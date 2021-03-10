@@ -2,28 +2,43 @@
 
 <div class = "forms">
 	 <form method="post" id="DjonnyLem">
-		 <label>Выберите наименование дефекта: </label><input type="text" name="defect_name" id="defect_name" class="form-control" placeholder="Выберите наименование дефекта"><br>
-<label>Выберите наименование операции: </label>
-<select name="operation_name" required="required">
+<input type="hidden" name="indetify"  value='form1'>
+
+
+<label>Выберите наименование дефекта: </label>
+<select name="defect_name1" required="required"><br>
  <option value="">Выберите значение</option>
 {% for i in defect %} 
 <option>{{ i.defect_name }}</option>
 {% endfor %}
+</select><br>
 
-         <label>Выберите наименование операции: </label><input type="text" name="operation_name" id="operation_name" class="form-control" placeholder="Выберите наименование операции"><br>
-         <label>Выберите допустимость дефекта: </label><input type="text" name="defect_type" id="defect_type" class="form-control" placeholder="Выберите допустимость дефекта"><br>
-         <label>Выберите номер изделия: </label><input type="text" name="article_number" id="article_number" class="form-control" placeholder="Выберите номер изделия"><br>
-         <label>Выберите наименование изделия: </label><input type="text" name="article_name" id="article_name" class="form-control" placeholder="Выберите наименование изделия"><br>
-		 <label>Выберите фото дефекта: </label><input type="text" name="defect_picture" id="defect_picture" class="form-control" placeholder="Выберите фото дефекта"><br>
-		 <label>Введите пояснение: </label><textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
-        
+<label>Выберите наименование операции: </label>
+<input type="text" name="operation_name1" id="operation_name1" class="form-control" placeholder="Выберите наименование операции"><br>
+
+<label>Выберите допустимость дефекта: </label>
+<input type="text" name="defect_type" id="defect_type" class="form-control" placeholder="Выберите допустимость дефекта"><br>
+
+<label>Выберите номер изделия: </label>
+<input type="text" name="article_number" id="article_number" class="form-control" placeholder="Выберите номер изделия"><br>
+
+<label>Выберите наименование изделия: </label>
+<input type="text" name="article_name" id="article_name" class="form-control" placeholder="Выберите наименование изделия"><br>
+
+<label>Выберите фото дефекта: </label>
+<input type="text" name="defect_picture" id="defect_picture" class="form-control" placeholder="Выберите фото дефекта"><br>
+
+<label>Введите пояснение: </label>
+<textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
+
 <input type="submit" class="btn btn-success" value="Отправить">
-
+<hr><hr>
     </form>
 	</div>
 
 <div class = "forms">
 	 <form method="post">
+<input type="hidden" name="indetify" value='form2'>
 		 <label>Введите наименование дефекта: </label><input type="text" name="defect_name" id="defect_name" class="form-control" placeholder="Введите наименование дефекта"><br>
 
         
@@ -35,7 +50,7 @@
 <hr>
 <div class = "forms" name="operation_name">
 	 <form method="post" >
->
+<input type="hidden" name="indetify"  value='form3'>
      <label>Введите наименование операции: </label><input type="text" name="operation_name" id="operation_name" class="form-control" placeholder="Введите наименование операции"><br>
         
         <input type="submit" class="btn btn-success" value="Отправить">

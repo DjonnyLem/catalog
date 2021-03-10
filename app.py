@@ -11,19 +11,19 @@ db = SQLAlchemy(app)
 
 class Catalog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    defect = db.Column(db.Text, db.ForeignKey('defect.defect_name'), nullable=False)
+    defect = db.Column(db.Text, db.ForeignKey('defect.defect_name'))#,, nullable=False)
     operation = db.Column(db.Text, db.ForeignKey('operation.operation_name'), nullable=False)
-    aricle = db.Column(db.Text, nullable=False)
-    name =  db.Column(db.Text, nullable=False)
-    sort = db.Column(db.Integer, nullable=True)
+    aricle = db.Column(db.Text)#, nullable=False)
+    name =  db.Column(db.Text)#,, nullable=False)
+    sort = db.Column(db.Integer)#,, nullable=False)
     #picture =
-    note = db.Column(db.String(300), nullable=False)
+    note = db.Column(db.String(300))#,, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
-        return (f"<catalog>" % self.defect, self.operation,
+        return (f"<catalog %r>" % self.defect, self.operation,
                 self.aricle, self.name, self.sort,
-                self.note1, self.note2, self.date)
+                self.note,  self.date)
 
 class Defect(db.Model):
     defect_name = db.Column(db.String(50), nullable=False, primary_key=True)
@@ -44,65 +44,86 @@ class Operation(db.Model):
 #        self.site_code = site_code
 #        self.site_type = site_type
 #        self.temperature = temperature
-
+@app.route('/')
+@app.route('/home')
+def index():
+    return  """
+        <h2 style='color: red;'>Hi, Djonny!</h2>
+        
+        """
 
 @app.route('/add', methods=['POST', 'GET'])
 def add():
     print (request.form)
     defect = Defect.query.all()
     operation = Operation.query.all()
+    catalog = Catalog.query.all()   
+    
     if request.method == "POST":
-        for key, item in request.form.items():
-            print (key)
-            print (item)
-            
-            if key =='defect_name':
-                
-                print("1", item)
-                defect_name = (request.form['defect_name']).upper()
-                defect = Defect(defect_name=defect_name)
         
-                try:
-                    db.session.add(defect)
-                    db.session.commit()
-                    return redirect('/add')
-                except:
-                    return "При добавлении статьи произошла ошибка"
-                  
+        if request.form["indetify"] == "form1":
+              
+            defect_name = (request.form['defect_name1']).upper()
+            operation_name = (request.form['operation_name1']).upper()
+            defect_type = (request.form['defect_type'])
+            article_number = (request.form['article_number'])
+            article_name = (request.form['article_name']).upper()
+            note = (request.form['note']).upper()
+            print(defect_name, operation_name, defect_type, article_number, article_name) 
 
-
+            q = Catalog(defect=defect_name,
+                        operation=operation_name,
+                        sort=defect_type,
+                        aricle=article_number,
+                        name=article_name,
+                        note=note)
             
-            elif key =='operation_name':
-                print("2", item)
-                
-                print("1", item)
-                operation_name = (request.form['operation_name']).upper()
-                operation = Operation(operation_name=operation_name)
+#            defect = Catalog(defect=defect_name)
+#            operation = Catalog(operation=operation_name)
+#            sort = Catalog(sort=defect_type)
+#            aricle = Catalog(aricle=article_number)
+#            name = Catalog(name=article_name)
+#            note = Catalog(note1=note)
+             
+            try:
+                db.session.add(q)
+ #               db.session.add(operation)
+ #               db.session.add(sort)
+#                db.session.add(aricle)
+ #               db.session.add(name)
+                db.session.commit()
+                return redirect('/add')
+            except:
+                return "При добавлении статьи произошла ошибка"
+
         
-                try:
-                    db.session.add(operation)
-                    db.session.commit()
-                    return redirect('/add')
-                except:
-                    return "При добавлении статьи произошла ошибка"                
+        if request.form["indetify"] == "form2":
+            defect_name = (request.form['defect_name']).upper()
+            defect = Defect(defect_name=defect_name)
+        
+            try:
+                db.session.add(defect)
+                db.session.commit()
+                print("form2- передача в базу осуществлена")
+                return redirect('/add')
+            except:
+                return "При добавлении статьи произошла ошибка"
+
+        if request.form["indetify"] == "form3":
+            operation_name = (request.form['operation_name']).upper()
+            operation = Operation(operation_name=operation_name)
+        
+            try:
+                db.session.add(operation)
+                db.session.commit()
+                return redirect('/add')
+            except:
+                return "При добавлении статьи произошла ошибка"
+
     else:
         return render_template("add.html", operation=operation, defect=defect)
-'''    
-    if request.method == "POST":
-        defect_name = (request.form['defect_name']).upper()
-        print (defect_name)
-        defect = Defect(defect_name=defect_name)
-        
-        try:
-            db.session.add(defect)
-            db.session.commit()
-            return redirect('/add')
-        except:
-            #flash('Ошибка отправки')
-            return "При добавлении статьи произошла ошибка"
-    else:
-        return render_template("add.html",defect=defect)
-'''
+     
+    
 
         
 @app.route('/add')    
