@@ -1,0 +1,67 @@
+
+
+source env/bin/activate
+python -m idlelib
+
+
+$ cd work/python
+$ /usr/bin/python3 -m venv myvenv
+В результате в директории work/python будет создана папка myvenv с необходимым содержимым для поддержки виртуального окружения.
+
+4. Активировать виртуальное окружение можно командой (из папки, где оно создано):
+
+$ source myvenv/bin/activate
+(myvenv) $
+В результате в bash в начале командной строки появиться надпись (myvenv).
+
+5. Для деактивации используется команда:
+
+(myvenv) $ deactivate
+$
+6. Можно убедится, что pip и python работают в контейнере:
+
+(myvenv) $ which pip
+/home/pavel/work/python/myvenv/bin/pip
+
+(myvenv) $ which python
+/home/pavel/work/python/myvenv/bin/python
+
+(myvenv) $ python -V
+Python 3.5.2
+7. Если виртуальное окружение создавалась для работы с Django, то далее нужно выполнить следующие команды:
+
+(myvenv) $ pip install django # Устанавливаем Django
+(myvenv) $ pip freeze # Смотрим какие при этом зависимости установились
+Django==1.10.2
+(myvenv) $ python django-admin.py startproject newproject # Создаем новый проект
+(myvenv) $ pip freeze > newproject/requirements.txt # Сохраняем зависимости
+При подготовке статьи использовались следующие источники:
+
+http://antiskleroz.pp.ua/it/python_virtual_environment
+http://djbook.ru/forum/topic/3970/
+https://tutorial.djangogirls.org/ru/django_installation/
+Любые замечания, пожелания и дополнения к статье пишите в комментариях.
+
+
+Активация и деактивация виртуального окружения производится с помощью следующих команд:
+
+$ source activate venv
+$ source deactivate venv
+Посмотреть все имеющиеся вирт
+
+source venv/bin/activate # активация вирт окр
+deactivate
+
+
+Запустить виртуальную среду
+Запустите: python -m idlelib.idle
+pip install -r requirements.txt 
+pip freeze > requirements.txt
+#bash###########################
+
+for i in *.jpg; do let j+=1; mv $i file$j.jpg ; done #номерует все файлы по file1 и тд
+for i in *.png; do convert $i $i.jpg ; done
+
+>>> from main import db
+>>> db.create_all()
+

@@ -1,0 +1,156 @@
+
+
+<div class = "forms">
+	 <form method="post" id="DjonnyLem">
+		 <label>Выберите наименование дефекта: </label><input type="text" name="defect_name" id="defect_name" class="form-control" placeholder="Выберите наименование дефекта"><br>
+<label>Выберите наименование операции: </label>
+<select name="operation_name" required="required">
+ <option value="">Выберите значение</option>
+{% for i in defect %} 
+<option>{{ i.defect_name }}</option>
+{% endfor %}
+
+         <label>Выберите наименование операции: </label><input type="text" name="operation_name" id="operation_name" class="form-control" placeholder="Выберите наименование операции"><br>
+         <label>Выберите допустимость дефекта: </label><input type="text" name="defect_type" id="defect_type" class="form-control" placeholder="Выберите допустимость дефекта"><br>
+         <label>Выберите номер изделия: </label><input type="text" name="article_number" id="article_number" class="form-control" placeholder="Выберите номер изделия"><br>
+         <label>Выберите наименование изделия: </label><input type="text" name="article_name" id="article_name" class="form-control" placeholder="Выберите наименование изделия"><br>
+		 <label>Выберите фото дефекта: </label><input type="text" name="defect_picture" id="defect_picture" class="form-control" placeholder="Выберите фото дефекта"><br>
+		 <label>Введите пояснение: </label><textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
+        
+<input type="submit" class="btn btn-success" value="Отправить">
+
+    </form>
+	</div>
+
+<div class = "forms">
+	 <form method="post">
+		 <label>Введите наименование дефекта: </label><input type="text" name="defect_name" id="defect_name" class="form-control" placeholder="Введите наименование дефекта"><br>
+
+        
+        <input type="submit" class="btn btn-success" value="Отправить">
+
+    </form>
+	</div>
+
+<hr>
+<div class = "forms" name="operation_name">
+	 <form method="post" >
+>
+     <label>Введите наименование операции: </label><input type="text" name="operation_name" id="operation_name" class="form-control" placeholder="Введите наименование операции"><br>
+        
+        <input type="submit" class="btn btn-success" value="Отправить">
+
+    </form>
+	</div>
+<hr>
+
+<div class = "forms">
+	 <form method="post">
+		<label>Введите номер изделия: </label><input type="text" name="article_number" id="article_number" class="form-control" placeholder="Введите номер изделия"><br>
+         <label>Введите наименование изделия: </label><input type="text" name="article_name" id="article_name" class="form-control" placeholder="Введите наименование изделия"><br>
+
+        
+        <input type="submit" class="btn btn-success" value="Отправить">
+
+    </form>
+	</div>
+<select name="user_profile_color_2" required="required">
+ <option value="">Выберите значение</option>
+{% for i in defect %} 
+<option>{{ i.defect_name }}</option>
+{% endfor %}
+  <option value="1">Синий</option>
+  <option value="2">Зеленый</option>
+  <option value="3">Желтый</option>
+  <option value="4">Красный</option>
+  <option value="5">Оранжевый</option>
+  <option value="6">Черный</option>
+  <option value="/1">ADD</option>
+</select> 
+<h3><a href="/1">test</a></h3>
+{% block post_detail %}
+<h3>{{ pr }}</h3>
+{% endblock %}
+<h3>test</h3>
+<hr><hr><hr>
+{% for i in defect %} 
+<p>{{ i.defect_name }}</p>
+{% endfor %}
+<hr> 
+{% for i in operation %} 
+<p>{{ i.operation_name }}</p>
+{% endfor %}
+<hr> <hr><hr>
+<!--
+{% for i in defect %} 
+<p>{{ i.defect_name }}</p>
+{% endfor %}
+-->
+<a href="/1">указатель ссылки</a>
+
+<select onchange="window.location.href=this.options[this.selectedIndex].value">
+	<option value="">Выберите значение</option>
+				{% for i in defect %} 
+	<option VALUE="">{{ i.defect_name }}</option>
+				{% endfor %}
+    <option VALUE="/1">Добавить...</option>
+
+</select>
+
+
+
+<select onchange="window.location.href=this.options[this.selectedIndex].value">
+    <option VALUE="http://ru.stackoverflow.com/">Ссылка №1</option>
+    <option VALUE="http://ru.stackoverflow.com/">Ссылка №2</option>
+    <option VALUE="http://ru.stackoverflow.com/">Ссылка №3</option>
+</select>
+
+<select multiple onchange="window.location.href=this.options[this.selectedIndex].value">
+    <option VALUE="http://ru.stackoverflow.com/">Ссылка №1</option>
+    <option VALUE="http://ru.stackoverflow.com/">Ссылка №2</option>
+    <option VALUE="http://ru.stackoverflow.com/">Ссылка №3</option>
+</select>
+
+<select id="channel-select" name="channel" onchange="window.location.href = this.options[this.selectedIndex].value;"  >
+    
+  <option value="all">Name</option>
+                        
+        <optgroup label="Name">
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+        </optgroup>
+        
+        <optgroup label="Name">
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+          <option value="url">Name</option>
+        </optgroup>
+</select>
+
+<select onchange="document.location=this.options[this.selectedIndex].value">
+      <option value="#">Выберите раздел сайта</option>
+      <option value="depart.html">Отделения</option>
+      <option value="techinfo.html">Техническая информация</option>
+      <option value="study.html">Обучение</option>
+    </select>
+
+<hr>
+<h1>Пример использования атрибута "form"</h1>
+<form action="/examples/php-scripts/coffee.php" method="post" id="f-coffee">
+<fieldset> <legend><b>Какой кофе вы любите?</b></legend>
+<!-- Переключатели находятся внутри формы -->
+<label><input type="radio" name="coffee" value="without"> просто кофе (без всего)</label>
+<label><input type="radio" name="coffee" value="milk"> с молоком</label>
+<p><input type="text" name="coffee_value" placeholder="Свой вариант"></p>
+</fieldset>
+</form>
+<!-- Кнопки присоединяются к форме -->
+<p><input type="reset" form="f-coffee"> <input type="submit" form="f-coffee"></p>
+</body>
+</html
