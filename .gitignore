@@ -1,6 +1,7 @@
 /__pycache__
 /.git
 /myvenv
+/venv
 /SQLiteStudio
 
 
