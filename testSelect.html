@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- Import our custom stylesheet -->
+
+
+    <title>Test Select</title>
+</head>
+
+<body>
+
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6">
+
+                <h1>Test Select</h1>
+                <hr>
+
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label>Select</label>
+                        <input type="text" class="form-control" id="name" placeholder="" name="top">
+
+                    </div>
+
+
+                    <button class="btn btn-primary" id="submit" onclick="submit_message();">Button</button>
+                </div>
+
+
+                <hr>
+
+                <div class="mb-3" id="messages"></div>
+                <div class="row">
+
+                    <select id="form-select" aria-label="Default select example" onChange="getValue()">
+                        <option selected>Выберите значение</option>
+                        <option value="1">Красный</option>
+                        <option value="2">Оранжевый</option>
+                        <option value="3">Желтый</option>
+                        <option value="4">Зеленый</option>
+                        <option value="5">Голубой</option>
+                        <option value="6">Синий</option>
+                        <option value="7">Фиолетовый</option>
+                        <option value="add">Добавить...</option>
+                    </select>
+
+                    <button type="button" class="btn btn-outline-primary">Выбрать</button>
+                    <hr>
+
+
+                    <hr>
+                    <select class="ser" aria-label=".form-select-sm example" onChange="zz()">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        let next = "http://ya.ru"
+        let a = document.getElementById("form-select");
+        let text = a.options[3].text;
+        let value = a.options[3].value;
+        function getValue() {
+            let a = document.getElementById("form-select");
+            let b = a.value;
+
+            console.log(b)
+
+
+            /*   if (a.selectedIndex != -1) {
+                   //Если есть выбранный элемент, отобразить его значение (свойство value)
+                   console.log(a.options[a.selectedIndex].text);
+               }*/
+
+            if (a.options[a.selectedIndex].value == "add") {
+                document.location.href = "http://www.ya.ru"//"#top"
+
+            }
+
+
+        }
+
+                   // onclick="getValue()"
+    </script>
+
+    <script>
+        //let z = document.getElementsByClassName("ser");
+        let z = document.querySelector(".ser")
+        function zz() {
+            console.log(z)
+            //console.log(z.options[z.selectedIndex].text)
+        }
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
