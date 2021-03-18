@@ -1,12 +1,31 @@
+<!doctype html>
+<html lang="en">
 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<div class = "forms">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- Import our custom stylesheet -->
+</head>
+<body>
+
+<!------------------------------------------------------------------------------->
+<div class="container">
+  <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+    <div class="col-md-9">
+ 	<div class="form-group">
+<h2>Введите данные по дефекту</h2>
+
 	 <form method="post" id="DjonnyLem">
-<input type="hidden" name="indetify"  value='form1'>
+	<input type="hidden" name="indetify"  value='form1'>
 
 
 <label>Выберите наименование дефекта: </label>
-<select name="defect_name1" required="required"><br>
+<select class="form-control" name="defect_name1" required="required"><br>
  <option value="">Выберите значение</option>
 {% for i in defect %} 
 <option>{{ i.defect_name }}</option>
@@ -17,7 +36,13 @@
 <input type="text" name="operation_name1" id="operation_name1" class="form-control" placeholder="Выберите наименование операции"><br>
 
 <label>Выберите допустимость дефекта: </label>
-<input type="text" name="defect_type" id="defect_type" class="form-control" placeholder="Выберите допустимость дефекта"><br>
+<select class="form-control" name="defect_type" required="required"><br>
+ <option value="">Выберите допустимость дефекта</option>
+
+<option value="1" style="color: green;">Дефект допустим</option>
+<option value="0" style="color: red;">Дефект не допустим</option>
+</select><br>
+
 
 <label>Выберите номер изделия: </label>
 <input type="text" name="article_number" id="article_number" class="form-control" placeholder="Выберите номер изделия"><br>
@@ -25,17 +50,39 @@
 <label>Выберите наименование изделия: </label>
 <input type="text" name="article_name" id="article_name" class="form-control" placeholder="Выберите наименование изделия"><br>
 
-<label>Выберите фото дефекта: </label>
-<input type="text" name="defect_picture" id="defect_picture" class="form-control" placeholder="Выберите фото дефекта"><br>
+<label>Прикрепите фото дефекта: </label>
+<input type="text" name="defect_picture" id="defect_picture" class="form-control" placeholder="Прикрепите фото дефекта"><br>
 
 <label>Введите пояснение: </label>
 <textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
 
-<input type="submit" class="btn btn-success" value="Отправить">
+
+
+
+<input type="submit" class="btn btn-primary" value="Отправить">
 <hr><hr>
     </form>
 	</div>
 
+
+
+	</div>
+	</div>
+	</div>
+
+</div>
+<!------------------------------------------------------------------------------->
+
+<div class="container">
+  <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+    <div class="col-md-8">
+
+	
+	</div>
+	</div>
+
+</div>
+<!------------------------------------------------------------------------------->
 <div class = "forms">
 	 <form method="post">
 <input type="hidden" name="indetify" value='form2'>
@@ -167,5 +214,22 @@
 </form>
 <!-- Кнопки присоединяются к форме -->
 <p><input type="reset" form="f-coffee"> <input type="submit" form="f-coffee"></p>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+
+
 </body>
 </html
