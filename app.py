@@ -21,19 +21,19 @@ class Catalog(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
-        return (f"<catalog %r>" % self.defect, self.operation,
+        return "<User %r, %r, %r, %r, %r, %r, %r>" %(self.defect, self.operation,
                 self.aricle, self.name, self.sort,
                 self.note,  self.date)
 
 class Defect(db.Model):
     defect_name = db.Column(db.String(50), nullable=False, primary_key=True)
     def __repr__(self):
-        return '<defect %r>' % self.defect_name
+        return   '<defect_name %r>' % self.defect_name
 
 class Operation(db.Model):
     operation_name = db.Column(db.String(50), nullable=False, primary_key=True)
     def __repr__(self):
-        return '<defect %r>' % self.operation_name
+        return '<operation_name %r>' % self.operation_name
 
 #    def __repr__(self):
 #        return "<User(%r, %r)>" % (
@@ -124,12 +124,21 @@ def add():
         return render_template("add.html", operation=operation, defect=defect)
      
     
+@app.route('/show')
+
+def show():
+    defects = Defect.query.all()
+    d = Catalog.query.all()
+    c = Catalog.query.order_by(Catalog.id).all()
+    print(defects)
+    print(type(d))
+    print(d)
+    print('+'*15)
+    print(c)
+    return render_template("show.html", defects=defects, d=d)
 
         
-@app.route('/add')    
-def show():
-    operation = Operation.query.all()
-    return render_template("add.html",operation=operation)
+
       
 
 @app.route('/1')
