@@ -20,20 +20,12 @@ class Catalog(db.Model):
     note = db.Column(db.String(300))#,, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, defect, operation, aricle, name, sort, note, date):
-        self.defect = defect
-        self.operation = operation
-        self.aricle = aricle
-        self.name = name
-        self.note = note
-        self.date = date
-
-'''    
+   
     def __repr__(self):
         return "<User %r, %r, %r, %r, %r, %r, %r>" %(self.defect, self.operation,
                 self.aricle, self.name, self.sort,
                 self.note,  self.date)
-'''
+
 class Defect(db.Model):
     defect_name = db.Column(db.String(50), nullable=False, primary_key=True)
     def __repr__(self):
