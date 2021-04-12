@@ -1,15 +1,106 @@
-{{ defects }}
+{% extends 'base1.html' %}
+
+
+{% block title %}
+Show
+{% endblock %}
+
+
+{% block body %}
+
+
+
+
+
+    <div class="container">
+        <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+
+
+        
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for i in d %}
+ <tr>
+      <th><input type="submit" class="btn btn-primary" value="Edit"></th>
+      <td>{{ i.aricle }}</td>
+      <td>{{ i.name }}</td>
+      <td>{{ i.note }}</td>
+  </tr>
+{% endfor %}
+<!--
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+-->
+  </tbody>
+</table>
+
+
+
+<div class="row align-items-start">
+    <div class="col" style="border:1px solid red;">
+      Одна из трёх колонок
+    </div>
+    <div class="col" style="border:1px solid red;">
+      Одна из трёх колонок
+    </div>
+    <div class="col" style="border:1px solid red;">
+      Одна из трёх колонок
+    </div>
+  </div>
+ 
+ {{ defects }}
 <br>
 {% for i in defects %}
 <a>{{ i }}</a><br
 {% endfor %}
 <br>
 {% for i in d %}
-<a>{{ i }}</a><br
+<a>{{ i.note }}</a><br
 {% endfor %}
 <br>
 <table>
 
     <td>fgdfgdf</td>
     <td>dsgfgd</td>
-</table>
+</table>      
+
+
+    </div>
+    </div>
+ 
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

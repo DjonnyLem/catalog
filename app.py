@@ -48,10 +48,11 @@ class Operation(db.Model):
 @app.route('/')
 @app.route('/home')
 def index():
-    return  """
-        <h2 style='color: red;'>Hi, Djonny!</h2>
-        
-        """
+    #return  """ <h2 style='color: red;'>Hi, Djonny!</h2> """
+
+    return render_template("base1.html")
+
+
 
 @app.route('/add', methods=['POST', 'GET'])
 def add():
@@ -132,12 +133,13 @@ def show():
     d = Catalog.query.all()
     c = Catalog.query.all()
     f=Catalog.query.order_by(Catalog.name).all()
-    print(defects)
-    print(type(d))
-    print(d)
-    print('+'*15)
-    print(f)
+    #print(defects)
+    #print(type(d))
+    print(c)
+    #print('+'*70)
+    #print(f)
     return render_template("show.html", defects=defects, d=d)
+
 
         
 

@@ -1,4 +1,12 @@
+{% extends 'base1.html' %}
 
+
+{% block title %}
+1
+{% endblock %}
+
+
+{% block body %}
 
 <h1>test</h1>
 {% for i in pr %}
@@ -19,3 +27,5 @@
 <p>{{ i.operation_name }}</p>
 {% endfor %}
 <h2>{{ num }}</h2>
+
+{% endblock %}
