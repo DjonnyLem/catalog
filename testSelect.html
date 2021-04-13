@@ -69,9 +69,40 @@
                 </div>
             </div>
         </div>
-    </div>
+    
+
+<div class="row align-items-start">
+    <div class="col" style="border:1px solid red; ">
+ <form method="post">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="a"> <!- onChange="this.form.submit()">
+  <label class="form-check-label" for="flexRadioDefault1">
+    Сортировать по дефектам
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="b"> <!--onChange="this.form.submit()"-->
+  <label class="form-check-label" for="flexRadioDefault2">
+    Сортировать по операциям
+  </label>
+</div>
+ </form>
+</div>
+
+</div>
 
 
+
+
+
+<input id="button" type="submit">
+
+
+
+
+<div id="parent">
+	<input>
+</div>
 
     <script>
         let next = "http://ya.ru"
@@ -99,6 +130,19 @@
         }
 
                    // onclick="getValue()"
+ </script>
+ <script>
+
+let rad = document.querySelector('input[id="flexRadioDefault2"]');
+rad.addEventListener('click', function() {
+	alert('!@!');
+});
+console.log(rad);
+
+let button = document.querySelector('#button');
+button.addEventListener('click', function() {
+	alert('!!!');
+});
     </script>
 
     <script>

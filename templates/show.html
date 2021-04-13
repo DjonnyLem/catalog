@@ -13,7 +13,7 @@ Show
 
 
     <div class="container">
-        <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+        <div class="row" style="background-color: #f1f1f1; border:1px solid red;"> <!-- height:100vh"-->
 
 
         
@@ -21,19 +21,32 @@ Show
 <table class="table">
   <thead>
     <tr>
+      <th scope="col">Article</th>
+      <th scope="col">Name</th>
+	  <th scope="col">Defect</th>
+	  <th scope="col">Operation</th>
+	  <th scope="col">Path</th>
+	  <th scope="col">Picture</th>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">#</th>
     </tr>
   </thead>
   <tbody>
 {% for i in d %}
  <tr>
-      <th><input type="submit" class="btn btn-primary" value="Edit"></th>
       <td>{{ i.aricle }}</td>
       <td>{{ i.name }}</td>
+      <td>{{ i.defect }}</td>
+      <td>{{ i.operation }}</td>
       <td>{{ i.note }}</td>
+	  <td><img src="{{ i.note }}" class="img-thumbnail" alt="" style=" max-width: 20%;  height: auto;"></td>
+
+      <th><button type="button" class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+</svg></button></th>
+      <th><button type="button" class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+  <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
+</svg></button></th>
   </tr>
 {% endfor %}
 <!--
@@ -58,8 +71,24 @@ Show
   </tbody>
 </table>
 
+<div class="row align-items-start">
+    <div class="col" style="border:1px solid red; ">
+ <form method="post">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="a" onChange="this.form.submit()">
+  <label class="form-check-label" for="flexRadioDefault1">
+    Сортировать по дефектам
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="b" onChange="this.form.submit()">
+  <label class="form-check-label" for="flexRadioDefault2">
+    Сортировать по операциям
+  </label>
+</div>
+ </form>
 
-
+</div>
 <div class="row align-items-start">
     <div class="col" style="border:1px solid red;">
       Одна из трёх колонок
@@ -92,6 +121,25 @@ Show
     </div>
     </div>
  
+ <script>
+    function updateButtonState(){
+
+//let Radio = localStorage.getItem('Radio');
+//if (Radio) {
+ // let inp = document.querySelector('input[name="flexRadioDefault"]');
+//	onChange="this.form.submit()";
+ // if (inp) {
+  //  inp.checked = true;
+}
+     // var submitButton = document.querySelector('button[type="submit"]');
+     // var selectedRadioButton = document.querySelector('input[name="radio-value"]:checked');
+     // submitButton.disabled = selectedRadioButton.value != '5';
+   // }
+   // updateButtonState();
+let rad = document.querySelector('input[name="flexRadioDefault"]');
+console.log(rad);
+  </script>
+
 
 {% endblock %}
 

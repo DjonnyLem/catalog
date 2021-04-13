@@ -56,11 +56,12 @@ def index():
 
 @app.route('/add', methods=['POST', 'GET'])
 def add():
-    print (request.form)
+    e = request.form
     defect = Defect.query.all()
     operation = Operation.query.all()
     catalog = Catalog.query.all()   
-    
+    for i in e:
+        print(i)
     if request.method == "POST":
         
         if request.form["indetify"] == "form1":
@@ -126,19 +127,30 @@ def add():
         return render_template("add.html", operation=operation, defect=defect)
      
     
-@app.route('/show')
+@app.route('/show', methods=['POST', 'GET'])
 
 def show():
+    req = request.form.get("flexRadioDefault")
     defects = Defect.query.all()
-    d = Catalog.query.all()
+    #d = Catalog.query.order_by(Catalog.operation).all()
     c = Catalog.query.all()
     f=Catalog.query.order_by(Catalog.name).all()
+    s = Catalog.query.filter_by(defect='ПЕРЕКОС').all()
     #print(defects)
     #print(type(d))
-    print(c)
+    #print(c)
     #print('+'*70)
     #print(f)
-    return render_template("show.html", defects=defects, d=d)
+    #print(req)
+    #for i in req:
+        #print (i)
+    if req == "a":
+        d = Catalog.query.order_by(Catalog.defect).all()
+    elif req == "b":
+        d = Catalog.query.order_by(Catalog.operation).all()
+    else:
+        d = Catalog.query.order_by(Catalog.id).all()
+    return render_template("show.html", defects=defects, d=d, s=s)
 
 
         
