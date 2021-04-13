@@ -132,16 +132,23 @@
                    // onclick="getValue()"
  </script>
  <script>
-
-let rad = document.querySelector('input[id="flexRadioDefault2"]');
-rad.addEventListener('click', function() {
-	alert('!@!');
-});
-console.log(rad);
+let rad = document.querySelectorAll('input[type="radio"]');
+//let rad = document.querySelector('input[id="flexRadioDefault2"]');
+//rad.addEventListener('click', function() {
+//	alert('!@!');
+//});
+for (let radio of rad) {
+radio.addEventListener('change', function() {
+	console.log(radio.value);
+		})};
 
 let button = document.querySelector('#button');
 button.addEventListener('click', function() {
 	alert('!!!');
+for (let radio of rad) {
+		if (radio.checked) {
+			console.log(radio.value);
+		}}
 });
     </script>
 
