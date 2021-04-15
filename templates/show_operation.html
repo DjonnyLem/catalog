@@ -1,0 +1,47 @@
+{% extends 'base1.html' %}
+
+
+{% block title %}
+Show_operation
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container-fluid-mt-5 px-4" style="margin-top: 75px;"> 
+
+
+	<div class="row">
+    <div class="col-md-3"style="border:0.5px solid grey;">
+
+     <ul class="list-group">
+
+{% for i in operations %}
+        <li class="list-group-item">
+          <a class="nav-link" href="#">{{ i.operation_name }}</a>
+        </li> 
+      </ul>
+
+{% endfor %}
+
+
+    </div>
+    <div class="col">
+      2 of 2
+		
+    </div>
+</div>  
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

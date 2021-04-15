@@ -152,9 +152,23 @@ def show():
         d = Catalog.query.order_by(Catalog.id).all()
     return render_template("show.html", defects=defects, d=d, s=s)
 
+@app.route('/show_defect', methods=['POST', 'GET'])
+def show_defect():
+    sd = request.form.get('1234')
+    se = request.form.get('12')
+    defects = Defect.query.order_by(Defect.defect_name).all()
+    d = Catalog.query.order_by(Catalog.defect).all()
+    print (sd)
+    print (se)
+    return render_template("show_defect.html", defects=defects, d=d)
 
-        
 
+
+@app.route('/show_operation', methods=['POST', 'GET'])        
+def show_operation():
+    operations = Operation.query.order_by(Operation.operation_name).all()
+    
+    return render_template("show_operation.html", operations=operations)
       
 
 @app.route('/1')
