@@ -8,91 +8,116 @@ Show_defect
 {% block body %}
 
 
+<style>
+  .row {
+    height: 85vh;
+}
+.scrollspy  {
+    height: 100%;
+}
+</style>
 
-<div class="container-fluid-mt-5 px-4"style="border:0.5px solid grey; margin-top: 75px; height: 60vh;">
+<!-- container-fluid d-flex flex-column -->
+
+<!-- container-fluid-mt-5 px-4 -->
+
+<div class="container-fluid-mt-5 px-4" style="border:0.5px solid rgb(246, 250, 1); margin-top: 80px;">
 
 
-	<div class="row">
+  <div class="row" style="height: 85vh;">
     <div class="col-md-3" style="border:0.5px solid grey;">
-  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target="#scrollspy1" data-mdb-offset="0"
-style="position: relative;  height: 55vh; overflow: auto;">
+      <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
+        style="position: relative;  height: 55vh; overflow: auto;">
 
-     <ul class="list-group">
-<li class="list-group-item">
-          <a class="nav-link" href="#">ВСЕ ДЕФЕКТЫ</a>
-        </li>
-{% for i in defects %}
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a class="nav-link" href="#">ВСЕ ДЕФЕКТЫ</a>
+          </li>
+          {% for i in defects %}
 
-        <li class="list-group-item">
-          <a class="nav-link" href="#">{{ i.defect_name }}</a>
-        </li> 
-      </ul>
+          <li class="list-group-item">
+            <a class="nav-link" href="#">{{ i.defect_name }}</a>
+          </li>
+        </ul>
 
-{% endfor %}
-</div>
+        {% endfor %}
+      </div>
 
-  </div>
+    </div>
+
+<style>
+  tr {
+    width: 100%;
+    display: inline-table;
+    height:60px;    */            // <-- the rows height 
+    }
+    
+    table{
+     height:300px;              // <-- Select the height of the table
+     display: -moz-groupbox;    // For firefox bad effect
+    }
+    tbody{
+      overflow-y: scroll;      
+      height: 500px;            //  <-- Select the height of the body
+      width: 100%;
+      position: absolute;
+    }  
+ </style>
 
 
     <div class="col" style="border:0.5px solid grey;">
-      
-  <div class="forms">
-        <form method="post"> 
-
-  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target="#scrollspy2" data-mdb-offset="0"
-style="position: relative;  height: 55vh; overflow: auto;">
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">#</th>
-      <th scope="col">Артикул</th>
-      <th scope="col">Наименование</th>
-	  <th scope="col">Дефект</th>
-	  <th scope="col">Операция</th>
-	  <th scope="col">Фото</th>
-	  <th scope="col">Расположение</th>
 
 
-    </tr>
-  </thead>
-  <tbody>
-{% for i in d %}
- <tr>
-      <th><button type="submit" name="1234" value="s{{ i.id }}" class="btn btn-outline-secondary btn-sm "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
-  <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
-</svg></button></th>
-    <th><button type="submit" name="12" value="{{ i.id }}" class="btn btn-outline-secondary btn-sm "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-</svg></button></th>
+      <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".table table-hover table-sm" data-mdb-offset="0"
+      style="position: relative;">
 
-      <td>{{ i.aricle }}</td>
-      <td>{{ i.name }}</td>
-      <td>{{ i.defect }}</td>
-      <td>{{ i.operation }}</td>
-	  <td><img src="{{ i.note }}" class="img-thumbnail" alt="" style=" max-width: 20%;  height: auto;"></td>
-      <td>{{ i.note }}</td>
-  
-  </tr>
-{% endfor %}
-    
-</table>
+        <table class="table table-hover table-sm">
+          <thead >
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">#</th>
+              <th scope="col">Артикул</th>
+              <th scope="col">Наименование</th>
+              <th scope="col">Дефект</th>
+              <th scope="col">Операция</th>
+              <th scope="col">Фото</th>
+              <th scope="col">Расположение</th>
 
- </div>
- </form>
 
-  </div>
-  </div>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in d %}
+            <tr>
+              <th><a href="/show_defect/{{ i.id }}" type="button" class="btn btn-outline-secondary btn-sm "><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-caret-right" viewBox="0 0 16 16">
+                    <path
+                      d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" />
+                  </svg></a></th>
+              <th><button type="submit" name="12" value="{{ i.id }}" class="btn btn-outline-secondary btn-sm "><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                  </svg></button></th>
 
-{% endblock %}
+              <td>{{ i.aricle }}</td>
+              <td>{{ i.name }}</td>
+              <td>{{ i.defect }}</td>
+              <td>{{ i.operation }}</td>
+              <td><img src="{{ i.note }}" class="img-thumbnail" alt="" style=" max-width: 20%;  height: auto;"></td>
+              <td>{{ i.note }}</td>
+
+            </tr>
+            {% endfor %}
+
+        </table>
+
+      </div>
 
 
 
+    </div>
 
-
-
-
-
-
-
+    {% endblock %}
