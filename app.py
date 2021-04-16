@@ -178,10 +178,10 @@ def one():
     defect = Defect.query.all()
     return render_template("1.html", pr=pr,defect=defect)
 
-def one1():
-    num = ["one", "two", "three"]
-    op = Operation.query.all()
-    return render_template("1.html", num=num,op=op)
+@app.route('/defect')
+def defect():
+
+    return render_template("defect.html")
 
 
 
