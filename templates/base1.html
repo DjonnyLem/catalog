@@ -78,6 +78,12 @@
               <a class="nav-link" href="/1">1</a>
             </li>
 
+{% for el in menu %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ el.url }}">{{ el.name }}</a>
+            </li>
+{% endfor %}
+
           </ul>
           <!--
       <form class="d-flex">

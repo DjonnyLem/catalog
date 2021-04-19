@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+from menu import menu
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
@@ -52,7 +52,8 @@ class Operation(db.Model):
 #        self.site_type = site_type
 #        self.temperature = temperature
 
-
+def base():
+        return render_template(menu=menu)
 @app.route('/')
 @app.route('/home')
 def index():
