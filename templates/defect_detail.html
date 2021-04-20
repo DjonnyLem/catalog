@@ -17,9 +17,10 @@ Defect
       <h2 style="color: #ff7000;">{{ defect_detail.defect }}</h2><br>
       <p>id: {{ defect_detail.id }}</p>
       <p>Операция: {{ defect_detail.operation }}</p>
-      <p>Артикул: {{ defect_detail.aricle }}</p>
-      <p>Наименование: {{ defect_detail.name }}</p>
-      {% if defect_detail.sort == 1%}
+  <!--    <p>Артикул: {{ defect_detail.article }}</p>
+      <p>Наименование: {{ defect_detail.name }}</p>  -->
+	<p>Изделие:  {{ defect_detail.name }}, {{ defect_detail.article }}</p>
+      {% if defect_detail.sort == 1 %}
 		<p>Допустимость: <a style="color:green;">ДЕФЕКТ ДОПУСТИМ</a></p>
 		{% elif defect_detail.sort == 0 %}
 	<p>Допустимость: <a style="color:red;">ДЕФЕКТ НЕ ДОПУСТИМ</a></p>
@@ -27,7 +28,15 @@ Defect
 	<p>Допустимость: <a style="color:grey;">ДОПУСТИМОСТЬ НЕ ОПРЕДЕЛЕНА</a></p>
 	{% endif %}
       <p>Комментарий: {{ defect_detail.note }}</p>
+ 
+
+
+
+     <a href="#" class="btn btn-success">Назад</a>
+        <a href="#" class="btn btn-danger">Удалить</a>
+        <a href="#" class="btn btn-success">Редактировать</a>
     </div>
+
 
 
     <div class="col" style="border:0.5px solid grey;">

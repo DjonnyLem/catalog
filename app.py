@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from menu import menu
 
+
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -16,7 +18,7 @@ class Catalog(db.Model):
         'defect.defect_name'))  # ,, nullable=False)
     operation = db.Column(db.Text, db.ForeignKey(
         'operation.operation_name'), nullable=False)
-    aricle = db.Column(db.Text)  # , nullable=False)
+    article = db.Column(db.Text)  # , nullable=False)
     name = db.Column(db.Text)  # ,, nullable=False)
     sort = db.Column(db.Integer)  # ,, nullable=False)
     # picture =
@@ -25,7 +27,7 @@ class Catalog(db.Model):
 
     def __repr__(self):
         return "<User %r, %r, %r, %r, %r, %r, %r>" % (self.defect, self.operation,
-                                                      self.aricle, self.name, self.sort,
+                                                      self.article, self.name, self.sort,
                                                       self.note,  self.date)
 
 
@@ -52,14 +54,13 @@ class Operation(db.Model):
 #        self.site_type = site_type
 #        self.temperature = temperature
 
-def base():
-        return render_template(menu=menu)
+
 @app.route('/')
 @app.route('/home')
 def index():
     # return  """ <h2 style='color: red;'>Hi, Djonny!</h2> """
 
-    return render_template("base1.html")
+    return render_template("base1.html", menu=menu)
 
 
 @app.route('/add', methods=['POST', 'GET'])
@@ -86,14 +87,14 @@ def add():
             q = Catalog(defect=defect_name,
                         operation=operation_name,
                         sort=defect_type,
-                        aricle=article_number,
+                        article=article_number,
                         name=article_name,
                         note=note)
 
 #            defect = Catalog(defect=defect_name)
 #            operation = Catalog(operation=operation_name)
 #            sort = Catalog(sort=defect_type)
-#            aricle = Catalog(aricle=article_number)
+#            article = Catalog(article=article_number)
 #            name = Catalog(name=article_name)
 #            note = Catalog(note1=note)
 
@@ -101,7 +102,7 @@ def add():
                 db.session.add(q)
  #               db.session.add(operation)
  #               db.session.add(sort)
-#                db.session.add(aricle)
+#                db.session.add(article)
  #               db.session.add(name)
                 db.session.commit()
                 return redirect('/add')
@@ -205,7 +206,7 @@ def defect():
 #    id = db.Column(db.Integer, primary_key=True)
 #   defect = db.Column(db.Text, nullable=False)
 #    operation = db.Column(db.Text, nullable=False)
-#    aricle = db.Column(db.Text, nullable=False)
+#    article = db.Column(db.Text, nullable=False)
 #    name =  db.Column(db.Text, nullable=False)
     #sort = db.Column(db.Integer, nullable=True)
     # picture =

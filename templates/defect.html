@@ -1,0 +1,79 @@
+{% extends 'base1.html' %}
+
+
+{% block title %}
+Add
+{% endblock %}
+
+
+{% block body %}
+
+
+    <!------------------------------------------------------------------------------->
+    <div class="container">
+        <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <h2>Введите данные по дефекту</h2>
+
+                    <form method="post" id="DjonnyLem">
+                        <input type="hidden" name="indetify" value='form1'>
+
+
+                        <label>Выберите наименование дефекта: </label>
+                        <select class="form-control" name="defect_name1" required="required"><br>
+                            <option value="">Выберите значение</option>
+                            {% for i in defect %}
+                            <option>{{ i.defect_name }}</option>
+                            {% endfor %}
+                        </select><br>
+
+                        <label>Выберите наименование операции: </label>
+                        <input type="text" name="operation_name1" id="operation_name1" class="form-control"
+                            placeholder="Выберите наименование операции"><br>
+
+                        <label>Выберите допустимость дефекта: </label>
+                        <select class="form-control" name="defect_type" required="required"><br>
+                            <option value="">Выберите допустимость дефекта</option>
+
+                            <option value="1" style="color: green;">Дефект допустим</option>
+                            <option value="0" style="color: red;">Дефект не допустим</option>
+                        </select><br>
+
+
+                        <label>Выберите номер изделия: </label>
+                        <input type="text" name="article_number" id="article_number" class="form-control"
+                            placeholder="Выберите номер изделия"><br>
+
+                        <label>Выберите наименование изделия: </label>
+                        <input type="text" name="article_name" id="article_name" class="form-control"
+                            placeholder="Выберите наименование изделия"><br>
+
+                        <label>Прикрепите фото дефекта: </label>
+                        <input type="text" name="defect_picture" id="defect_picture" class="form-control"
+                            placeholder="Прикрепите фото дефекта"><br>
+
+                        <label>Введите пояснение: </label>
+                        <textarea name="note" id="note" class="form-control"
+                            placeholder="Введите пояснение"></textarea><br>
+
+
+
+
+                        <input type="submit" class="btn btn-primary" value="Изменить">
+                        <hr>
+                        <hr>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+  
+{% endblock %}
+
+ 
