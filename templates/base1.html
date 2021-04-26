@@ -16,6 +16,7 @@
 <body>
 
   <style>
+
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -33,8 +34,8 @@
 
 
   <!-- Custom styles for this template -->
-  <link href="navbar-top-fixed.css" rel="stylesheet">
-
+ 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar-top-fixed.css') }}" type="text/css">
 
   </head>
 
@@ -76,6 +77,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/1">1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/upload">Загрузить</a>
             </li>
 
 {% for el in menu %}
