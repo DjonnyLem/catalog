@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from menu import menu
 import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
@@ -197,74 +198,74 @@ def defect():
 
     return render_template("defect.html")
 
+from werkzeug.utils import secure_filename
 
-#app.config["IMAGE_UPLOADS"] = "/home/tech-3/Рабочий стол/test/app/static/img/uploads"
-app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/test/app/static/img/uploads"
+app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/catalog/static/img/uploads"
+#app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/test/app/static/img/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config["MAX_IMAGE_FILESIZE"] = 4 * 1024 * 1024
 
 
-
 def allowed_image(filename):
 
-        if not "." in filename:
-                return False
+    if not "." in filename:
+        return False
 
-        ext = filename.rsplit(".", 1)[1]
+    ext = filename.rsplit(".", 1)[1]
 
-        if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
-                return True
-        else:
-                return False
+    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
 
 def allowed_image_filesize(filesize):
-        
-        if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
-                return True
-        else:
-                return False
-                
+
+    if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
+        return True
+    else:
+        return False
+
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
 
-        if request.method == "POST":
+    if request.method == "POST":
 
-                if request.files:
+        if request.files:
 
-                        if "filesize" in request.cookies:
+            if "filesize" in request.cookies:
 
-                                if not allowed_image_filesize(request.cookies["filesize"]):
-                                        print("Filesize exceeded maximum limit")
-                                        return redirect(request.url)
+                if not allowed_image_filesize(request.cookies["filesize"]):
+                    print("Filesize exceeded maximum limit")
+                    return redirect(request.url)
 
-                        image = request.files["image"]
+            image = request.files["image"]
 
-                        if image.filename == "":
-                                print("No filename")
-                                return redirect(request.url)
+            if image.filename == "":
+                print("No filename")
+                return redirect(request.url)
 
-                        if allowed_image(image.filename):
-                                filename = secure_filename(image.filename)
+            if allowed_image(image.filename):
+                filename = secure_filename(image.filename)
 
-                                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
 
-                                print("Image saved")
+                print("Image saved")
 
-                                return redirect(request.url)
+                return redirect(request.url)
 
-                        else:
-                                print("That file extension is not allowed")
-                                return redirect(request.url)
+            else:
+                print("That file extension is not allowed")
+                return redirect(request.url)
 
-        return render_template("upload.html")
+    return render_template("upload.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
 
 
-
-    
 #    def __repr__(self):
 #        return '<Article %r>' % self.id
 
@@ -353,4 +354,3 @@ if __name__ == "__main__":
 #            return "При добавлении статьи произошла ошибка"
 #    else:
 #        return render_template("create-article.html")
-

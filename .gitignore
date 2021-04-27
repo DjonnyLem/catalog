@@ -5,7 +5,7 @@
 /venv
 /SQLiteStudio
 /.idea
-
+/.vscode
 
 
 # Основной синтаксис:
