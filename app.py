@@ -4,6 +4,7 @@ from datetime import datetime
 from menu import menu
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename  # к обработке фото
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
@@ -63,6 +64,72 @@ def index():
     return render_template("base1.html", menu=menu)
 
 
+##########################################################################################################
+app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/catalog/static/img/uploads"
+# app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/test/app/static/img/uploads"
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
+app.config["MAX_IMAGE_FILESIZE"] = 4 * 1024 * 1024
+
+
+def allowed_image(filename):
+
+    if not "." in filename:
+        return False
+
+    ext = filename.rsplit(".", 1)[1]
+
+    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
+
+def allowed_image_filesize(filesize):
+
+    if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
+        return True
+    else:
+        return False
+
+
+def upload(n):
+
+    if request.files:
+        if "filesize" in request.cookies:
+            if not allowed_image_filesize(request.cookies["filesize"]):
+                print("Filesize exceeded maximum limit")
+                return redirect(request.url)
+#####################################################################
+        image = n
+        # print(image.filename)
+        # d = Catalog.query.order_by(Catalog.id.desc()).first()
+        # ext = image.filename.rsplit(".", 1)
+        # print('file'+str(d.id+1)+'.'+ext[1])
+        # fl = ('file_'+str(d.id+1)+'.'+ext[1]).lower()
+        # new_name=os.rename(image.filename, fl)
+######################################################################
+        if image.filename == "":
+            print("No filename")
+            return redirect(request.url)
+        if allowed_image(image.filename):
+            filename = secure_filename(image.filename)
+            d = Catalog.query.order_by(Catalog.id.desc()).first()########
+            ext = filename.rsplit(".", 1)###########
+            fl = ('file_'+str(d.id+1)+'.'+ext[1]).lower()##############
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], fl))
+            print("Image saved")
+            return "static/img/uploads"+fl
+        else:
+            print("That file extension is not allowed")
+            return redirect(request.url)
+
+    # print (d.id)
+
+   
+
+
+
+##########################################################################################################
 @app.route('/add', methods=['POST', 'GET'])
 def add():
     e = request.form
@@ -72,18 +139,24 @@ def add():
     for i in e:
         print(i)
     if request.method == "POST":
-
+        # обработчик фото
         if request.form["indetify"] == "form1":
-
+            d = Catalog.query.order_by(Catalog.id.desc()).first()    
             defect_name = (request.form['defect_name1']).upper()
             operation_name = (request.form['operation_name1']).upper()
             defect_type = (request.form['defect_type'])
             article_number = (request.form['article_number'])
             article_name = (request.form['article_name']).upper()
-            note = (request.form['note']).upper()
+            note = request.files['image']  #????????????????request.form
+            ff = request.form
+            fl = request.files
+            fg = request.cookies
             print(defect_name, operation_name, defect_type,
-                  article_number, article_name)
-
+                  article_number, article_name, note, d.id)
+            print ('new=   ',ff)
+            print ('now=   ',fl)
+            print ('nrw=   ',fg)
+            
             q = Catalog(defect=defect_name,
                         operation=operation_name,
                         sort=defect_type,
@@ -140,7 +213,7 @@ def add():
 def show():
     req = request.form.get("flexRadioDefault")
     defects = Defect.query.all()
-    #d = Catalog.query.order_by(Catalog.operation).all()
+    # d = Catalog.query.order_by(Catalog.operation).all()
     c = Catalog.query.all()
     f = Catalog.query.order_by(Catalog.name).all()
     s = Catalog.query.filter_by(defect='ПЕРЕКОС').all()
@@ -151,7 +224,7 @@ def show():
     # print(f)
     # print(req)
     # for i in req:
-    #print (i)
+    # print (i)
     if req == "a":
         d = Catalog.query.order_by(Catalog.defect).all()
     elif req == "b":
@@ -198,10 +271,10 @@ def defect():
 
     return render_template("defect.html")
 
-from werkzeug.utils import secure_filename
+
 
 app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/catalog/static/img/uploads"
-#app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/test/app/static/img/uploads"
+# app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/test/app/static/img/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config["MAX_IMAGE_FILESIZE"] = 4 * 1024 * 1024
 
@@ -232,6 +305,8 @@ def upload():
 
     if request.method == "POST":
 
+        print (request.files)
+
         if request.files:
 
             if "filesize" in request.cookies:
@@ -239,9 +314,14 @@ def upload():
                 if not allowed_image_filesize(request.cookies["filesize"]):
                     print("Filesize exceeded maximum limit")
                     return redirect(request.url)
-
+####################################################################
             image = request.files["image"]
-
+            print(image.filename)
+            d = Catalog.query.order_by(Catalog.id.desc()).first()
+            ext = image.filename.rsplit(".", 1)
+            print('file'+str(d.id+1)+'.'+ext[1])
+            fl=('file_'+str(d.id+1)+'.'+ext[1]).lower()
+#####################################################################            
             if image.filename == "":
                 print("No filename")
                 return redirect(request.url)
@@ -249,7 +329,7 @@ def upload():
             if allowed_image(image.filename):
                 filename = secure_filename(image.filename)
 
-                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+                image.save(os.path.join(app.config["IMAGE_UPLOADS"], fl))
 
                 print("Image saved")
 
@@ -258,6 +338,9 @@ def upload():
             else:
                 print("That file extension is not allowed")
                 return redirect(request.url)
+
+
+
 
     return render_template("upload.html")
 
@@ -275,7 +358,7 @@ if __name__ == "__main__":
 #    operation = db.Column(db.Text, nullable=False)
 #    article = db.Column(db.Text, nullable=False)
 #    name =  db.Column(db.Text, nullable=False)
-    #sort = db.Column(db.Integer, nullable=True)
+    # sort = db.Column(db.Integer, nullable=True)
     # picture =
 #    note1 = db.Column(db.String(300), nullable=False)
 #    note2 = db.Column(db.String(300), nullable=False)
