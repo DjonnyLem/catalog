@@ -1,0 +1,65 @@
+{% extends 'example_base1.html' %}
+
+
+{% block title %}
+Add
+{% endblock %}
+
+
+{% block body %}
+
+
+<!------------------------------------------------------------------------------->
+<div class="container">
+    <div class="row" style="background-color: #f1f1f1; border:1px solid red; ">
+        <div class="col-md-9">
+            <div class="form-group">
+                <h3>Введите данные</h3>
+
+                <form method="post" id="DjonnyLem" enctype="multipart/form-data">
+                    <input type="hidden" name="indetify" value='form1'>
+
+
+
+
+                    <label>Выберите номер изделия: </label>
+                    <input type="text" name="defect" id="defect" class="form-control"
+                        placeholder="Выберите номер изделия"><br>
+
+  
+
+                    
+                        <label>Select image...</label>
+                        <input type="file" class="form-control" name="image" id="image"><!-- oninput="filesize(this);"> -->
+                        <br>
+
+
+
+  
+                    <input type="submit" class="btn btn-primary" value="Отправить">
+                   
+                </form>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+
+    function filesize(elem) {
+
+        document.cookie = `filesize=${elem.files[0].size}`;
+    }
+
+</script>
+{% endblock %}

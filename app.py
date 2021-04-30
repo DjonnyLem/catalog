@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from menu import menu
 import os
-from werkzeug.utils import secure_filename
 from werkzeug.utils import secure_filename  # к обработке фото
 
 app = Flask(__name__)
