@@ -250,6 +250,17 @@ def show_defect_detail(id):
 
     return render_template("defect_detail.html", defect_detail=defect_detail)
 
+@app.route('/show_defect/<int:id>/del')
+def defect_delete(id):
+    defect = Catalog.query.get_or_404(id)
+    try:
+        db.session.delete(defect)
+        db.session.commit()
+        return redirect('/show_defect')
+    except:
+        return "При удалении произошла ошибка"
+
+
 
 @app.route('/show_operation')
 def show_operation():
