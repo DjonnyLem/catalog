@@ -28,31 +28,35 @@ def index():
 
 @app.route('/example_add', methods=['POST', 'GET'])
 def add():
-    e = request.form
-    for i in e:
-        print(i)
+    el = request.form
+    for i in el:
+        print('i=', i)
     if request.method == "POST":
         
         if request.form["indetify"] == "form1":
-            d = Example.query.order_by(Example.id.desc()).first()    
+            past_str = Defect.query.order_by(Defect.id.desc()).first()    
             defect = (request.form['defect']).upper()
             image = request.files['image']  
             ff = request.form
             fl = request.files['image']
+            filename = secure_filename(image.filename)
+            e=fl.filename.rsplit('.',1)
+            s="="*10
+            print('eee=',e)
             print(defect, image)
             print ('new=   ',ff)
             print ('now=   ',fl.filename)
-
+            print ('id=   ',past_str.id)
             print ("="*10)
-            q = Defect(defect_name=defect, image="233")
+            print('size=',s)
+            path= 'static/img/uploads/'
+            fl_name=path+"file_"+str(past_str.id+1)+"."+e[1]
+            q = Defect(defect_name=defect, image=fl_name)
             print(q.image)            
 #            return render_template("example_add.html")
-            
-            
-
-
-
+                   
             try:
+                
                 db.session.add(q)
                 #db.session.add(defect)
                 #db.session.add(image)
