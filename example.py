@@ -29,47 +29,62 @@ def index():
 @app.route('/example_add', methods=['POST', 'GET'])
 def add():
     el = request.form
-    for i in el:
-        print('i=', i)
+    # for i in el:
+        # print('i=', i)
     if request.method == "POST":
         
-        if request.form["indetify"] == "form1":
-            past_str = Defect.query.order_by(Defect.id.desc()).first()    
-            defect = (request.form['defect']).upper()
-            image = request.files['image']  
+        if request.form["indetify"] == "form1":                 
+            past_str = Defect.query.order_by(Defect.id.desc()).first()    #берем из БД последнюю запись, сортированную по убыванию по id
+            defect = (request.form['defect']).upper()       #запись с поля name= 'defect'
+            image = request.files['image']          #файл из поля name= 'image'
             ff = request.form
             fl = request.files['image']
             filename = secure_filename(image.filename)
             e=fl.filename.rsplit('.',1)
-            s="="*10
-            print('eee=',e)
-            print(defect, image)
-            print ('new=   ',ff)
-            print ('now=   ',fl.filename)
-            print ('id=   ',past_str.id)
-            print ("="*10)
-            print('size=',s)
-            path= 'static/img/uploads/'
-            fl_name=path+"file_"+str(past_str.id+1)+"."+e[1]
+            # s="="*10
+            # print('eee=',e)
+            # print(defect, image)
+            # print ('new=   ',ff)
+            # print ('now=   ',fl.filename)
+            # print ('id=   ',past_str.id)
+            # print ("="*10)
+            # print('size=',s)
+            path1 = os.getcwd()
+            path2= 'static/img/uploads/'
+
+            fl_name=path2+"file_"+str(past_str.id+1)+"."+e[1]
+            image.save(os.path.join(path1, fl_name))
+            print (os.path.join(path1, fl_name))
             q = Defect(defect_name=defect, image=fl_name)
             print(q.image)            
 #            return render_template("example_add.html")
+
                    
             try:
                 
                 db.session.add(q)
                 #db.session.add(defect)
                 #db.session.add(image)
-                db.session.commit()
+                # db.session.commit()
+                b = Defect.query.order_by(Defect.id.desc()).first() 
+                ss = str(b.id)
+                
+                sss = b.image.rsplit('/',1)[1].split('.')[0].split('_')[1]
+                print (past_str.id, '->', ss)
+                if ss==sss:
+                    print ('OK')
+                    db.session.commit()
                 return redirect('/example_add')
+
             except:
                 return "При добавлении произошла ошибка"
 
  
     else:
+        
         return render_template("example_add.html")
 
-
+# Функция os.path.exists () принимает аргумент строкового типа, который может быть либо именем каталога, либо файлом.
 
 if __name__ == "__main__":
     app.run(debug=True)
