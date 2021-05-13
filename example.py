@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from menu import menu
 import os
+from flask import flash
 from werkzeug.utils import secure_filename  # к обработке фото
 
 app = Flask(__name__)
@@ -35,6 +36,12 @@ def add():
         
         if request.form["indetify"] == "form1":                 
             past_str = Defect.query.order_by(Defect.id.desc()).first()    #берем из БД последнюю запись, сортированную по убыванию по id
+            print ('!!!!',past_str)
+            if past_str == None:
+                id_name=0
+            else:
+                id_name=past_str.id
+            print ('id_name=',id_name)       
             defect = (request.form['defect']).upper()       #запись с поля name= 'defect'
             image = request.files['image']          #файл из поля name= 'image'
             ff = request.form
@@ -52,8 +59,8 @@ def add():
             path1 = os.getcwd()
             path2= 'static/img/uploads/'
 
-            fl_name=path2+"file_"+str(past_str.id+1)+"."+e[1]
-            image.save(os.path.join(path1, fl_name))
+            fl_name=path2+"file_"+str(id_name+1)+"."+e[1]
+            #image.save(os.path.join(path1, fl_name))
             print (os.path.join(path1, fl_name))
             q = Defect(defect_name=defect, image=fl_name)
             print(q.image)            
@@ -65,15 +72,19 @@ def add():
                 db.session.add(q)
                 #db.session.add(defect)
                 #db.session.add(image)
-                # db.session.commit()
-                b = Defect.query.order_by(Defect.id.desc()).first() 
-                ss = str(b.id)
+                db.session.commit()
                 
-                sss = b.image.rsplit('/',1)[1].split('.')[0].split('_')[1]
-                print (past_str.id, '->', ss)
-                if ss==sss:
-                    print ('OK')
-                    db.session.commit()
+                image.save(os.path.join(path1, fl_name))
+                #flash ('Пароль должен содержать не менее 10 символов')
+                #print('Пароль должен содержать не менее 10 символов')
+                #b = Defect.query.order_by(Defect.id.desc()).first() 
+                #ss = str(b.id)
+                
+                #sss = b.image.rsplit('/',1)[1].split('.')[0].split('_')[1]
+                #print (past_str.id, '->', ss)
+                #if ss==sss:
+                    #print ('OK')
+                    #db.session.commit()
                 return redirect('/example_add')
 
             except:
