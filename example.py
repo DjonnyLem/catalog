@@ -33,7 +33,13 @@ def add():
     # for i in el:
         # print('i=', i)
     if request.method == "POST":
+        if 'filesize' in request.cookies:
         
+            print ('O-OK')
+            print('filesize111 =',request.cookies["filesize"])
+        else:
+            print ('N-NOK')
+               
         if request.form["indetify"] == "form1":                 
             past_str = Defect.query.order_by(Defect.id.desc()).first()    #берем из БД последнюю запись, сортированную по убыванию по id
             print ('!!!!',past_str)
