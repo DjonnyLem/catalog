@@ -40,61 +40,58 @@ def add():
         else:
             print ('N-NOK')
                
-        if request.form["indetify"] == "form1":                 
-            past_str = Defect.query.order_by(Defect.id.desc()).first()    #берем из БД последнюю запись, сортированную по убыванию по id
-            print ('!!!!',past_str)
-            if past_str == None:
-                id_name=0
-            else:
-                id_name=past_str.id
-            print ('id_name=',id_name)       
-            defect = (request.form['defect']).upper()       #запись с поля name= 'defect'
-            image = request.files['image']          #файл из поля name= 'image'
-            ff = request.form
-            fl = request.files['image']
-            filename = secure_filename(image.filename)
-            e=fl.filename.rsplit('.',1)
-            # s="="*10
-            # print('eee=',e)
-            # print(defect, image)
-            # print ('new=   ',ff)
-            # print ('now=   ',fl.filename)
-            # print ('id=   ',past_str.id)
-            # print ("="*10)
-            # print('size=',s)
-            path1 = os.getcwd()
-            path2= 'static/img/uploads/'
+        #if request.form["indetify"] == "form1":                 
+        past_str = Defect.query.order_by(Defect.id.desc()).first()    #берем из БД последнюю запись, сортированную по убыванию по id
+        print ('!!!!',past_str)
+        if past_str == None:
+            id_name=0
+        else:
+            id_name=past_str.id
+        print ('id_name=',id_name)       
+        defect = (request.form['defect']).upper()       #запись с поля name= 'defect'
+        image = request.files['image']          #файл из поля name= 'image'
+        ff = request.form
+        fl = request.files['image']
+        filename = secure_filename(image.filename)
+        e=fl.filename.rsplit('.',1)
+        # s="="*10
+        #print('eee=',e)
+        # print(defect, image)
+        #print ('new=   ',ff)
+        #print ('now=   ',fl.filename)
+        # print ('id=   ',past_str.id)
+        # print ("="*10)
+        # print('size=',s)
+        path1 = os.getcwd()
+        path2= 'static/img/uploads/'
 
-            fl_name=path2+"file_"+str(id_name+1)+"."+e[1]
-            #image.save(os.path.join(path1, fl_name))
-            print (os.path.join(path1, fl_name))
-            q = Defect(defect_name=defect, image=fl_name)
-            print(q.image)            
-#            return render_template("example_add.html")
+        fl_name=path2+"file_"+str(id_name+1)+"."+e[1]
+        print (os.path.join(path1, fl_name))
+        q = Defect(defect_name=defect, image=fl_name)
+        print(q.image)            
+#           return render_template("example_add.html")
 
                    
-            try:
+        try:
                 
-                db.session.add(q)
-                #db.session.add(defect)
-                #db.session.add(image)
-                db.session.commit()
+            db.session.add(q)
+            db.session.commit()
                 
-                image.save(os.path.join(path1, fl_name))
-                #flash ('Пароль должен содержать не менее 10 символов')
-                #print('Пароль должен содержать не менее 10 символов')
-                #b = Defect.query.order_by(Defect.id.desc()).first() 
-                #ss = str(b.id)
+            image.save(os.path.join(path1, fl_name))
+            #flash ('Пароль должен содержать не менее 10 символов')
+            #print('Пароль должен содержать не менее 10 символов')
+            #b = Defect.query.order_by(Defect.id.desc()).first() 
+            #ss = str(b.id)
                 
-                #sss = b.image.rsplit('/',1)[1].split('.')[0].split('_')[1]
-                #print (past_str.id, '->', ss)
-                #if ss==sss:
-                    #print ('OK')
-                    #db.session.commit()
-                return redirect('/example_add')
+            #sss = b.image.rsplit('/',1)[1].split('.')[0].split('_')[1]
+            #print (past_str.id, '->', ss)
+            #if ss==sss:
+                #print ('OK')
+                #db.session.commit()
+            return redirect('/example_add')
 
-            except:
-                return "При добавлении произошла ошибка"
+        except:
+            return "При добавлении произошла ошибка"
 
  
     else:
@@ -102,6 +99,19 @@ def add():
         return render_template("example_add.html")
 
 # Функция os.path.exists () принимает аргумент строкового типа, который может быть либо именем каталога, либо файлом.
+
+#>>> import os
+#>>> b = os.path.getsize("/path/isa_005.mp3")
+#>>> b
+#2071611L
+
+#>>> import os
+#>>> statinfo = os.stat('somefile.txt')
+#>>> statinfo
+#(33188, 422511L, 769L, 1, 1032, 100, 926L, 1105022698,1105022732, 1105022732)
+#>>> statinfo.st_size
+#926L
+
 
 if __name__ == "__main__":
     app.run(debug=True)

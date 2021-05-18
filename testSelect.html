@@ -24,7 +24,7 @@
 
                 <h1>Test Select</h1>
                 <hr>
-
+				<h3 id ="message"></h3>
                 <div class="mb-3">
                     <div class="form-group">
                         <label>Select</label>
@@ -160,7 +160,12 @@ for (let radio of rad) {
             //console.log(z.options[z.selectedIndex].text)
         }
     </script>
+<script>
+//вывод текста
+let message = "Текст выведен с помощью JavaScript";
+document.getElementById("message").innerHTML=message;
 
+</script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
