@@ -5,6 +5,7 @@ from menu import menu
 import os
 from werkzeug.utils import secure_filename  # к обработке фото
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -26,7 +27,7 @@ class Catalog(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<User %r, %r, %r, %r, %r, %r, %r>" % (self.defect, self.operation,
+        return "<Catalog %r, %r, %r, %r, %r, %r, %r>" % (self.defect, self.operation,
                                                       self.article, self.name, self.sort,
                                                       self.note,  self.date)
 
@@ -43,6 +44,13 @@ class Operation(db.Model):
 
     def __repr__(self):
         return '<operation_name %r>' % self.operation_name
+
+class Product (db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    article_number = db.Column(db.String(50), nullable=False, primary_key=True)
+    article_name = db.Column(db.String(50), nullable=False, primary_key=True)
+    def __repr__(self):
+        return "<Product %r, %rr>" % (self.article_number, self.article_name)
 
 #    def __repr__(self):
 #        return "<User(%r, %r)>" % (
@@ -146,12 +154,12 @@ def add():
             defect_type = (request.form['defect_type'])
             article_number = (request.form['article_number'])
             article_name = (request.form['article_name']).upper()
-            note = request.files['image']  #????????????????request.form
+            #note = request.files['image']  #????????????????request.form
             ff = request.form
             fl = request.files
             fg = request.cookies
             print(defect_name, operation_name, defect_type,
-                  article_number, article_name, note, d.id)
+                  article_number, article_name,  d.id)
             print ('new=   ',ff)
             print ('now=   ',fl)
             print ('nrw=   ',fg)
@@ -161,25 +169,18 @@ def add():
                         sort=defect_type,
                         article=article_number,
                         name=article_name,
-                        note=note)
-
-#            defect = Catalog(defect=defect_name)
-#            operation = Catalog(operation=operation_name)
-#            sort = Catalog(sort=defect_type)
-#            article = Catalog(article=article_number)
-#            name = Catalog(name=article_name)
-#            note = Catalog(note1=note)
+                        #note=note)
+                        )
+            print ('q=   ',q)
 
             try:
                 db.session.add(q)
- #               db.session.add(operation)
- #               db.session.add(sort)
-#                db.session.add(article)
- #               db.session.add(name)
+                d = Catalog.query.order_by(Catalog.id.desc()).first()
+                print (d.id)
                 db.session.commit()
                 return redirect('/add')
             except:
-                return "При добавлении статьи произошла ошибка"
+                return "При добавлении произошла ошибка"
 
         if request.form["indetify"] == "form2":
             defect_name = (request.form['defect_name']).upper()
@@ -191,7 +192,7 @@ def add():
                 print("form2- передача в базу осуществлена")
                 return redirect('/add')
             except:
-                return "При добавлении статьи произошла ошибка"
+                return "При добавлении произошла ошибка"
 
         if request.form["indetify"] == "form3":
             operation_name = (request.form['operation_name']).upper()
@@ -202,7 +203,23 @@ def add():
                 db.session.commit()
                 return redirect('/add')
             except:
-                return "При добавлении статьи произошла ошибка"
+                return "При добавлении произошла ошибка"
+
+    
+
+        if request.form["indetify"] == "form4":
+            article_number = (request.form['article_number']).upper()
+            article_name = (request.form['article_name']).upper()
+            product_name =article_name+', '+article_number
+            print (product_name)
+            product = Product(article_number=article_number,article_name=article_name)
+            
+            try:
+                db.session.add(product)
+                db.session.commit()
+                return redirect('/add')
+            except:
+                return "При добавлении произошла ошибка"
 
     else:
         return render_template("add.html", operation=operation, defect=defect)
@@ -255,6 +272,7 @@ def defect_delete(id):
     defect = Catalog.query.get_or_404(id)
     try:
         db.session.delete(defect)
+        
         db.session.commit()
         return redirect('/show_defect')
     except:
