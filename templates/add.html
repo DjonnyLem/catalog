@@ -21,17 +21,30 @@ Add
 
 
                     <label>Выберите наименование дефекта: </label>
-                    <select class="form-control" id="form-select1" name="defect_name1" required="required" onChange="getValue();"><br>
+                    <select class="form-control" id="form-select" name="defect_name" required="required"
+                        onChange="getValue();"><br>
                         <option value="">Выберите значение</option>
                         {% for i in defect %}
                         <option>{{ i.defect_name }}</option>
                         {% endfor %}
-						<option value="add" style="background:green;">Добавить дефект</option>
+                        <option value="add_defect" style="background:green;">Добавить дефект</option>
                     </select><br>
 
-                    <label>Выберите наименование операции: </label>
-                    <input type="text" name="operation_name1" id="operation_name1" class="form-control"
-                        placeholder="Выберите наименование операции"><br>
+
+                    <label>Выберите наименование операции:</label>
+                    <select class="form-control" id="form-select" name="operation_name" required="required"
+                        onChange="getValue();"><br>
+                        <option value="">Выберите наименование операции</option>
+                        {% for i in operation %}
+                        <option>{{ i.operation_name }}</option>
+                        {% endfor %}
+                        <option value="add_operation" style="background:green;">Добавить операцию</option>
+                    </select><br>
+
+
+                    <!-- <label>Выберите наименование операции: </label> -->
+                    <!-- <input type="text" name="operation_name1" id="operation_name1" class="form-control" -->
+                    <!-- placeholder="Выберите наименование операции"><br> -->
 
                     <label>Выберите допустимость дефекта: </label>
                     <select class="form-control" name="defect_type" required="required"><br>
@@ -41,14 +54,24 @@ Add
                         <option value="0" style="color: red;">Дефект не допустим</option>
                     </select><br>
 
+                    <label>Выберите изделие:</label>
+                    <select class="form-control" id="form-select" name="product_name" required="required"
+                        onChange="getValue();"><br>
+                        <option value="">Выберите изделие</option>
+                        {% for i in product %}
+                        <option>{{ i.product_name }}</option>
+                        {% endfor %}
+                        <option value="add_product" style="background:green;">Добавить изделие</option>
+                    </select><br>
 
-                    <label>Выберите номер изделия: </label>
-                    <input type="text" name="article_number" id="article_number" class="form-control"
-                        placeholder="Выберите номер изделия"><br>
 
-                    <label>Выберите наименование изделия: </label>
-                    <input type="text" name="article_name" id="article_name" class="form-control"
-                        placeholder="Выберите наименование изделия"><br>
+                    <!-- <label>Выберите номер изделия: </label> -->
+                    <!-- <input type="text" name="article_number" id="article_number" class="form-control" -->
+                    <!-- placeholder="Выберите номер изделия"><br> -->
+
+                    <!-- <label>Выберите наименование изделия: </label> -->
+                    <!-- <input type="text" name="article_name" id="article_name" class="form-control" -->
+                    <!-- placeholder="Выберите наименование изделия"><br> -->
 
                     <label>Прикрепите фото дефекта: </label>
                     <input type="text" name="defect_picture" id="defect_picture" class="form-control"
@@ -120,10 +143,10 @@ Add
                 <form method="post" id="3">
                     <input type="hidden" name="indetify" value='form3'>
                     <label>Введите наименование операции: </label>
-					<input type="text" name="operation_name" id="operation_name" class="form-control"
+                    <input type="text" name="operation_name" id="operation_name" class="form-control"
                         placeholder="Введите наименование операции"><br>
 
-     
+
 
                     <input type="submit" class="btn btn-primary" value="Отправить">
 
@@ -148,31 +171,37 @@ Add
         <div class="col-md-9">
             <div class="form-group">
                 <h2 id="2">Введите информацию по изделию</h2>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
 
-<span>{{ message }}</span>
- {% endfor %}
-            {% endif %}
-            {% endwith %}
+
+
+
+
+
+
+
 
                 <form method="post" id="4">
                     <input type="hidden" name="indetify" value='form4'>
                     <label>Введите номер изделия: </label>
-					<input type="text" name="article_number" id="article_number" class="form-control"
+                    <input type="text" name="article_number" id="article_number" class="form-control"
                         placeholder="Введите номер изделия"><br>
 
-       		 <label>Введите наименование изделия: </label>
-			<input type="text" name="article_name" id="article_name"
-            class="form-control" placeholder="Введите наименование изделия"><br>
+                    <label>Введите наименование изделия: </label>
+                    <input type="text" name="article_name" id="article_name" class="form-control"
+                        placeholder="Введите наименование изделия"><br>
 
 
                     <input type="submit" class="btn btn-primary" value="Отправить">
 
                 </form>
 
-
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
 
 
             </div>
@@ -188,29 +217,33 @@ Add
 
 
 <script>
-        function getValue() {
-			let next = "#2"
-            let a = document.getElementById("form-select1");
-            //let b = a.value;
-            /*   if (a.selectedIndex != -1) {
-                   //Если есть выбранный элемент, отобразить его значение (свойство value)
-                   console.log(a.options[a.selectedIndex].text);
-               }*/
+    function getValue() {
+        let next = "#2"
+        let a = document.getElementById("form-select1");
+        //let b = a.value;
+        /*   if (a.selectedIndex != -1) {
+               //Если есть выбранный элемент, отобразить его значение (свойство value)
+               console.log(a.options[a.selectedIndex].text);
+           }*/
 
-            if (a.options[a.selectedIndex].value == "add") {
-                document.location.href = "#2"//"#top"
-            }
+        if (a.options[a.selectedIndex].value == "add_defect") {
+            document.location.href = "#2"//"#top"
+        } else if (a.options[a.selectedIndex].value == "add_operation") {
+            document.location.href = "#3"
+        } else if (a.options[a.selectedIndex].value == "add_product") {
+            document.location.href = "#4"
         }
+    }
 
 </script>
 <script>
     function filesize() {
         let file = document.getElementById("image").files[0].size;
         console.log('fs=', file);
-       
+
         //let a = 'filesize'+'='+file;
 
-        document.cookie = 'filesize'+'='+file;
+        document.cookie = 'filesize' + '=' + file;
     }
 </script>
 {% endblock %}

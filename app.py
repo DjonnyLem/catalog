@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 
 
 class Catalog(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     defect = db.Column(db.Text, db.ForeignKey(
         'defect.defect_name'))  # ,, nullable=False)
     operation = db.Column(db.Text, db.ForeignKey(
@@ -46,11 +46,12 @@ class Operation(db.Model):
         return '<operation_name %r>' % self.operation_name
 
 class Product (db.Model):
-    id = db.Column('id', db.Integer, primary_key=True)
-    article_number = db.Column(db.String(50), nullable=False, primary_key=True)
-    article_name = db.Column(db.String(50), nullable=False, primary_key=True)
+    id = db.Column('id', db.Integer, primary_key=True, nullable=True, autoincrement=True)
+    article_number = db.Column(db.String(30))
+    article_name = db.Column(db.String(30))
+    product_name = db.Column(db.String(50))
     def __repr__(self):
-        return "<Product %r, %rr>" % (self.article_number, self.article_name)
+        return "<Product %r, %r, %r>" % (self.article_number, self.article_name, self.product_name)
 
 #    def __repr__(self):
 #        return "<User(%r, %r)>" % (
@@ -142,24 +143,26 @@ def add():
     e = request.form
     defect = Defect.query.all()
     operation = Operation.query.all()
-    catalog = Catalog.query.all()
+    # catalog = Catalog.query.all()
+    product = Product.query.all()
+    print (product)
     for i in e:
         print(i)
     if request.method == "POST":
         # обработчик фото
         if request.form["indetify"] == "form1":
             d = Catalog.query.order_by(Catalog.id.desc()).first()    
-            defect_name = (request.form['defect_name1']).upper()
-            operation_name = (request.form['operation_name1']).upper()
+            defect_name = (request.form['defect_name']).upper()
+            operation_name = (request.form['operation_name']).upper()
             defect_type = (request.form['defect_type'])
-            article_number = (request.form['article_number'])
-            article_name = (request.form['article_name']).upper()
+            # article_number = (request.form['article_number'])
+            product_name = (request.form['product_name']).upper()
             #note = request.files['image']  #????????????????request.form
             ff = request.form
             fl = request.files
             fg = request.cookies
             print(defect_name, operation_name, defect_type,
-                  article_number, article_name,  d.id)
+                  product_name,  d.id)
             print ('new=   ',ff)
             print ('now=   ',fl)
             print ('nrw=   ',fg)
@@ -167,8 +170,8 @@ def add():
             q = Catalog(defect=defect_name,
                         operation=operation_name,
                         sort=defect_type,
-                        article=article_number,
-                        name=article_name,
+                        # article=article_number,
+                        name=product_name,
                         #note=note)
                         )
             print ('q=   ',q)
@@ -212,7 +215,7 @@ def add():
             article_name = (request.form['article_name']).upper()
             product_name =article_name+', '+article_number
             print (product_name)
-            product = Product(article_number=article_number,article_name=article_name)
+            product = Product(article_number=article_number, article_name=article_name, product_name=product_name)
             
             try:
                 db.session.add(product)
@@ -223,7 +226,7 @@ def add():
                 return "При добавлении произошла ошибка"
 
     else:
-        return render_template("add.html", operation=operation, defect=defect)
+        return render_template("add.html", operation=operation, defect=defect, product=product)
 
 
 @app.route('/show', methods=['POST', 'GET'])
