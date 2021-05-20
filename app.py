@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename  # к обработке фото
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config["SECRET_KEY"] = "OB3Ux3QBsUxCdK0ROCQd_w"
 db = SQLAlchemy(app)
 
 
@@ -178,7 +178,7 @@ def add():
                 d = Catalog.query.order_by(Catalog.id.desc()).first()
                 print (d.id)
                 db.session.commit()
-                return redirect('/add')
+                return redirect('/add#1')
             except:
                 return "При добавлении произошла ошибка"
 
@@ -190,7 +190,7 @@ def add():
                 db.session.add(defect)
                 db.session.commit()
                 print("form2- передача в базу осуществлена")
-                return redirect('/add')
+                return redirect('/add#2')
             except:
                 return "При добавлении произошла ошибка"
 
@@ -201,7 +201,7 @@ def add():
             try:
                 db.session.add(operation)
                 db.session.commit()
-                return redirect('/add')
+                return redirect('/add#3')
             except:
                 return "При добавлении произошла ошибка"
 
@@ -217,7 +217,8 @@ def add():
             try:
                 db.session.add(product)
                 db.session.commit()
-                return redirect('/add')
+                flash ('Информация по изделию добавлена в базу данных', 'warning')
+                return redirect('/add#4')
             except:
                 return "При добавлении произошла ошибка"
 

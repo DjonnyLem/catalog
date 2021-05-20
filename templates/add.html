@@ -16,7 +16,7 @@ Add
             <div class="form-group">
                 <h2>Введите данные по дефекту</h2>
 
-                <form method="post" id="DjonnyLem" enctype="multipart/form-data">
+                <form method="post" id="1" enctype="multipart/form-data">
                     <input type="hidden" name="indetify" value='form1'>
 
 
@@ -83,9 +83,9 @@ Add
     <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
         <div class="col-md-9">
             <div class="form-group">
-                <h2 id="2">Введите наименование дефекта</h2>
+                <h2>Введите наименование дефекта</h2>
 
-                <form method="post" id="DjonnyLem">
+                <form method="post" id="2">
                     <input type="hidden" name="indetify" value='form2'>
                     <label>Введите наименование дефекта: </label>
                     <input type="text" name="defect_name" id="defect_name" class="form-control"
@@ -117,7 +117,7 @@ Add
             <div class="form-group">
                 <h2 id="2">Введите операцию</h2>
 
-                <form method="post" id="DjonnyLem">
+                <form method="post" id="3">
                     <input type="hidden" name="indetify" value='form3'>
                     <label>Введите наименование операции: </label>
 					<input type="text" name="operation_name" id="operation_name" class="form-control"
@@ -148,8 +148,16 @@ Add
         <div class="col-md-9">
             <div class="form-group">
                 <h2 id="2">Введите информацию по изделию</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
 
-                <form method="post" id="DjonnyLem">
+<span>{{ message }}</span>
+ {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+                <form method="post" id="4">
                     <input type="hidden" name="indetify" value='form4'>
                     <label>Введите номер изделия: </label>
 					<input type="text" name="article_number" id="article_number" class="form-control"
