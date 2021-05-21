@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash,session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from menu import menu
@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename  # к обработке фото
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["SECRET_KEY"] = "OB3Ux3QBsUxCdK0ROCQd_w"
+
 db = SQLAlchemy(app)
 
 
@@ -64,13 +64,68 @@ class Product (db.Model):
 #        self.temperature = temperature
 
 
+app.config["SECRET_KEY"] = "OB3Ux3QBsUxCdK0ROCQd_w"
+
+##########################################################################################################
+
 @app.route('/')
 @app.route('/home')
 def index():
+    print(session["USERNAME"])
     # return  """ <h2 style='color: red;'>Hi, Djonny!</h2> """
 
     return render_template("base1.html", menu=menu)
+##########################################################################################################
+user_data = {
+        "username": "otk",
+        "email": "julian@gmail.com",
+        "password": "115",
+        "bio": "Some guy from the internet"
+    
+}
 
+@app.route("/sign_in", methods=['POST', 'GET'])
+def sign_in():
+        if request.method == 'POST':
+                req = request.form
+                print (req)
+                username = req.get('username')
+                password = req.get('password')
+
+                if not username in user_data["username"]:
+                        print ("Username not found")
+                        print (user_data["username"])
+                        return redirect(request.url)
+                else:
+                        user = user_data["username"]
+
+                if not password == user_data['password']:
+                        print ('Incorrect password')
+                        return redirect(request.url)
+                else:
+                        session['USERNAME'] = user_data['username'] 
+                        session['PASSWORD'] = user_data['password']      
+                        print('Session username set')
+                        print(session)
+                        # return redirect(request.url)
+                        return redirect(url_for("user_profile"))
+
+        return render_template('/sign_in.html')    
+
+
+##########################################################################################################
+@app.route("/user_profile")
+def user_profile():
+
+        if not session.get("USERNAME") is None:
+                # 
+                username = session.get("USERNAME")
+                user = user_data["username"]
+                return render_template("/user_profile.html",user_data=user_data, user=user)
+        else:
+                print("No username found is session")
+                return redirect(url_for("sign_in"))
+        # return render_template("public/user_profile.html", user=user)
 
 ##########################################################################################################
 app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/catalog/static/img/uploads"

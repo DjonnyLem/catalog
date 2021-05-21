@@ -82,10 +82,23 @@
               <a class="nav-link" href="/upload">Загрузить</a>
             </li>
 
-{% for el in menu %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ el.url }}">{{ el.name }}</a>
+{% if session["USERNAME"] == "otk" -%}
+			<li class="nav-item">
+              <a class="nav-link " href="/user_profile">Профиль</a>
             </li>
+{%else -%}
+		<li class="nav-item">
+          <a class="nav-link disabled" href="/user_profile" tabindex="-1" aria-disabled="true">Профиль</a>
+        </li>
+{% endif -%}
+            <li class="nav-item">
+              <a class="nav-link" href="/sign_in">Админ</a>
+            </li>
+
+{% for el in menu %}
+   <!--         <li class="nav-item">  -->
+      <!--         <a class="nav-link" href="{{ el.url }}">{{ el.name }}</a> -->
+      <!--       </li> -->
 {% endfor %}
 
           </ul>
