@@ -37,7 +37,7 @@ Add
                 <form method="post" id="1" enctype="multipart/form-data">
 			 <label>Выберите наименование дефекта: </label>
                     <select class="form-control" id="defect_name" name="defect_name" required="required"
-                        onChange="getValue();"><br>
+                        onChange="getValue(this.id);"><br>
                         <option value="">Выберите значение</option>
                         {% for i in defect %}
                         <option>{{ i.defect_name }}</option>
@@ -48,7 +48,7 @@ Add
 
                     <label>Выберите наименование операции:</label>
                     <select class="form-control" id="operation_name" name="operation_name" required="required"
-                        onChange="getValue();"><br>
+                        onChange="getValue(this.id);"><br>
                         <option value="">Выберите наименование операции</option>
                         {% for i in operation %}
                         <option>{{ i.operation_name }}</option>
@@ -58,7 +58,7 @@ Add
 
 
                     <label>Выберите допустимость дефекта: </label>
-                    <select class="form-control" name="defect_type" required="required"><br>
+                    <select class="form-control" name="defect_type" id="defect_type" required="required"><br>
                         <option value="">Выберите допустимость дефекта</option>
 
                         <option value="1" style="color: green;">Дефект допустим</option>
@@ -67,7 +67,7 @@ Add
 
                     <label>Выберите изделие:</label>
                     <select class="form-control" id="product_name" name="product_name" required="required"
-                        onChange="getValue();"><br>
+                        onChange="getValue(this.id);"><br>
                         <option value="">Выберите изделие</option>
                         {% for i in product %}
                         <option>{{ i.product_name }}</option>
@@ -108,12 +108,49 @@ Add
 
 
 <script>
-function getValue() {
- let a = document.getElementById("defect_name");
+  let a = document.getElementById(this.id);
+console.log (a);
+    let d = document.getElementsByTagName('select');
+    console.log (d)
+	var ids = document.querySelectorAll('[id]');
+    console.log (ids)
+    Array.prototype.forEach.call( ids, function( el, i ) {
+        console.log( el.id ); // log the ID
+    });
+    function getValue(id) {
 
-//      if a.options[a.selectedIndex].value == "add_defect") {
- //          document.location.href="/add_defect"
-        } 
+ ////let a = document.getElementById("defect_name");
+//// console.log (a);
+ ////let val = a.options[a.selectedIndex].value;
+ // == "add_defect"){
+  //  document.location.href="/add_defect";;
+    //
+ let f =  document.getElementById(id).id;
+ let g =  document.getElementById(id).value;
+console.log(f,g);
+
+if (f == "defect_name" && g == "add_defect"){
+console.log("OEEE defect name");
+document.location.href="/add_defect";
+}
+else if (f == "operation_name" && g == "add_operation"){
+    console.log("OEEE operation name");
+    document.location.href="/add_operation";
+    }
+   else if (f == "product_name" && g == "add_product"){
+        console.log("OEEE product name");
+        document.location.href = "/add_product";
+        }
+ //}
+////console.log(val);
+////if (val == "add_defect"){
+  ////  console.log("ok");
+  ////  document.location.href="/add_defect"
+////}
+
+   //   if a.options[a.selectedIndex].value == "add_defect") {
+     //     document.location.href="/add_defect"
+     //   } 
 //		else if b.options[a.selectedIndex].value == "add_operation") {
   //          document.location.href = "/add_operation"
 //        } 
