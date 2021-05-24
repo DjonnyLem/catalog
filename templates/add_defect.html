@@ -1,0 +1,81 @@
+{% extends 'base1.html' %}
+
+
+{% block title %}
+Add
+{% endblock %}
+
+
+{% block body %}
+
+
+<!------------------------------------------------------------------------------->
+<div class="container-fluid-mt-5 px-4">
+ <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+        <div class="col-md-9">
+            <div class="form-group">
+                <h2>Введите наименование дефекта</h2>
+               {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <form method="post" id="2">
+                    <label>Введите наименование дефекта: </label>
+                    <input type="text" name="defect_name" id="defect_name" class="form-control"
+                        placeholder="Введите наименование дефекта"><br>
+
+
+                    <input type="submit" class="btn btn-primary" value="Отправить">
+
+                </form>
+
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+<!------------------------------------------------------------------------------->
+
+
+<script>
+    function getValue() {
+        let next = "#2"
+        let a = document.getElementById("form-select1");
+        //let b = a.value;
+        /*   if (a.selectedIndex != -1) {
+               //Если есть выбранный элемент, отобразить его значение (свойство value)
+               console.log(a.options[a.selectedIndex].text);
+           }*/
+
+        if (a.options[a.selectedIndex].value == "add_defect") {
+            document.location.href = "#2"//"#top"
+        } else if (a.options[a.selectedIndex].value == "add_operation") {
+            document.location.href = "#3"
+        } else if (a.options[a.selectedIndex].value == "add_product") {
+            document.location.href = "#4"
+        }
+    }
+
+</script>
+<script>
+    function filesize() {
+        let file = document.getElementById("image").files[0].size;
+        console.log('fs=', file);
+
+        //let a = 'filesize'+'='+file;
+
+        document.cookie = 'filesize' + '=' + file;
+    }
+</script>
+{% endblock %}

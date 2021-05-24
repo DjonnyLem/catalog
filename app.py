@@ -71,7 +71,7 @@ app.config["SECRET_KEY"] = "OB3Ux3QBsUxCdK0ROCQd_w"
 @app.route('/')
 @app.route('/home')
 def index():
-    print(session["USERNAME"])
+    # print(session["USERNAME"])
     # return  """ <h2 style='color: red;'>Hi, Djonny!</h2> """
 
     return render_template("base1.html", menu=menu)
@@ -283,6 +283,122 @@ def add():
     else:
         return render_template("add.html", operation=operation, defect=defect, product=product)
 
+####################################################################
+@app.route('/add_catalog', methods=['POST', 'GET'])
+def add_catalog():
+    defect = Defect.query.all()
+    operation = Operation.query.all()
+    product = Product.query.all()
+
+    if request.method == "POST":
+        # обработчик фото
+        d = Catalog.query.order_by(Catalog.id.desc()).first()    
+        defect_name = (request.form['defect_name']).upper()
+        operation_name = (request.form['operation_name']).upper()
+        defect_type = (request.form['defect_type'])
+        # article_number = (request.form['article_number'])
+        product_name = (request.form['product_name']).upper()
+        #note = request.files['image']  #????????????????request.form
+        ff = request.form
+        fl = request.files
+        fg = request.cookies
+        print(defect_name, operation_name, defect_type,
+                  product_name,  d.id)
+        print ('new=   ',ff)
+        print ('now=   ',fl)
+        print ('nrw=   ',fg)
+            
+        q = Catalog(defect=defect_name,
+                    operation=operation_name,
+                    sort=defect_type,
+                    # article=article_number,
+                    name=product_name,
+                    #note=note)
+                        )
+        print ('q=   ',q)
+
+        try:
+            db.session.add(q)
+            d = Catalog.query.order_by(Catalog.id.desc()).first()
+            print (d.id)
+            db.session.commit()
+            return redirect('/add_catalog')
+        except:
+            return "При добавлении произошла ошибка"
+
+
+    else:
+        return render_template("add_catalog.html", operation=operation, defect=defect, product=product)
+
+####################################################################    
+@app.route('/add_defect', methods=['POST', 'GET'])
+def add_defect():
+    defect = Defect.query.all()
+    if request.method == "POST":
+        defect_name = (request.form['defect_name']).upper()
+        defect = Defect(defect_name=defect_name)
+
+        try:
+            db.session.add(defect)
+            db.session.commit()
+            flash("Наименование дефекта добавлено в базу данных", 'warning')
+            return redirect('/add_defect')
+        except:
+            return "При добавлении произошла ошибка"
+
+
+    else:
+        return render_template("add_defect.html", defect=defect)   
+
+####################################################################
+@app.route('/add_operation', methods=['POST', 'GET'])
+def add_operation():
+    operation = Operation.query.all()
+
+    if request.method == "POST":
+        operation_name = (request.form['operation_name']).upper()
+        operation = Operation(operation_name=operation_name)
+
+        try:
+            db.session.add(operation)
+            db.session.commit()
+            return redirect('/add_operation')
+        except:
+            return "При добавлении произошла ошибка"
+
+ 
+    else:
+        return render_template("add_operation.html", operation=operation)
+
+####################################################################    
+@app.route('/add_product', methods=['POST', 'GET'])
+def add_product():
+    product = Product.query.all()
+
+    if request.method == "POST":
+        article_number = (request.form['article_number']).upper()
+        article_name = (request.form['article_name']).upper()
+        product_name =article_name+', '+article_number
+        product = Product(article_number=article_number, article_name=article_name, product_name=product_name)
+            
+        try:
+            
+            db.session.add(product)
+            db.session.commit()
+            flash ('Информация по изделию добавлена в базу данных', 'warning')
+            return redirect('/add_product')
+        except:
+            return "При добавлении произошла ошибка"
+
+    else:
+        return render_template("add_product.html", product=product)
+
+
+
+
+####################################################################
+
+
 
 @app.route('/show', methods=['POST', 'GET'])
 def show():
@@ -307,8 +423,6 @@ def show():
     else:
         d = Catalog.query.order_by(Catalog.id).all()
     return render_template("show.html", defects=defects, d=d, s=s)
-
-
 @app.route('/show_defect')
 def show_defect():
     sd = request.form.get('1234')
@@ -436,91 +550,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-#    def __repr__(self):
-#        return '<Article %r>' % self.id
-
-# class Article1(db.Model):
-#    id = db.Column(db.Integer, primary_key=True)
-#   defect = db.Column(db.Text, nullable=False)
-#    operation = db.Column(db.Text, nullable=False)
-#    article = db.Column(db.Text, nullable=False)
-#    name =  db.Column(db.Text, nullable=False)
-    # sort = db.Column(db.Integer, nullable=True)
-    # picture =
-#    note1 = db.Column(db.String(300), nullable=False)
-#    note2 = db.Column(db.String(300), nullable=False)
-#    date = db.Column(db.DateTime, default=datetime.utcnow)
-
-#    def __repr__(self):
-#        return '<Article1 %r>' % self.id
-
-# @app.route('/')
-# @app.route('/home')
-# def index():
-#    return render_template("index.html")
-
-
-# @app.route('/about')
-# def about():
-#    return render_template("about.html")
-
-
-# @app.route('/posts')
-# def posts():
-#    articles = Article.query.order_by(Article.date.desc()).all()
-#    return render_template("posts.html", articles=articles)
-
-
-# @app.route('/posts/<int:id>')
-# def post_detail(id):
-#    article = Article.query.get(id)
-#    return render_template("post-detail.html", article=article)
-
-
-# @app.route('/posts/<int:id>/del')
-# def post_delete(id):
-#    article = Article.query.get_or_404(id)
-
-#    try:
-#        db.session.delete(article)
-#        db.session.commit()
-#        return redirect('/posts')
-#    except:
-#        return "При удалении статьи произошла ошибка"
-
-
-# @app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
-# def post_update(id):
-#    article = Article.query.get(id)
-#    if request.method == "POST":
-#        article.title = request.form['title']
-#        article.intro = request.form['intro']
-#        article.text = request.form['text']
-
-#        try:
-#            db.session.commit()
-#            return redirect('/posts')
-#        except:
-#            return "При редактировании статьи произошла ошибка"
-#    else:
-#        return render_template("post_update.html", article=article)
-
-
-# @app.route('/create-article', methods=['POST', 'GET'])
-
-# def create_article():
-#    if request.method == "POST":
-#        title = request.form['title']
-#        intro = request.form['intro']
-#        text = request.form['text']
-#
-#        article = Article(title=title, intro=intro, text=text)
-
-#        try:
-#            db.session.add(article)
-#            db.session.commit()
-#            return redirect('/posts')
-#        except:
-#            return "При добавлении статьи произошла ошибка"
-#    else:
-#        return render_template("create-article.html")
