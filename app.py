@@ -20,15 +20,15 @@ class Catalog(db.Model):
     operation = db.Column(db.Text, db.ForeignKey(
         'operation.operation_name'), nullable=False)
     article = db.Column(db.Text)  # , nullable=False)
-    name = db.Column(db.Text)  # ,, nullable=False)
-    sort = db.Column(db.Integer)  # ,, nullable=False)
-    # picture =
+    product_name = db.Column(db.Text)  # ,, nullable=False)
+    defect_type = db.Column(db.Integer)  # ,, nullable=False)
+    picture =db.Column(db.Text)  # ,, nullable=False)
     note = db.Column(db.String(300))  # ,, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return "<Catalog %r, %r, %r, %r, %r, %r, %r>" % (self.defect, self.operation,
-                                                      self.article, self.name, self.sort,
+                                                      self.article, self.product_name, self.defect_type,
                                                       self.note,  self.date)
 
 
@@ -62,6 +62,7 @@ class Product (db.Model):
 #        self.site_code = site_code
 #        self.site_type = site_type
 #        self.temperature = temperature
+
 
 
 app.config["SECRET_KEY"] = "OB3Ux3QBsUxCdK0ROCQd_w"
@@ -128,13 +129,12 @@ def user_profile():
         # return render_template("public/user_profile.html", user=user)
 
 ##########################################################################################################
-app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/catalog/static/img/uploads"
-# app.config["IMAGE_UPLOADS"] = "/home/lem/PROJECTS/test/app/static/img/uploads"
+app.config["IMAGE_UPLOADS"] = "/static/img/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
-app.config["MAX_IMAGE_FILESIZE"] = 4 * 1024 * 1024
+app.config["MAX_IMAGE_FILESIZE"] = 2 * 1024 * 1024
 
 
-def allowed_image(filename):
+def allowed_image(filename): #проверяем имеет ли файл расширение и допустимо ли такое расширение
 
     if not "." in filename:
         return False
@@ -147,7 +147,7 @@ def allowed_image(filename):
         return False
 
 
-def allowed_image_filesize(filesize):
+def allowed_image_filesize(filesize): # Проверяем не превышает ли файл допустимый объем
 
     if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
         return True
@@ -224,9 +224,9 @@ def add():
             
             q = Catalog(defect=defect_name,
                         operation=operation_name,
-                        sort=defect_type,
+                        defect_type=defect_type,
                         # article=article_number,
-                        name=product_name,
+                        product_name=product_name,
                         #note=note)
                         )
             print ('q=   ',q)
@@ -284,6 +284,7 @@ def add():
         return render_template("add.html", operation=operation, defect=defect, product=product)
 
 ####################################################################
+    
 @app.route('/add_catalog', methods=['POST', 'GET'])
 def add_catalog():
     defect = Defect.query.all()
@@ -291,30 +292,30 @@ def add_catalog():
     product = Product.query.all()
 
     if request.method == "POST":
-        # обработчик фото
+        
         d = Catalog.query.order_by(Catalog.id.desc()).first()    
         defect_name = (request.form['defect_name']).upper()
         operation_name = (request.form['operation_name']).upper()
         defect_type = (request.form['defect_type'])
-        # article_number = (request.form['article_number'])
         product_name = (request.form['product_name']).upper()
-        #note = request.files['image']  #????????????????request.form
+        picture = request.files['image']  #????????????????request.form
+        note = (request.form['note']).upper()
         ff = request.form
         fl = request.files
         fg = request.cookies
         print(defect_name, operation_name, defect_type,
-                  product_name,  d.id)
+                  product_name,note,  d.id)
         print ('new=   ',ff)
         print ('now=   ',fl)
         print ('nrw=   ',fg)
             
         q = Catalog(defect=defect_name,
                     operation=operation_name,
-                    sort=defect_type,
+                    defect_type=defect_type,
                     # article=article_number,
-                    name=product_name,
-                    #note=note)
-                        )
+                    product_name=product_name,
+                    note=note)
+                        
         print ('q=   ',q)
 
         try:
@@ -406,7 +407,7 @@ def show():
     defects = Defect.query.all()
     # d = Catalog.query.order_by(Catalog.operation).all()
     c = Catalog.query.all()
-    f = Catalog.query.order_by(Catalog.name).all()
+    f = Catalog.query.order_by(Catalog.product_name).all()
     s = Catalog.query.filter_by(defect='ПЕРЕКОС').all()
     # print(defects)
     # print(type(d))
@@ -423,6 +424,8 @@ def show():
     else:
         d = Catalog.query.order_by(Catalog.id).all()
     return render_template("show.html", defects=defects, d=d, s=s)
+
+
 @app.route('/show_defect')
 def show_defect():
     sd = request.form.get('1234')

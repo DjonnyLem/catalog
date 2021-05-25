@@ -46,18 +46,7 @@ Add
                     </select><br>
 
 
-                    <label>Выберите наименование операции:</label>
-                    <select class="form-control" id="operation_name" name="operation_name" required="required"
-                        onChange="getValue(this.id);"><br>
-                        <option value="">Выберите наименование операции</option>
-                        {% for i in operation %}
-                        <option>{{ i.operation_name }}</option>
-                        {% endfor %}
-                        <option value="add_operation" style="background:green;">Добавить операцию</option>
-                    </select><br>
-
-
-                    <label>Выберите допустимость дефекта: </label>
+                 <label>Выберите допустимость дефекта: </label>
                     <select class="form-control" name="defect_type" id="defect_type" required="required"><br>
                         <option value="">Выберите допустимость дефекта</option>
 
@@ -65,7 +54,8 @@ Add
                         <option value="0" style="color: red;">Дефект не допустим</option>
                     </select><br>
 
-                    <label>Выберите изделие:</label>
+
+                   <label>Выберите изделие:</label>
                     <select class="form-control" id="product_name" name="product_name" required="required"
                         onChange="getValue(this.id);"><br>
                         <option value="">Выберите изделие</option>
@@ -76,11 +66,25 @@ Add
                     </select><br>
 
 
+
+                    <label>Выберите наименование операции:</label>
+                    <select class="form-control" id="operation_name" name="operation_name" required="required"
+                        onChange="getValue(this.id);"><br>
+                        <option value="">Выберите наименование операции</option>
+                        {% for i in operation %}
+                        <option>{{ i.operation_name }}</option>
+                        {% endfor %}
+                        <option value="add_operation" style="background:green;">Добавить операцию</option>
+                    </select><br>
+
+<!--
                     <label>Прикрепите фото дефекта: </label>
                     <input type="text" name="defect_picture" id="defect_picture" class="form-control"
                         placeholder="Прикрепите фото дефекта">
+-->
+
                     <div class="custom-file">
-                        <label>Select image...</label>
+                        <label>Прикрепите фото дефекта:</label>
                         <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
                         <br>
                     </div>

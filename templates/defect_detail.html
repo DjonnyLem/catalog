@@ -19,10 +19,10 @@ Defect
       <p>Операция: {{ defect_detail.operation }}</p>
   <!--    <p>Артикул: {{ defect_detail.article }}</p>
       <p>Наименование: {{ defect_detail.name }}</p>  -->
-	<p>Изделие:  {{ defect_detail.name }}, {{ defect_detail.article }}</p>
-      {% if defect_detail.sort == 1 %}
+	<p>Изделие:  {{ defect_detail.name_product }}, {{ defect_detail.article }}</p>
+      {% if defect_detail.defect_type == 1 %}
 		<p>Допустимость: <a style="color:green;">ДЕФЕКТ ДОПУСТИМ</a></p>
-		{% elif defect_detail.sort == 0 %}
+		{% elif defect_detail.defect_type == 0 %}
 	<p>Допустимость: <a style="color:red;">ДЕФЕКТ НЕ ДОПУСТИМ</a></p>
 {% else %}
 	<p>Допустимость: <a style="color:grey;">ДОПУСТИМОСТЬ НЕ ОПРЕДЕЛЕНА</a></p>
