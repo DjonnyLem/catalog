@@ -16,7 +16,6 @@
 <body>
 
   <style>
-
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -34,92 +33,108 @@
 
 
   <!-- Custom styles for this template -->
- 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar-top-fixed.css') }}" type="text/css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar-top-fixed.css') }}" type="text/css">
 
   </head>
 
   <body>
 
-    <nav class="navbar px-4 navbar-expand-md navbar-light fixed-top bg-light"style="border:0.5px solid grey;>
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img src="../static/img/logo/logo.svg" alt="" width="40" height="40">
-        </a>
+    <nav class="navbar px-4 navbar-expand-md navbar-light fixed-top bg-light" style="border:0.5px solid grey;>
+      <div class=" container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="../static/img/logo/logo.svg" alt="" width="40" height="40">
+      </a>
 
-        <!-- <a class="navbar-brand" href="#">Адор</a>  -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">HOME</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/show_defect">ДЕФЕКТЫ ПО ВИДАМ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/show_operation">ДЕФЕКТЫ ПО ОПЕРАЦИЯМ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">ДЕФЕКТЫ ПО ИЗДЕЛИЯМ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/show">SHOW</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/add_catalog">ADD</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/add">ADD1</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">#</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/1">1</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/upload">Загрузить</a>
-            </li>
+      <!-- <a class="navbar-brand" href="#">Адор</a>  -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/show_defect">ДЕФЕКТЫ ПО ВИДАМ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/show_operation">ДЕФЕКТЫ ПО ОПЕРАЦИЯМ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">ДЕФЕКТЫ ПО ИЗДЕЛИЯМ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/show">SHOW</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add_catalog">ADD</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add">ADD1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">#</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/1">1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/upload">Загрузить</a>
+          </li>
 
-{% if session["USERNAME"] == "otk" -%}
-			<li class="nav-item">
-              <a class="nav-link " href="/user_profile">Профиль</a>
-            </li>
-{%else -%}
-		<li class="nav-item">
-          <a class="nav-link disabled" href="/user_profile" tabindex="-1" aria-disabled="true">Профиль</a>
-        </li>
-{% endif -%}
-            <li class="nav-item">
-              <a class="nav-link" href="/sign_in">Админ</a>
-            </li>
+          {% if session["USERNAME"] == "otk" -%}
+          <li class="nav-item">
+            <a class="nav-link " href="/user_profile">Профиль</a>
+          </li>
+          {%else -%}
+          <li class="nav-item">
+            <a class="nav-link disabled" href="/user_profile" tabindex="-1" aria-disabled="true">Профиль</a>
+          </li>
+          {% endif -%}
+          <li class="nav-item">
+            <a class="nav-link" href="/sign_in">Админ</a>
+          </li>
 
-{% for el in menu %}
-   <!--         <li class="nav-item">  -->
-      <!--         <a class="nav-link" href="{{ el.url }}">{{ el.name }}</a> -->
-      <!--       </li> -->
-{% endfor %}
+          {% for el in menu %}
+          <!--         <li class="nav-item">  -->
+          <!--         <a class="nav-link" href="{{ el.url }}">{{ el.name }}</a> -->
+          <!--       </li> -->
+          {% endfor %}
 
-          </ul>
-          <!--
+        </ul>
+        <!--
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
 
 -->
-        </div>
       </div>
+      </div>
+
     </nav>
 
-
-
-
+    <script type="text/javascript">
+     
+      function shineLinks(id) {
+        try {
+          var el = document.getElementById(id).getElementsByTagName('a');
+          var url = document.location.href;
+          for (var i = 0; i < el.length; i++) {
+            console.log(url)
+            if (url == el[i].href) {
+              el[i].className += " nav-link active";
+            };
+          };
+        } catch (e) { }
+      };
+    </script>
+     <script type="text/javascript">shineLinks('navbarCollapse'); </script>
     {% block body %}{% endblock %}
+
+
 
 
     <!-- Optional JavaScript -->
@@ -130,6 +145,26 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
       integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
       crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </body>
 
 </html>
