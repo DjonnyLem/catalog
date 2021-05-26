@@ -60,7 +60,7 @@ Add
                         onChange="getValue(this.id);"><br>
                         <option value="">Выберите изделие</option>
                         {% for i in product %}
-                        <option>{{ i.product_name }}</option>
+                        <option>{{ i.general_name }}</option>
                         {% endfor %}
                         <option value="add_product" style="background:green;">Добавить изделие</option>
                     </select><br>
@@ -86,7 +86,15 @@ Add
                     <div class="custom-file">
                         <label>Прикрепите фото дефекта:</label>
                         <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
-                        <br>
+                        
+               {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+					<br>
                     </div>
 
 

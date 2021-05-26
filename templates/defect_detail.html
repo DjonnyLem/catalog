@@ -19,7 +19,7 @@ Defect
       <p>Операция: {{ defect_detail.operation }}</p>
   <!--    <p>Артикул: {{ defect_detail.article }}</p>
       <p>Наименование: {{ defect_detail.name }}</p>  -->
-	<p>Изделие:  {{ defect_detail.name_product }}, {{ defect_detail.article }}</p>
+	<p>Изделие:  {{ defect_detail.name_product }}</p>
       {% if defect_detail.defect_type == 1 %}
 		<p>Допустимость: <a style="color:green;">ДЕФЕКТ ДОПУСТИМ</a></p>
 		{% elif defect_detail.defect_type == 0 %}
@@ -40,8 +40,8 @@ Defect
 
 
     <div class="col" style="border:0.5px solid grey;">
-
-      <img src="{{ defect_detail.note }}"   class="img-fluid" alt="">
+{{ defect_detail.picture }}
+      <img src="/{{ defect_detail.picture }}"   class="img-fluid" alt="">
     </div>
   </div>
 
