@@ -481,6 +481,33 @@ def defect_delete(id):
 
 
 ####################################################################
+@app.route('/show_defect/<int:id>/update', methods=['POST', 'GET'])
+def defect_update(id):
+    catalog = Catalog.query.get(id)
+    defect = Defect.query.all()
+    operation = Operation.query.all()
+    product = Product.query.all()
+    if request.method == "POST":
+        #article.title = request.form['title']
+        #article.intro = request.form['intro']
+        #article.text = request.form['text']
+        defect_name = (request.form['defect_name']).upper()
+        operation_name = (request.form['operation_name']).upper()
+        defect_type = (request.form['defect_type'])
+        product_name = (request.form['product_name']).upper()
+        note = (request.form['note']).upper()
+        image = request.files['image']  #????????????????request.form
+
+        try:
+            db.session.commit()
+            return redirect('/defect_detail.html')
+        except:
+            return "При редактировании произошла ошибка"
+    else:
+        return render_template("catalog_update.html", catalog=catalog,
+                           defect=defect, operation=operation,
+                           product=product)
+####################################################################
 @app.route('/show_operation')
 def show_operation():
     operations = Operation.query.order_by(Operation.operation_name).all()
