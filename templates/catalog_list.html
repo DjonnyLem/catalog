@@ -1,0 +1,48 @@
+{% extends 'base1.html' %}
+
+
+{% block title %}
+Defect
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container-fluid-mt-5 px-4" style="border:0.5px solid grey; margin-top: 80px; ">
+
+
+  <div class="row">
+    <div class="col-md-3" style="border:0.5px solid grey;">
+      <h2 style="color: #ff7000;">{{ catalog_list.defect }}</h2><br>
+      <p>id: {{ catalog_list.id }}</p>
+      <p>Операция: {{ catalog_list.operation }}</p>
+  <!--    <p>Артикул: {{ catalog_list.article }}</p>
+      <p>Наименование: {{ catalog_list.name }}</p>  -->
+	<p>Изделие:  {{ catalog_list.name_product }}</p>
+      {% if catalog_list.defect_type == 1 %}
+		<p>Допустимость: <a style="color:green;">ДЕФЕКТ ДОПУСТИМ</a></p>
+		{% elif catalog_list.defect_type == 0 %}
+	<p>Допустимость: <a style="color:red;">ДЕФЕКТ НЕ ДОПУСТИМ</a></p>
+{% else %}
+	<p>Допустимость: <a style="color:grey;">ДОПУСТИМОСТЬ НЕ ОПРЕДЕЛЕНА</a></p>
+	{% endif %}
+      <p>Комментарий: {{ catalog_list.note }}</p>
+ 
+
+
+
+     <a href="/show_catalog" class="btn btn-success">Назад</a>
+        <a href="/catalog_list/{{ catalog_list.id }}/del" class="btn btn-danger">Удалить</a>
+        <a href="/catalog_list/{{ catalog_list.id }}/update" class="btn btn-success">Редактировать</a>
+    </div>
+
+
+
+    <div class="col" style="border:0.5px solid grey;">
+{{ catalog_list.picture }}
+      <img src="/{{ catalog_list.picture }}"   class="img-fluid" alt="">
+    </div>
+  </div>
+
+  {% endblock %}

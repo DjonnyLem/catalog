@@ -2,7 +2,7 @@
 
 
 {% block title %}
-Add
+Update
 {% endblock %}
 
 
@@ -32,15 +32,19 @@ Add
 </div>
         <div class="col-md-6">
             <div class="form-group">
-                <h2>Введите данные по дефекту</h2>
+                <h2>Измените данные по дефекту</h2>
 
                 <form method="post" id="1" enctype="multipart/form-data">
 			 <label>Выберите наименование дефекта: </label>
                     <select class="form-control" id="defect_name" name="defect_name" required="required"
                         onChange="getValue(this.id);"><br>
-                        <option value="">Выберите значение</option>
+             <!--           <option value="">Выберите значение</option>  -->
                         {% for i in defect %}
-                        <option>{{ i.defect_name }}</option>
+						{% if i.defect_name == catalog.defect %}
+                        <option selected>{{ i.defect_name }}</option>
+						{% else %}
+						<option>{{ i.defect_name }}</option>
+						{% endif %}
                         {% endfor %}
                         <option value="add_defect" style="background:green;">Добавить дефект</option>
                     </select><br>
@@ -48,31 +52,44 @@ Add
 
                  <label>Выберите допустимость дефекта: </label>
                     <select class="form-control" name="defect_type" id="defect_type" required="required"><br>
-                        <option value="">Выберите допустимость дефекта</option>
-
-                        <option value="1" style="color: green;">Дефект допустим</option>
-                        <option value="0" style="color: red;">Дефект не допустим</option>
+                  <!--      <option value="">Выберите допустимость дефекта</option>  -->
+						{% if catalog.defect_type == 1 %}
+						<option selected value="1" style="color: green;">Дефект допустим</option>
+						<option value="0" style="color: red;">Дефект не допустим</option>
+						{% elif catalog.defect_type == 0 %}
+ 						<option selected value="0" style="color: red;">Дефект не допустим</option>
+						<option value="1" style="color: green;">Дефект допустим</option>
+						{% endif %}
+                                               
                     </select><br>
 
 
                    <label>Выберите изделие:</label>
                     <select class="form-control" id="product_name" name="product_name" required="required"
                         onChange="getValue(this.id);"><br>
-                        <option value="">Выберите изделие</option>
+                   <!--     <option value="">Выберите изделие</option>  -->
                         {% for i in product %}
+						{% if i.general_name == catalog.product_name %}
+                        <option selected>{{ i.general_name }}</option>
+						{% else %}		
                         <option>{{ i.general_name }}</option>
+						{% endif %}
                         {% endfor %}
                         <option value="add_product" style="background:green;">Добавить изделие</option>
                     </select><br>
 
 
 
-                    <label>Выберите наименование операции:</label>
+                   <label>Выберите наименование операции:</label>  
                     <select class="form-control" id="operation_name" name="operation_name" required="required"
                         onChange="getValue(this.id);"><br>
-                        <option value="">Выберите наименование операции</option>
+                  <!--       <option value="">Выберите наименование операции</option> -->
                         {% for i in operation %}
+						{% if i.operation_name == catalog.operation %}
+                        <option selected>{{ i.operation_name }}</option>
+						{% else %}		
                         <option>{{ i.operation_name }}</option>
+						{% endif %}
                         {% endfor %}
                         <option value="add_operation" style="background:green;">Добавить операцию</option>
                     </select><br>
@@ -82,24 +99,17 @@ Add
                     <input type="text" name="defect_picture" id="defect_picture" class="form-control"
                         placeholder="Прикрепите фото дефекта">
 -->
-
+				<img src="/{{ catalog.picture }}" class="img-thumbnail" alt="" style=" max-width: 20%;  height: auto;">
                     <div class="custom-file">
                         <label>Прикрепите фото дефекта:</label>
                         <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
                         
-               {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <span>{{ message }}</span>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-					<br>
+              
                     </div>
 
 
                     <label>Введите пояснение: </label>
-                    <textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
+                    <textarea name="note" id="note" class="form-control" placeholder="Введите пояснение">{{ catalog.note }}</textarea><br>
 
 
                     <input type="submit" class="btn btn-primary" value="Отправить">

@@ -450,39 +450,40 @@ def show():
         d = Catalog.query.order_by(Catalog.id).all()
     return render_template("show.html", defects=defects, d=d, s=s)
 
+
 ####################################################################
-@app.route('/show_defect')
-def show_defect():
-    sd = request.form.get('1234')
-    se = request.form.get('12')
+@app.route('/show_catalog')
+def show_catalog():
     defects = Defect.query.order_by(Defect.defect_name).all()
-    d = Catalog.query.order_by(Catalog.defect).all()
-    print(sd)
-    print(se)
-    return render_template("show_defect.html", defects=defects, d=d)
+    catalog = Catalog.query.order_by(Catalog.defect).all()
+   
+    return render_template("show_catalog.html", defects=defects, catalog=catalog)
 
 ####################################################################
-@app.route('/show_defect/<int:id>')
-def show_defect_detail(id):
-    defect_detail = Catalog.query.get(id)
 
-    return render_template("defect_detail.html", defect_detail=defect_detail)
+
+
+@app.route('/catalog_list/<int:id>')
+def catalog_list(id):
+    catalog_list = Catalog.query.get(id)
+
+    return render_template("catalog_list.html", catalog_list=catalog_list)
 ####################################################################
-@app.route('/show_defect/<int:id>/del')
-def defect_delete(id):
-    defect = Catalog.query.get_or_404(id)
+@app.route('/catalog_list/<int:id>/del')
+def catalog_delete(id):
+    catalog = Catalog.query.get_or_404(id)
     try:
-        db.session.delete(defect)
+        db.session.delete(catalog)
         
         db.session.commit()
-        return redirect('/show_defect')
+        return redirect('/show_catalog')
     except:
         return "При удалении произошла ошибка"
 
 
 ####################################################################
-@app.route('/show_defect/<int:id>/update', methods=['POST', 'GET'])
-def defect_update(id):
+@app.route('/catalog_list/<int:id>/update', methods=['POST', 'GET'])
+def catalog_update(id):
     catalog = Catalog.query.get(id)
     defect = Defect.query.all()
     operation = Operation.query.all()
@@ -500,7 +501,7 @@ def defect_update(id):
 
         try:
             db.session.commit()
-            return redirect('/defect_detail.html')
+            return redirect('/catalog_list.html')
         except:
             return "При редактировании произошла ошибка"
     else:
