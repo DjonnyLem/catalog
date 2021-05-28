@@ -34,6 +34,7 @@ class Catalog(db.Model):
 
 
 class Defect(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     defect_name = db.Column(db.String(50), nullable=False, primary_key=True)
 
     def __repr__(self):
@@ -454,13 +455,26 @@ def show():
 ####################################################################
 @app.route('/show_catalog')
 def show_catalog():
-    defects = Defect.query.order_by(Defect.defect_name).all()
+    defects = Defect.query.all()#order_by(Defect.defect_name).all()
     catalog = Catalog.query.order_by(Catalog.defect).all()
+    cat = Catalog.query.order_by(Catalog.defect).distinct(Catalog.defect).all()
+    print (cat)
    
-    return render_template("show_catalog.html", defects=defects, catalog=catalog)
+    return render_template("show_catalog.html", cat =cat, defects=defects, catalog=catalog)
+
 
 ####################################################################
+@app.route('/show_catalog/<int:id>')
+def select_defect(id):
+    defects = defects = Defect.query.order_by(Defect.defect_name).all()
+    catalog = Catalog.query.order_by(Catalog.defect).all()
+    #   db.session.query(Yahoo.price).filter_by(ticker=self.ticker).order_by(
+   # db.desc(Yahoo.date)).first()[0])
+    
+   
+    return render_template("show_catalog.html", defects=defects)
 
+####################################################################
 
 
 @app.route('/catalog_list/<int:id>')

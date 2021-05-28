@@ -29,12 +29,12 @@ Show_defect
 
         <ul class="list-group">
           <li class="list-group-item">
-            <a class="nav-link" href="#">ВСЕ ДЕФЕКТЫ</a>
+            <a class="nav-link" href="/show_catalog">ВСЕ ДЕФЕКТЫ</a>
           </li>
-          {% for i in defects %}
+          {% for i in cat %}
 
           <li class="list-group-item">
-            <a class="nav-link" href="#">{{ i.defect_name }}</a>
+            <a class="nav-link" href="/show_catalog/{{ i.id }}">{{ i.defect }}</a>
           </li>
         </ul>
 
