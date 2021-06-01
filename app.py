@@ -283,12 +283,13 @@ def add_catalog():
         
         
         d = Catalog.query.order_by(Catalog.id.desc()).first()    
-        defect_name = (request.form['defect_name']).upper()
+        id_defect = (request.form['defect_name'])
         operation_name = (request.form['operation_name']).upper()
         defect_type = (request.form['defect_type'])
         product_name = (request.form['product_name']).upper()
         note = (request.form['note']).upper()
-        image = request.files['image']  #????????????????request.form
+        image = request.files['image'] 
+        print (id_defect)
         if request.files:
             if "filesize" in request.cookies:
                 if not limit_filesize(request.cookies["filesize"]):
@@ -331,13 +332,13 @@ def add_catalog():
         ff = request.form
         fl = request.files
         fg = request.cookies
-        print(defect_name, operation_name, defect_type,
+        print(id_defect, operation_name, defect_type,
                   product_name, note)
         print ('new=   ',ff)
         print ('now=   ',fl)
         print ('nrw=   ',fg)
             
-        q = Catalog(defect=defect_name,
+        q = Catalog(id_defect=id_defect,
                     operation=operation_name,
                     defect_type=defect_type,
                     picture=picture,
@@ -458,18 +459,18 @@ def show():
 ####################################################################
 @app.route('/show_catalog')
 def show_catalog():
-    defects = Defect.query.all()#order_by(Defect.defect_name).all()
-    catalog = Catalog.query.order_by(Catalog.id_defect).all()
-    cat = Catalog.query.order_by(Catalog.id_defect).distinct(Catalog.id_defect).all()
+    # defects = Defect.query.all()#order_by(Defect.defect_name).all()
+    # catalog = Catalog.query.order_by(Catalog.id_defect).all()
+    # cat = Catalog.query.order_by(Catalog.id_defect).distinct(Catalog.id_defect).all()
     #res = db.session.query(Catalog.defect).join(Defect).distinct().all()
     #res =(sum(res,()))
-    res = db.session.query(Defect.id, Defect.defect_name).join(Catalog).distinct().order_by(Defect.defect_name).all()
-    d= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).all() 
+    defects = db.session.query(Defect.id, Defect.defect_name).join(Catalog).distinct().order_by(Defect.defect_name).all()
+    catalog= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).all() 
 #Показываем наименование дефекта из таблице Дефект
     #res = res.sort()
-    print (res)
+    # print (res)
    
-    return render_template("show_catalog.html", res =res, defects=defects, catalog=catalog)
+    return render_template("show_catalog.html", defects=defects, catalog=catalog)
 
 
 ####################################################################
@@ -488,9 +489,11 @@ def select_defect(id):
 
 @app.route('/catalog_list/<int:id>')
 def catalog_list(id):
-    catalog_list = Catalog.query.get(id)
+    # catalog_list = Catalog.query.get(id)
+    catalog_list= db.session.query(Catalog).get(id) 
+    defect_list = db.session.query(Defect).filter(catalog_list.id_defect==Defect.id)
 
-    return render_template("catalog_list.html", catalog_list=catalog_list)
+    return render_template("catalog_list.html", catalog_list=catalog_list, defect_list=defect_list)
 ####################################################################
 @app.route('/catalog_list/<int:id>/del')
 def catalog_delete(id):
@@ -512,19 +515,25 @@ def catalog_update(id):
     operation = Operation.query.all()
     product = Product.query.all()
     if request.method == "POST":
+        print ('POST')
         #article.title = request.form['title']
         #article.intro = request.form['intro']
-        #article.text = request.form['text']
-        defect_name = (request.form['defect_name']).upper()
-        operation_name = (request.form['operation_name']).upper()
-        defect_type = (request.form['defect_type'])
-        product_name = (request.form['product_name']).upper()
-        note = (request.form['note']).upper()
-        image = request.files['image']  #????????????????request.form
+        # article.text = request.form['text']
+        catalog.id_defect = (request.form['defect_name']).upper()
+        catalog.operation = (request.form['operation_name']).upper()
+        catalog.defect_type = (request.form['defect_type'])
+        catalog.product_name = (request.form['product_name']).upper()
+        catalog.note = (request.form['note']).upper()
+        # if not request.files['image'] :
+            # print  ("None")
 
+        # else:
+            # print ('OK') #????????????????request.form
+            # image = request.files['image'] 
         try:
             db.session.commit()
-            return redirect('/catalog_list.html')
+            print('Изменено')
+            return redirect('/show_catalog')
         except:
             return "При редактировании произошла ошибка"
     else:

@@ -40,10 +40,10 @@ Update
                         onChange="getValue(this.id);"><br>
              <!--           <option value="">Выберите значение</option>  -->
                         {% for i in defect %}
-						{% if i.defect_name == catalog.defect %}
-                        <option selected>{{ i.defect_name }}</option>
+						{% if i.id == catalog.id_defect %}
+                        <option selected value="{{ i.id }}">{{ i.defect_name }}</option>
 						{% else %}
-						<option>{{ i.defect_name }}</option>
+						<option value="{{ i.id }}">{{ i.defect_name }}</option>
 						{% endif %}
                         {% endfor %}
                         <option value="add_defect" style="background:green;">Добавить дефект</option>

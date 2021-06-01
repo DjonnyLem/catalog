@@ -40,7 +40,7 @@ Add
                         onChange="getValue(this.id);"><br>
                         <option value="">Выберите значение</option>
                         {% for i in defect %}
-                        <option>{{ i.defect_name }}</option>
+                        <option value="{{ i.id }}">{{ i.defect_name }}</option>
                         {% endfor %}
                         <option value="add_defect" style="background:green;">Добавить дефект</option>
                     </select><br>

@@ -14,12 +14,12 @@ Defect
 
   <div class="row">
     <div class="col-md-3" style="border:0.5px solid grey;">
-      <h2 style="color: #ff7000;">{{ catalog_list.defect }}</h2><br>
+      <h2 style="color: #ff7000;">{{ defect_list[0].defect_name }}</h2><br>
       <p>id: {{ catalog_list.id }}</p>
       <p>Операция: {{ catalog_list.operation }}</p>
   <!--    <p>Артикул: {{ catalog_list.article }}</p>
       <p>Наименование: {{ catalog_list.name }}</p>  -->
-	<p>Изделие:  {{ catalog_list.name_product }}</p>
+	<p>Изделие:  {{ catalog_list.product_name }}</p>
       {% if catalog_list.defect_type == 1 %}
 		<p>Допустимость: <a style="color:green;">ДЕФЕКТ ДОПУСТИМ</a></p>
 		{% elif catalog_list.defect_type == 0 %}
