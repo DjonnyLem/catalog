@@ -31,10 +31,10 @@ Show_defect
           <li class="list-group-item">
             <a class="nav-link" href="/show_catalog">ВСЕ ДЕФЕКТЫ</a>
           </li>
-          {% for i in cat %}
+          {% for i in res  %}
 
           <li class="list-group-item">
-            <a class="nav-link" href="/show_catalog/{{ i.id }}">{{ i.defect }}</a>
+            <a class="nav-link" href="/show_catalog/{{ i.id }}">{{ i.defect_name }}</a>
           </li>
         </ul>
 
@@ -102,7 +102,7 @@ Show_defect
 
               <td>{{ i.article }}</td>
               <td>{{ i.product_name }}</td>
-              <td>{{ i.defect }}</td>
+              <td>{{ i.id_defect }}</td>
               <td>{{ i.operation }}</td>
               <td><img src="{{ i.picture }}" class="img-thumbnail" alt="" style=" max-width: 20%;  height: auto;"></td>
               <td>{{ i.note }}</td>

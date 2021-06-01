@@ -15,8 +15,8 @@ db = SQLAlchemy(app)
 
 class Catalog(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    defect = db.Column(db.Text, db.ForeignKey(
-        'defect.defect_name'))  # ,, nullable=False)
+    id_defect = db.Column(db.Integer, db.ForeignKey(
+        'defect.id'))  # ,, nullable=False)
     operation = db.Column(db.Text, db.ForeignKey(
         'operation.operation_name'), nullable=False)
     article = db.Column(db.Text)  # , nullable=False)
@@ -28,7 +28,7 @@ class Catalog(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Catalog %r, %r, %r, %r, %r, %r, %r>" % (self.defect, self.operation,
+        return "<Catalog %r, %r, %r, %r, %r, %r, %r>" % (self.id_defect, self.operation,
                                                       self.article, self.product_name, self.defect_type,
                                                       self.note,  self.date)
 
@@ -76,6 +76,9 @@ app.config["SECRET_KEY"] = "OB3Ux3QBsUxCdK0ROCQd_w"
 def index():
     # print(session["USERNAME"])
     # return  """ <h2 style='color: red;'>Hi, Djonny!</h2> """
+
+
+    
 
     return render_template("base1.html", menu=menu)
 ##########################################################################################################
@@ -434,7 +437,7 @@ def show():
     # d = Catalog.query.order_by(Catalog.operation).all()
     c = Catalog.query.all()
     f = Catalog.query.order_by(Catalog.product_name).all()
-    s = Catalog.query.filter_by(defect='ПЕРЕКОС').all()
+    s = Catalog.query.filter_by(id_defect='1').all()
     # print(defects)
     # print(type(d))
     # print(c)
@@ -456,18 +459,24 @@ def show():
 @app.route('/show_catalog')
 def show_catalog():
     defects = Defect.query.all()#order_by(Defect.defect_name).all()
-    catalog = Catalog.query.order_by(Catalog.defect).all()
-    cat = Catalog.query.order_by(Catalog.defect).distinct(Catalog.defect).all()
-    print (cat)
+    catalog = Catalog.query.order_by(Catalog.id_defect).all()
+    cat = Catalog.query.order_by(Catalog.id_defect).distinct(Catalog.id_defect).all()
+    #res = db.session.query(Catalog.defect).join(Defect).distinct().all()
+    #res =(sum(res,()))
+    res = db.session.query(Defect.id, Defect.defect_name).join(Catalog).distinct().order_by(Defect.defect_name).all()
+    d= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).all() 
+#Показываем наименование дефекта из таблице Дефект
+    #res = res.sort()
+    print (res)
    
-    return render_template("show_catalog.html", cat =cat, defects=defects, catalog=catalog)
+    return render_template("show_catalog.html", res =res, defects=defects, catalog=catalog)
 
 
 ####################################################################
 @app.route('/show_catalog/<int:id>')
 def select_defect(id):
     defects = defects = Defect.query.order_by(Defect.defect_name).all()
-    catalog = Catalog.query.order_by(Catalog.defect).all()
+    catalog = Catalog.query.order_by(Catalog.id_defect).all()
     #   db.session.query(Yahoo.price).filter_by(ticker=self.ticker).order_by(
    # db.desc(Yahoo.date)).first()[0])
     
