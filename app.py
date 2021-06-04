@@ -28,9 +28,9 @@ class Catalog(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Catalog %r, %r, %r, %r, %r, %r, %r>" % (self.id_defect, self.operation,
+        return "<Catalog %r, %r, %r, %r, %r, %r, %r, %r>" % (self.id_defect, self.operation,
                                                       self.article, self.product_name, self.defect_type,
-                                                      self.note,  self.date)
+                                                      self.picture, self.note,  self.date)
 
 
 class Defect(db.Model):
@@ -231,7 +231,7 @@ def add():
 app.config["IMAGE_UPLOADS"] = "static/img/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config["MAX_IMAGE_FILESIZE"] = 2 * 1024 * 1024
-
+path = os.getcwd()
 
 def allowed_image(filename): #проверяем имеет ли файл расширение и допустимо ли такое расширение
 
@@ -321,7 +321,7 @@ def add_catalog():
             print (flname)
             path_flname = os.path.join(app.config["IMAGE_UPLOADS"], flname)
             print (path_flname)
-            path = os.getcwd()
+            
             print (path)
             path_load = os.path.join(path, app.config["IMAGE_UPLOADS"])
             print ("path_load=",path_load)
@@ -499,12 +499,20 @@ def catalog_list(id):
 def catalog_delete(id):
     catalog = Catalog.query.get_or_404(id)
     try:
+        d = os.path.join(path, app.config["IMAGE_UPLOADS"],catalog.picture)
+        print (d)
+        if os.path.isfile (d):
+            os.remove(d)
         db.session.delete(catalog)
         
         db.session.commit()
         return redirect('/show_catalog')
     except:
         return "При удалении произошла ошибка"
+#>>> if os.path.isfile ('/home/tech-3/Рабочий стол/1.txt'):
+#  os.remove('/home/tech-3/Рабочий стол/1.txt')
+
+#
 
 
 ####################################################################
