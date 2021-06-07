@@ -476,20 +476,21 @@ def show_catalog():
 ####################################################################
 @app.route('/show_catalog/<int:id>')
 def select_defect(id):
-    defects = defects = Defect.query.order_by(Defect.defect_name).all()
-    catalog = Catalog.query.order_by(Catalog.id_defect).all()
+    defects = db.session.query(Defect.id, Defect.defect_name).join(Catalog).distinct().order_by(Defect.defect_name).all()
+    catalog= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).filter(Defect.id == id)
+
     #   db.session.query(Yahoo.price).filter_by(ticker=self.ticker).order_by(
    # db.desc(Yahoo.date)).first()[0])
     
    
-    return render_template("show_catalog.html", defects=defects)
+    return render_template("show_catalog.html", defects=defects, catalog=catalog)
 
 ####################################################################
 
 
 @app.route('/catalog_list/<int:id>')
 def catalog_list(id):
-    # catalog_list = Catalog.query.get(id)
+
     catalog_list= db.session.query(Catalog).get(id) 
     defect_list = db.session.query(Defect).filter(catalog_list.id_defect==Defect.id)
 
