@@ -1,0 +1,31 @@
+.nav li {
+  font-weight: 400;
+  white-space: normal;
+  line-height: 18px;
+  height: 36px;
+  padding: 0 5px;
+  font-family: 'Noto Sans', sans-serif;
+  color: #333333;
+}
+
+.nav li:hover {
+  font-weight: 400;
+  white-space: normal;
+  line-height: 18px;
+  height: 36px;
+  padding: 0 5px;
+  font-family: 'Noto Sans', sans-serif;
+  color: #ff8111;
+   text-decoration:  underline;
+}
+
+.nav1 li {
+  font-weight: 600;
+  white-space: normal;
+  line-height: 18px;
+  height: 36px;
+  padding: 0 5px;
+  font-family: 'Noto Sans', sans-serif;
+  color: #ff8111;
+   text-decoration:  none;
+}
