@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 
 
 {% block title %}
 Show_defect
 {% endblock %}
 
-{% block nav %}
+{% block body %}
 
 
 <style>
@@ -21,7 +21,8 @@ Show_defect
 
 <!-- container-fluid-mt-5 px-4 -->
 
-
+<div class="container-fluid-mt-5 px-4" style="border:0.5px solid rgb(246, 250, 1); margin-top: 80px;">
+  <div class="row" style="height: 85vh;">
     <div class="col-md-3" style="border:0.5px solid grey;">
       <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
         style="position: relative;  height: 55vh; overflow: auto;">
@@ -41,10 +42,7 @@ Show_defect
       </div>
 
     </div>
-{% endblock %}
 
-
-{% block main %}
 <style>
   tr {
    /* width: 100%;
@@ -65,7 +63,7 @@ Show_defect
  </style>
 
 
-    
+    <div class="col" style="border:0.5px solid grey;">
 
 
       <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".table table-hover table-sm" data-mdb-offset="0"
@@ -121,6 +119,6 @@ Show_defect
 
 
 
-    
+    </div>
 
-{% endblock %}
+    {% endblock %}

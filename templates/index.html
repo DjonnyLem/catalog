@@ -30,7 +30,12 @@
       }
     }
   </style>
-  <style>
+ 
+
+
+  <!-- Custom styles for this template -->
+  <link href="../static/css/navbar-top-fixed.css" rel="stylesheet">
+ <style>
     .nav-link,
     .nav-item {
       color: #333333 !important;
@@ -42,12 +47,14 @@
       color: #ff8111 !important;
       text-decoration: underline !important;
     }
+
+	.nav-link.active {
+      color: #ff8111 !important; //
+      font-size: 0.9rem;
+	  font-weight: 500;
+	}
+
   </style>
-
-
-  <!-- Custom styles for this template -->
-  <link href="../static/css/navbar-top-fixed.css" rel="stylesheet">
-
 
 </head>
 
@@ -88,7 +95,8 @@
           <li class="nav-item">
             <a class="nav-link" href="/add">ADD1</a>
           </li>
-          <a class="nav-link" href="/1">1</a>
+		  <li class="nav-item">
+          <a class="nav-link" href="file:///home/tech-3/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/test-master/templates/index.html">ПРИМЕР</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/upload">ЗАГРУЗИТЬ</a>
@@ -112,12 +120,14 @@
     </div>
   </nav>
 
+
+
   <main class="container-fluid">
     <div class="row">
       <div class="col-md-3">
 
         <nav class="nav flex-column bg-light p-5 rounded">
-          <a class="nav-link active" aria-current="page" href="#">Active</a>
+          <a class="nav-link" aria-current="page" href="#">Active</a>
           <a class="nav-link" href="#">Link</a>
           <a class="nav-link" href="#">Link</a>
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -143,10 +153,10 @@
 
   </main>
 
-
+  <script src="../static/js/base.js"></script>
   <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
+<script type="text/javascript">shineLinks('navbarCollapse'); </script>
 </body>
 
 </html>

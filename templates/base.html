@@ -15,7 +15,10 @@
 
   <!-- Bootstrap core CSS -->
   <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <style>
+ 
+  <!-- Custom styles for this template -->
+  <link href="../static/css/navbar-top-fixed.css" rel="stylesheet">
+ <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -42,11 +45,15 @@
       color: #ff8111 !important;
       text-decoration: underline !important;
     }
+
+	.nav-link.active {
+      color: #ff8111 !important; 
+      font-size: 0.9rem;
+	  font-weight: 400;
+	}
+
   </style>
 
-
-  <!-- Custom styles for this template -->
-  <link href="../static/css/navbar-top-fixed.css" rel="stylesheet">
 
 
 </head>
@@ -88,6 +95,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/add">ADD1</a>
           </li>
+		  <li class="nav-item">
           <a class="nav-link" href="/1">1</a>
           </li>
           <li class="nav-item">
@@ -115,26 +123,16 @@
   <main class="container-fluid">
     <div class="row">
       <div class="col-md-3">
-
-        <nav class="nav flex-column bg-light p-5 rounded">
-          <a class="nav-link active" aria-current="page" href="#">Active</a>
-          <a class="nav-link" href="#">Nav</a>
-          <a class="nav-link" href="#">Sidebar</a>
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </nav>
+		{% block nav %}{% endblock %}
+       
 
       </div>
 
 
 
       <div class="col-md-9">
-
-        <div class="bg-light p-5 rounded">
-          <h1>Navbar example</h1>
-          <p class="lead" style="font-weight: 400; font-family: 'Noto Sans', sans-serif;    letter-spacing: 0.025em;">
-            This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it
-            will remain fixed to the top of your browser’s viewport.</p>
-
+		{% block main %}{% endblock %}
+        
         </div>
 
       </div>
@@ -143,10 +141,10 @@
 
   </main>
 
-
+  <script src="../static/js/base.js"></script>
   <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
+<script type="text/javascript">shineLinks('navbarCollapse'); </script>
 </body>
 
 </html>
