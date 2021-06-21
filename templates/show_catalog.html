@@ -7,6 +7,7 @@ Show_defect
 
 {% block nav %}
 
+<link href="../static/css/table.css" rel="stylesheet">
 
 <style>
 
@@ -31,64 +32,29 @@ Show_defect
 
 
 {% block main %}
-<style>
-  .table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    /*height: 80vh;*/
-  }
-
-  .table th {
-    border: 1px solid grey;
-    padding: 5px;
-    text-align: center
-      /*width: calc(100vw/8);*/
-  }
-
-  .table td {
-    border: 1px solid grey;
-    padding: 2px;
-    text-align: center;
-    /* width: calc(100vw/8); */
-
-  }
-
-  .table thead {
-    display: block;
-    position: relative;
-    width: calc(100%-16px) !important;
-  }
-
-
-  .table tbody {
-    display: block;
-    overflow: auto;
-    width: 100%;
-    height: calc(100vh - 25vh);
-  }
-</style>
 
 <!--=======================================================================================-->
 
-<div class="table-responsive">
-  <table class="table table-hover table-fixed">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">#</th>
-        <th scope="col">Наименование изделия</th>
-        <th scope="col">Дефект</th>
-        <th scope="col">Операция</th>
-        <th scope="col">Фото</th>
-        <th scope="col">Комментарии</th>
-        <th scope="col">Расположение</th>
-      </tr>
-    </thead>
+<div class="scroll" id="scr-01">
+          <table class="table table-fixed" id="tbl-head">
+            <thead>
+              <tr>
+ {% for i in table_head %}
+        <th scope="col">{{ i }}</th>
+ {% endfor %}
 
-    <tbody>
+            </thead>
 
-      {% for i in catalog %}
+          </table>
+</div>
+
+
+
+<div class="scroll" id="scr-02">
+          <table class="table table-fixed table-hover" id="tbl-body">
+            <tbody>
+
+{% for i in catalog %}
       <tr onclick="window.location.href='/catalog_list/{{ i[0].id }}'; return false">
         <td><a href="/catalog_list/{{ i[0].id }}" type="button" class="btn btn-outline-secondary btn-sm "><svg
               xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right"
@@ -114,26 +80,23 @@ Show_defect
 
       </tr>
       {% endfor %}
-    </tbody>
-  </table>
 
-</div>
 
+
+            </tbody>
+
+          </table>
+        </div>
+
+
+
+
+
+
+   
+
+<script src="../static/js/table.js"></script>
 <script>
-
-  let td = document.querySelectorAll('td'); //берем все td таблицы
-  for (var i = 0; i < 8; i++) {  // у нас 8 колонок. получаем номер колонки
-    let tdWidth = td[i].offsetWidth; // по номеру колонки получаем ее ширину
-    let th = document.querySelectorAll('th'); //берем все th заголовка таблицы
-    th[i].width = tdWidth; // присваиваем каждому th ширину td  тогоже номера
-  }
-  //let w = document.querySelectorAll('th');
-  //for (var i = 0; i < w.length; i++) {
-  //  console.log(w[i]);
-
-  //  let c = w[i].offsetWidth;
-  //  console.log('ширина th' + i, '=', c);
-  //}
 
 </script>
 

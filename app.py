@@ -80,7 +80,7 @@ def index():
 
     
 
-    return render_template("base1.html", menu=menu)
+    return render_template("base.html", menu=menu)
 ##########################################################################################################
 user_data = {
         "username": "otk",
@@ -455,7 +455,7 @@ def show():
         d = Catalog.query.order_by(Catalog.id).all()
     return render_template("show.html", defects=defects, d=d, s=s)
 
-
+table_head = ('#', '#', 'Наименование изделия', 'Дефект', 'Операция', 'Фото', 'Комментарии', 'Расположение')
 ####################################################################
 @app.route('/show_catalog')
 def show_catalog():
@@ -469,8 +469,8 @@ def show_catalog():
 #Показываем наименование дефекта из таблице Дефект
     #res = res.sort()
     # print (res)
-   
-    return render_template("show_catalog.html", defects=defects, catalog=catalog)
+    
+    return render_template("show_catalog.html", defects=defects, catalog=catalog, table_head=table_head)
 
 
 ####################################################################
@@ -483,7 +483,7 @@ def select_defect(id):
    # db.desc(Yahoo.date)).first()[0])
     
    
-    return render_template("show_catalog.html", defects=defects, catalog=catalog)
+    return render_template("show_catalog.html", defects=defects, catalog=catalog, table_head=table_head)
 
 ####################################################################
 

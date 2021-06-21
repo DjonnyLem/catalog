@@ -1,0 +1,22 @@
+#scr-01,
+#scr-02 {
+  width: 100%;
+}
+#scr-02 {
+  overflow: auto;
+  /*   overflow-x: hidden; */
+  height: 80vh;
+}
+
+#scr-01 {
+  overflow: hidden;
+}
+
+#tbl-head th {
+  border: 0.5px solid grey;
+  text-align: center;
+}
+#tbl-body td {
+  border: 0.5px solid grey;
+}
+
