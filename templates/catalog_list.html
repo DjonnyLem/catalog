@@ -1,19 +1,16 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 
 
 {% block title %}
 Defect
 {% endblock %}
 
-{% block body %}
+{% block nav %}
 
 
 
-<div class="container-fluid-mt-5 px-4" style="border:0.5px solid grey; margin-top: 80px; ">
 
-
-  <div class="row">
-    <div class="col-md-3" style="border:0.5px solid grey;">
+    <div class="col p-4">
       <h2 style="color: #ff7000;">{{ defect_list[0].defect_name }}</h2><br>
       <p>id: {{ catalog_list.id }}</p>
       <p>Операция: {{ catalog_list.operation }}</p>
@@ -28,20 +25,20 @@ Defect
 	<p>Допустимость: <a style="color:grey;">ДОПУСТИМОСТЬ НЕ ОПРЕДЕЛЕНА</a></p>
 	{% endif %}
       <p>Комментарий: {{ catalog_list.note }}</p>
- 
+ </div>
 
 
 
-     <a href="/show_catalog" class="btn btn-success">Назад</a>
-        <a href="/catalog_list/{{ catalog_list.id }}/del" class="btn btn-danger">Удалить</a>
-        <a href="/catalog_list/{{ catalog_list.id }}/update" class="btn btn-success">Редактировать</a>
-    </div>
+     <a href="/show_catalog" class="btn btn-outline-secondary">Назад</a>
+        <a href="/catalog_list/{{ catalog_list.id }}/del" class="btn btn-outline-secondary">Удалить</a>
+        <a href="/catalog_list/{{ catalog_list.id }}/update" class="btn btn-outline-secondary">Редактировать</a>
+    
+{% endblock %}
+{% block main %}
 
-
-
-    <div class="col" style="border:0.5px solid grey;">
-{{ catalog_list.picture }}
-      <img src="/{{ catalog_list.picture }}"   class="img-fluid" alt="">
+    <div class="col">
+<!--{{ catalog_list.picture }}-->
+      <img src="/{{ catalog_list.picture }}"   class="img-fluid" alt="NO PICURE">
     </div>
   </div>
 

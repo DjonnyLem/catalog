@@ -80,7 +80,7 @@ def index():
 
     
 
-    return render_template("base.html", menu=menu)
+    return render_template("home.html", menu=menu)
 ##########################################################################################################
 user_data = {
         "username": "otk",

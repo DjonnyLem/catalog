@@ -1,4 +1,4 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 
 
 {% block title %}
@@ -6,12 +6,11 @@ Add product
 {% endblock %}
 
 
-{% block body %}
+{% block main %}
 
 
 
-<div class="container-fluid-mt-5 px-4">
-    <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+
         <div class="col-md-6">
             <div class="form-group">
                 <h2 id="2">Введите информацию по изделию</h2>
@@ -34,7 +33,7 @@ Add product
                         placeholder="Введите наименование изделия"><br>
 
 
-                    <input type="submit" class="btn btn-primary" value="Отправить">
+                    <input type="submit" class="btn btn-outline-secondary" value="Отправить">
 
                 </form>
 
@@ -45,10 +44,8 @@ Add product
 
 
         </div>
-    </div>
-</div>
+ 
 
-</div>
 <!------------------------------------------------------------------------------->
 
 

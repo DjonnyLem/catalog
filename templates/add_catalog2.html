@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 
 
 {% block title %}
@@ -6,12 +6,13 @@ Add
 {% endblock %}
 
 
-{% block nav %}
+{% block body %}
 
 
 <!------------------------------------------------------------------------------->
-
-<div class="col">
+<div class="container-fluid-mt-5 px-4">
+    <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+<div class="col-md-3">
 
 <ul class="list-group">
           <li class="list-group-item">
@@ -29,9 +30,6 @@ Add
         </ul>
 
 </div>
-
-{% endblock %}
-{% block main %}
         <div class="col-md-6">
             <div class="form-group">
                 <h2>Введите данные по дефекту</h2>
@@ -104,8 +102,9 @@ Add
                     <textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
 
 
-                    <input type="submit" class="btn btn-outline-secondary" value="Отправить">
-                    
+                    <input type="submit" class="btn btn-primary" value="Отправить">
+                    <hr>
+                    <hr>
                 </form>
             </div>
 
