@@ -14,7 +14,9 @@ Show_defect
     color: #333333 !important;
   }
 </style>
-<style><!-- Стиль фиксации шапки таблицы -->
+
+<style>
+  /* Стиль фиксации шапки таблицы */
   .tableFixHead {
     overflow-y: auto;
     height: 85vh;
@@ -25,13 +27,16 @@ Show_defect
     top: 0;
   }
 
-  /* Just common table stuff. Really. */
   .table {
     border-collapse: collapse;
     width: 95%;
   }
 
-  /*th, td { padding: 8px 16px; }*/
+  th,
+  td {
+    padding: 8px 16px;
+  }
+
   th {
     background: #fff !important;
   }
@@ -56,7 +61,7 @@ Show_defect
 <!--=======================================================================================-->
 
 <div class="tableFixHead">
-  <table class="table table-fixed table-hover">
+  <table class="table table-hover">
     <thead>
       <tr>
         {% for i in table_head %}
@@ -69,25 +74,12 @@ Show_defect
 
       {% for i in catalog %}
       <tr onclick="window.location.href='/catalog_list/{{ i[0].id }}'; return false">
-        <!-- <td><a href="/catalog_list/{{ i[0].id }}" type="button" class="btn btn-outline-secondary btn-sm "><svg -->
-        <!-- xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" -->
-        <!-- viewBox="0 0 16 16"> -->
-        <!-- <path -->
-        <!-- d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" /> -->
-        <!-- </svg></a></td> -->
-        <!-- <td><a href="/catalog_list/{{ i[0].id }}/update" type="submit" name="12" value="{{ i.id }}" -->
-        <!-- class="btn btn-outline-secondary btn-sm "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" -->
-        <!-- fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"> -->
-        <!-- <path -->
-        <!-- d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /> -->
-        <!-- </svg></button></td> -->
-
-
         <td>{{ i[0].product_name }}</td>
         <td>{{ i[1] }}</td>
         <td>{{ i[0].operation }}</td>
         <td>{{ i[0].note }}</td>
-        <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt="" style=" max-width: 100%;  height: auto;"></td>
+        <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt=""
+            style=" max-width: 100%;  height: auto;"></td>
         <!-- <td>{{ i[0].picture }}</td> -->
 
 
