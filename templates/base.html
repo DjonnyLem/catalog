@@ -36,15 +36,14 @@
     }
   </style>
   <style>
-    .collapse a   {
+    .collapse .nav-link   {
       color: #333333 !important;
       font-size: 0.9rem;
     }
 
-    .nav-link:hover,
-    .nav-item:hover {
+    .nav-link:hover{
       color: #ff8111 !important;
-      text-decoration: underline !important;
+      text-decoration: underline ;
     }
 
 	.nav-link.active {
@@ -52,6 +51,13 @@
       font-size: 0.9rem;
 	  font-weight: 400;
 	}
+
+.nav-link.disabled {
+      color: grey !important; 
+ 
+text-decoration: none;
+	}
+
 
   </style>
 
@@ -87,13 +93,16 @@
           <li class="nav-item">
             <a class="nav-link" href="#">ДЕФЕКТЫ ПО ИЗДЕЛИЯМ</a>
           </li>
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="nav-link" href="/show">SHOW</a>
-          </li>
+          </li>-->
           <li class="nav-item">
-            <a class="nav-link" href="/add_catalog">ADD</a>
+            <a class="nav-link" href="/add_catalog">ДОБАВИТЬ</a>
           </li>
-          <li class="nav-item">
+ 			<li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
+          	</li>
+         <!-- <li class="nav-item">
             <a class="nav-link" href="/add">ADD1</a>
           </li>
 		  <li class="nav-item">
@@ -104,8 +113,8 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/user_profile">ПРОФИЛЬ</a>
-          </li>
-          <li class="nav-item position-absolute  end-0">
+          </li>-->
+          <li class="nav-item pe-5 position-absolute  end-0 ">
             <a class="nav-link" href="/sign_in">ВОЙТИ</a>
           </li>
         </ul>
