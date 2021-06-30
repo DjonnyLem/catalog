@@ -31,36 +31,7 @@ Add
                     <input type="submit" class="btn btn-outline-secondary" value="Отправить">
 
                 </form>
-<!---------------------------------------------------------------------------------------->
 
-<br>
-<br>
-<h2>Или выберите наименование дефекта для редактирования</h2>
-<div class="tableFixHead">
-  <table class="table table-hover">
-    <thead>
-      <tr onclick="window.location.href='/defect'; return false">
-        <th scope="col">id</th>
-        <th scope="col"> Зарегистрированные дефекты</th>
-        
-      </tr>
-    </thead>
-
-    <tbody>
-
-      {% for i in defect %}
-      <tr>
-        <td>{{ i.id }}</td>
-      	<td>{{ i.defect_name }}</td>
-      {% endfor %}
-		</tr>
-
-
-    </tbody>
-
-  </table>
-</div>
-<!---------------------------------------------------------------------------------------->
 
 
 

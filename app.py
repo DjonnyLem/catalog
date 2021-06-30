@@ -225,7 +225,7 @@ def add():
                 return "При добавлении произошла ошибка"
 
     else:
-        return render_template("add.html", operation=operation, defect=defect, product=product)
+        return render_template("add.html", operation=operation, defect=defect, product=product) 
 
 ####################################################################
 app.config["IMAGE_UPLOADS"] = "static/img/uploads"
@@ -244,7 +244,8 @@ def allowed_image(filename): #проверяем имеет ли файл рас
         return True
     else:
         return False
-
+def addFile ():
+    pass
 
 def limit_filesize(filesize): # Проверяем не превышает ли файл допустимый объем
 
@@ -252,7 +253,7 @@ def limit_filesize(filesize): # Проверяем не превышает ли 
         return True
     else:
         return False
-
+'''
         if image.filename == "":
             print("No filename")
             return redirect(request.url)
@@ -268,7 +269,7 @@ def limit_filesize(filesize): # Проверяем не превышает ли 
             print("That file extension is not allowed")
             return redirect(request.url)
 
-
+'''
 
    
 
@@ -306,7 +307,8 @@ def add_catalog():
                 print("Расширение файла не соответствует заданному")
                 flash("Расширение файла не соответствует заданному", 'warning')
                 filename = secure_filename(image.filename)
-
+                return redirect(request.url)
+            
             print ("picture =",image.filename)
             e=image.filename.rsplit('.',1)
             past_id = Catalog.query.order_by(Catalog.id.desc()).first()
@@ -429,33 +431,8 @@ def add_product():
 
 ####################################################################
 
-
-
-@app.route('/show', methods=['POST', 'GET'])
-def show():
-    req = request.form.get("flexRadioDefault")
-    defects = Defect.query.all()
-    # d = Catalog.query.order_by(Catalog.operation).all()
-    c = Catalog.query.all()
-    f = Catalog.query.order_by(Catalog.product_name).all()
-    s = Catalog.query.filter_by(id_defect='1').all()
-    # print(defects)
-    # print(type(d))
-    # print(c)
-    # print('+'*70)
-    # print(f)
-    # print(req)
-    # for i in req:
-    # print (i)
-    if req == "a":
-        d = Catalog.query.order_by(Catalog.defect).all()
-    elif req == "b":
-        d = Catalog.query.order_by(Catalog.operation).all()
-    else:
-        d = Catalog.query.order_by(Catalog.id).all()
-    return render_template("show.html", defects=defects, d=d, s=s)
 # table_head = ('#', '#', 'Наименование изделия', 'Дефект', 'Операция', 'Фото', 'Комментарии', 'Расположение')
-table_head = ('Наименование изделия', 'Дефект', 'Операция', 'Комментарии', 'Фото')
+table_head = ('Наименование изделия', 'Дефект', 'Операция', 'Комментарии', 'Фото')# Описываем колонки таблицы
 ####################################################################
 @app.route('/show_catalog')
 def show_catalog():
@@ -500,7 +477,7 @@ def catalog_list(id):
 def catalog_delete(id):
     catalog = Catalog.query.get_or_404(id)
     try:
-        d = os.path.join(path, app.config["IMAGE_UPLOADS"],catalog.picture)
+        d = os.path.join(path,catalog.picture)
         print (d)
         if os.path.isfile (d):
             os.remove(d)
@@ -525,21 +502,65 @@ def catalog_update(id):
     product = Product.query.all()
     if request.method == "POST":
         print ('POST')
-        #article.title = request.form['title']
-        #article.intro = request.form['intro']
-        # article.text = request.form['text']
         catalog.id_defect = (request.form['defect_name']).upper()
         catalog.operation = (request.form['operation_name']).upper()
         catalog.defect_type = (request.form['defect_type'])
         catalog.product_name = (request.form['product_name']).upper()
         catalog.note = (request.form['note']).upper()
-        # if not request.files['image'] :
-            # print  ("None")
+        if not request.files['image'] :
+            print  ("None")
 
-        # else:
-            # print ('OK') #????????????????request.form
-            # image = request.files['image'] 
-        try:
+        else:
+            print ('OK') #????????????????request.form
+            image = request.files['image']
+            if "filesize" in request.cookies:
+                if not limit_filesize(request.cookies["filesize"]):
+                    print("Filesize exceeded maximum limit")
+                    flash("Размер файла превышает лимит", 'warning')
+                    return redirect(request.url)
+                    
+            if image.filename == "":
+                print("No filename")
+                flash("Файл не выбран", 'warning')
+                return redirect(request.url)
+
+            if not allowed_image(image.filename):
+                print("Расширение файла не соответствует заданному")
+                flash("Расширение файла не соответствует заданному", 'warning')
+                filename = secure_filename(image.filename)
+                return redirect(request.url)
+
+            splitFile=image.filename.rsplit('.',1)
+            print (splitFile)
+            
+            
+
+    
+            newFileName = "file_"+str(id)+"."+(splitFile[1]).lower()
+            fileName = secure_filename(newFileName)
+            print (fileName)
+            pathFileName = os.path.join(app.config["IMAGE_UPLOADS"], fileName)
+            print (pathFileName)
+            
+            print (path)
+            pathLoad = os.path.join(path, app.config["IMAGE_UPLOADS"])
+            print ("pathLoad=",pathLoad)
+
+            picture = pathFileName
+           
+
+            catalog = Catalog.query.get_or_404(id)
+            try:
+                pathOldFile = os.path.join(path, catalog.picture)
+                print ('pathOldFile =',pathOldFile)
+                if os.path.isfile (pathOldFile):
+                   os.remove(pathOldFile)
+                   print ("Удалено")
+            except:
+                return "При удалении произошла ошибка"
+            image.save(os.path.join( pathLoad, fileName))
+            catalog.picture = picture
+        try:         
             db.session.commit()
             print('Изменено')
             return redirect('/show_catalog')
@@ -556,12 +577,7 @@ def show_operation():
 
     return render_template("show_operation.html", operations=operations)
 
-####################################################################
-@app.route('/1')
-def one():
-    pr = ["perfect", "beautiful", "nice"]
-    defect = Defect.query.all()
-    return render_template("1.html", pr=pr, defect=defect)
+
 
 ####################################################################
 @app.route('/defect')
@@ -572,11 +588,6 @@ def defect():
 
 
 
-####################################################################
-@app.route("/upload", methods=["GET", "POST"])
-def upload():
-
-    return render_template("upload.html")
                     
 ####################################################################
    
