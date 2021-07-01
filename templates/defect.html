@@ -1,79 +1,98 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 
 
 {% block title %}
-Add
+Update defect
 {% endblock %}
 
 
-{% block body %}
-
-
-    <!------------------------------------------------------------------------------->
-    <div class="container">
-        <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
-            <div class="col-md-9">
-                <div class="form-group">
-                    <h2>Введите данные по дефекту</h2>
-
-                    <form method="post" id="DjonnyLem">
-                        <input type="hidden" name="indetify" value='form1'>
-
-
-                        <label>Выберите наименование дефекта: </label>
-                        <select class="form-control" name="defect_name1" required="required"><br>
-                            <option value="">Выберите значение</option>
-                            {% for i in defect %}
-                            <option>{{ i.defect_name }}</option>
-                            {% endfor %}
-                        </select><br>
-
-                        <label>Выберите наименование операции: </label>
-                        <input type="text" name="operation_name1" id="operation_name1" class="form-control"
-                            placeholder="Выберите наименование операции"><br>
-
-                        <label>Выберите допустимость дефекта: </label>
-                        <select class="form-control" name="defect_type" required="required"><br>
-                            <option value="">Выберите допустимость дефекта</option>
-
-                            <option value="1" style="color: green;">Дефект допустим</option>
-                            <option value="0" style="color: red;">Дефект не допустим</option>
-                        </select><br>
-
-
-                        <label>Выберите номер изделия: </label>
-                        <input type="text" name="article_number" id="article_number" class="form-control"
-                            placeholder="Выберите номер изделия"><br>
-
-                        <label>Выберите наименование изделия: </label>
-                        <input type="text" name="article_name" id="article_name" class="form-control"
-                            placeholder="Выберите наименование изделия"><br>
-
-                        <label>Прикрепите фото дефекта: </label>
-                        <input type="text" name="defect_picture" id="defect_picture" class="form-control"
-                            placeholder="Прикрепите фото дефекта"><br>
-
-                        <label>Введите пояснение: </label>
-                        <textarea name="note" id="note" class="form-control"
-                            placeholder="Введите пояснение"></textarea><br>
+{% block nav %}
 
 
 
+{% endblock %}
 
-                        <input type="submit" class="btn btn-primary" value="Изменить">
-                        <hr>
-                        <hr>
-                    </form>
-                </div>
+
+
+{% block main %}
+
+
+<!------------------------------------------------------------------------------->
+<form method="post" id="2">
+        <div class="col-md-6">
+            <div class="form-group">
+                <h2>Измените наименование дефекта</h2>
+               {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                
+                    <label>Измените наименование дефекта: </label>
+                    <input type="text" name="defect_name" id="defect_name" class="form-control"
+                        placeholder="{{ defect_list.defect_name }}"><br>
+
+
+                    
 
 
 
             </div>
         </div>
-    </div>
+<!---------------------------------------------------------------------------------------->
 
-    </div>
-  
+<br>
+<br>
+<div class="col-md-11">
+{% if catalog.count() == 1 %}
+<h3>Данное наименование дефекта участвует в {{catalog.count()}} связанной записи. </h3>
+<h3>Наименование дефекта изменится и в указанной записи</h3>
+{% else %}
+<h3>Данное наименование дефекта участвует в {{catalog.count()}} связанных записях.  </h3>
+<h3>Наименование дефекта изменится и в указанных записях</h3>
+{%  endif %}
+
+<div class="tableFixHead">
+  <table class="table table-hover">
+    <thead>
+      <tr onclick="window.location.href='/defect'; return false">
+        <th scope="col">id</th>
+        <th scope="col"> Зарегистрированные дефекты</th>
+        
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for i in catalog %}
+      <tr>
+        <td>{{ i[0].product_name }}</td>
+        <td>{{ i[1] }}</td>
+        <td>{{ i[0].operation }}</td>
+        <td>{{ i[0].note }}</td>
+        <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt=""
+            style=" max-width: 100%;  height: auto;"></td>
+        <!-- <td>{{ i[0].picture }}</td> -->
+
+
+      </tr>
+      {% endfor %}
+
+
+    </tbody>
+
+  </table>
+
+<input type="submit" class="btn btn-outline-secondary" value="Изменить">
+</div>
+</div>
+</form>
+<!---------------------------------------------------------------------------------------->
+
+<script>
+
+</script>
 {% endblock %}
-
- 

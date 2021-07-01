@@ -35,10 +35,10 @@ class Catalog(db.Model):
 
 class Defect(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    defect_name = db.Column(db.String(50), nullable=False, primary_key=True)
+    defect_name = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
-        return '<defect_name %r>' % self.defect_name
+        return '<defect_name %r, %r>' % (self.id, self.defect_name)
 
 
 class Operation(db.Model):
@@ -580,10 +580,27 @@ def show_operation():
 
 
 ####################################################################
-@app.route('/defect')
-def defect():
-
-    return render_template("defect.html")
+@app.route('/defect/<int:id>', methods=['POST', 'GET'],)
+def defect_update(id):
+    defect_list = Defect.query.get(id)
+    catalog= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).filter(Defect.id == id)
+ 
+    print (request.form)
+    if request.method == "POST":
+        if request.form['defect_name']!="":
+            catalog.id_defect = (request.form['defect_name']).upper()
+            defect_list.defect_name = (request.form['defect_name']).upper()
+        
+            try:         
+                db.session.commit()
+                print('Изменено')
+                return redirect('/add_defect')
+            except:
+                return "При редактировании произошла ошибка"
+        else:
+            return redirect('/add_defect')
+    else:
+        return render_template("defect.html", defect_list=defect_list, catalog=catalog)
 
 
 
