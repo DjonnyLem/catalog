@@ -14,10 +14,10 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
  
   <!-- Custom styles for this template -->
-  <link href="../static/css/navbar-top-fixed.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/navbar-top-fixed.css') }}" rel="stylesheet">
 
 
  <style>
@@ -70,7 +70,7 @@ text-decoration: none;
   <nav class="navbar px-4 navbar-expand-md navbar-light fixed-top bg-white">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
-        <img src="../static/img/logo/logo.svg" alt="logo" width="40" height="40">
+        <img src="{{ url_for('static', filename='img/logo/logo.svg') }}" alt="logo" width="40" height="40">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,8 +151,8 @@ text-decoration: none;
 
   </main>
 
-  <script src="../static/js/base.js"></script>
-  <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <script type="text/javascript">shineLinks('navbarCollapse'); </script>
 </body>

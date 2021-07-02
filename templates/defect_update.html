@@ -61,9 +61,10 @@ Update defect
 <div class="tableFixHead">
   <table class="table table-hover">
     <thead>
-      <tr onclick="window.location.href='/defect'; return false">
-        <th scope="col">id</th>
-        <th scope="col"> Зарегистрированные дефекты</th>
+      <tr >
+ {% for i in table_head %}
+        <th scope="col">{{ i }}</th>
+        {% endfor %}
         
       </tr>
     </thead>
@@ -71,7 +72,7 @@ Update defect
     <tbody>
 
       {% for i in catalog %}
-      <tr>
+      <tr onclick="window.location.href='/defect'; return false">
         <td>{{ i[0].product_name }}</td>
         <td>{{ i[1] }}</td>
         <td>{{ i[0].operation }}</td>

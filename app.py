@@ -580,7 +580,7 @@ def show_operation():
 
 
 ####################################################################
-@app.route('/defect/<int:id>', methods=['POST', 'GET'],)
+@app.route('/defect/<int:id>/update', methods=['POST', 'GET'],)
 def defect_update(id):
     defect_list = Defect.query.get(id)
     catalog= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).filter(Defect.id == id)
@@ -600,14 +600,29 @@ def defect_update(id):
         else:
             return redirect('/add_defect')
     else:
-        return render_template("defect.html", defect_list=defect_list, catalog=catalog)
+        return render_template("defect_update.html",
+                               defect_list=defect_list,
+                               catalog=catalog,
+                               table_head=table_head)
 
 
 
 
                     
 ####################################################################
+@app.route('/defect/<int:id>/del', methods=['POST', 'GET'],)
+def defect_delete(id):
+    defect_list = Defect.query.get(id)
+    catalog= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).filter(Defect.id == id)
+ 
    
+    return render_template("defect_update.html", defect_list=defect_list, catalog=catalog)
+
+
+
+
+                    
+#################################################################### 
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 
 
 {% block title %}
@@ -6,12 +6,13 @@ Update
 {% endblock %}
 
 
-
+{% block body %}
 
 
 <!------------------------------------------------------------------------------->
-{% block nav %}
-<div class="col">
+<div class="container-fluid-mt-5 px-4">
+    <div class="row" style="background-color: #f1f1f1; border:1px solid red; height:100vh">
+<div class="col-md-3">
 
 <ul class="list-group">
           <li class="list-group-item">
@@ -29,10 +30,6 @@ Update
         </ul>
 
 </div>
-{% endblock %}
-
-{% block main %}
-
         <div class="col-md-6">
             <div class="form-group">
                 <h2>Измените данные по дефекту</h2>

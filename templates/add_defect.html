@@ -46,19 +46,26 @@ Add
       <tr>
         <th scope="col">id</th>
         <th scope="col"> Зарегистрированные дефекты</th>
-        <th scope="col"> Редактировать</th>
-		<th scope="col"> Удалить</th>
+        <th scope="col"> </th>
+		<th scope="col"> </th>
       </tr>
     </thead>
 
     <tbody>
 
       {% for i in defect %}
-      <tr onclick="window.location.href='/defect/{{ i.id }}'; return false">
+      <tr>
         <td>{{ i.id }}</td>
       	<td>{{ i.defect_name }}</td>
-      {% endfor %}
-		</tr>
+      
+		<td>
+		<a href="/defect/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Edit</a>
+		</td>
+		<td>
+        <a href='#' class="btn btn-outline-secondary btn-sm">Del</a>
+	</td>
+{% endfor %}
+	</tr>
 
 
     </tbody>
