@@ -612,11 +612,39 @@ def defect_update(id):
 ####################################################################
 @app.route('/defect/<int:id>/del', methods=['POST', 'GET'],)
 def defect_delete(id):
-    defect_list = Defect.query.get(id)
-    catalog= db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).filter(Defect.id == id)
- 
+    defect_list = Defect.query.get_or_404(id)
+    catalog = db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).filter(Defect.id == id)
+    c = db.session.query(Catalog, Defect.defect_name).join(Defect).order_by(Defect.defect_name).filter(Defect.id == id)
+    catalog_list = Catalog.query.get_or_404(id)
+    print (defect_list)
+    for i in catalog:
+        print ('i =',i[0])
+        d = os.path.join(path,i[0].picture)
+        if os.path.isfile (d):
+            os.remove(d)
+        
+        db.session.delete(i[0])
+        db.session.commit()
+    db.session.delete(defect_list)
+    db.session.commit()
+     #print (db.session)       
+
+           #try:
+       # d = os.path.join(path,catalog.picture)
+        #print (d)
+        #if os.path.isfile (d):
+           # os.remove(d)
+        #db.session.delete(catalog)
+        
+        #db.session.commit()
+        #return redirect('/show_catalog')
+    #except:
+        #return "При удалении произошла ошибка" 
    
-    return render_template("defect_update.html", defect_list=defect_list, catalog=catalog)
+    return render_template("add_defect.html",
+                           defect_list=defect_list,
+                           catalog=catalog,
+                           table_head=table_head )
 
 
 

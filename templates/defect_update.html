@@ -48,14 +48,17 @@ Update defect
 <br>
 <div class="col-md-11">
 {% if catalog.count() == 1 %}
-<h3>Данное наименование дефекта участвует в {{catalog.count()}} связанной записи. </h3>
-<h3>Наименование дефекта изменится и в указанной записи</h3>
+<h4>Данное наименование дефекта участвует в {{catalog.count()}} связанной записи. </h4>
+<h5>При изменении наименование дефекта изменится и в указанной записи.</h5>
+<h5 class="text-danger">Внимание! При удалении указанная запись полностью удалится без возможности восстановления.</h5>
+
 {% elif catalog.count() == 0 %}
-<h3>Данное наименование дефекта участвует в {{catalog.count()}} связанной записи </h3>
+<h4>Данное наименование дефекта участвует в {{catalog.count()}} связанной записи </h4>
 
 {% else %}
-<h3>Данное наименование дефекта участвует в {{catalog.count()}} связанных записях.  </h3>
-<h3>Наименование дефекта изменится и в указанных записях</h3>
+<h4>Данное наименование дефекта участвует в {{catalog.count()}} связанных записях.  </h4>
+<h5>При изменении наименование дефекта изменится и в указанных записях.</h5>
+<h5 class="text-danger">Внимание! При удалении указанные записи полностью удалятся без возможности восстановления.</h5>
 {%  endif %}
 
 <div class="tableFixHead">
@@ -72,9 +75,9 @@ Update defect
     <tbody>
 
       {% for i in catalog %}
-      <tr onclick="window.location.href='/defect'; return false">
+      <tr onclick="window.location.href='/catalog_list/{{ i[0].id }}'; return false">
         <td>{{ i[0].product_name }}</td>
-        <td>{{ i[1] }}</td>
+        <td class="text-danger">{{ i[1] }}</td>
         <td>{{ i[0].operation }}</td>
         <td>{{ i[0].note }}</td>
         <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt=""
@@ -90,6 +93,7 @@ Update defect
   </table>
 
 <input type="submit" class="btn btn-outline-secondary" value="Изменить">
+<a href="/defect/{{ defect_list.id }}/del" class="btn btn-outline-danger">Удалить</a>
 </div>
 </div>
 </form>

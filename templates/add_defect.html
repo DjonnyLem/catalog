@@ -5,6 +5,26 @@
 Add
 {% endblock %}
 
+{% block nav %}
+<style>
+
+</style>
+
+<!------------------------------------------------------------------------------->
+<div class="col">
+  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
+    style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
+    <nav class="nav flex-column  p-4">
+      <a class="nav-link" href="add_catalog">Введите данные по дефекту</a>
+      <a class="nav-link" href="add_defect">Введите наименование дефекта</a>
+      <a class="nav-link" href="add_operation">Введите операцию</a>
+      <a class="nav-link" href="add_product">Введите информацию по изделию</a>
+   </nav>
+  </div>
+</div>
+
+
+{% endblock %}
 
 {% block main %}
 
@@ -13,7 +33,7 @@ Add
 
         <div class="col-md-6">
             <div class="form-group">
-                <h2>Введите наименование дефекта</h2>
+                <h2>Введите новое наименование дефекта</h2>
                {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                 {% for category, message in messages %}
@@ -47,7 +67,7 @@ Add
         <th scope="col">id</th>
         <th scope="col"> Зарегистрированные дефекты</th>
         <th scope="col"> </th>
-		<th scope="col"> </th>
+	
       </tr>
     </thead>
 
@@ -59,11 +79,9 @@ Add
       	<td>{{ i.defect_name }}</td>
       
 		<td>
-		<a href="/defect/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Edit</a>
+		<a href="/defect/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Редактировать</a>
 		</td>
-		<td>
-        <a href='#' class="btn btn-outline-secondary btn-sm">Del</a>
-	</td>
+		
 {% endfor %}
 	</tr>
 
