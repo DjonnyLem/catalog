@@ -1,37 +1,108 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 
 
 {% block title %}
-Show_operation
+Show_defect
 {% endblock %}
 
-{% block body %}
+{% block nav %}
+
+<!-- <link href="../static/css/table.css" rel="stylesheet"> -->
+
+<style>
+  .nav a {
+    color: #333333 !important;
+  }
+</style>
+
+<style>
+  /* Стиль фиксации шапки таблицы */
+  .tableFixHead {
+    overflow-y: auto;
+    height: 85vh;
+  }
+
+  .tableFixHead thead th {
+    position: sticky;
+    top: 0;
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 95%;
+  }
+
+  th,
+  td {
+    padding: 8px 16px;
+  }
+
+  th {
+    background: #fff !important;
+  }
+</style>
+
+<div class="col">
+  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
+    style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
+    <nav class="nav flex-column  p-4">
+      <a class="nav-link" href="/show_catalog"> ВСЕ ОПЕРАЦИИ </a>
+      {% for i in defects %}
+      <a class="nav-link" href="/show_catalog/{{ i.id }}"> {{ i.defect_name }},{{ i.id }} </a>
+      {% endfor %}
+    </nav>
+  </div>
+</div>
+{% endblock %}
 
 
+{% block main %}
 
-<div class="container-fluid-mt-5 px-4" style="margin-top: 75px;">
+<!--=======================================================================================-->
+
+<div class="tableFixHead">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        {% for i in table_head %}
+        <th scope="col">{{ i }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for i in catalog %}
+      <tr onclick="window.location.href='/catalog_list/{{ i[0].id }}'; return false">
+        <td>{{ i[0].product_name }}</td>
+        <td>{{ i[1] }}</td>
+        <td>{{ i[0].operation }}</td>
+        <td>{{ i[0].note }}</td>
+        <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt=""
+            style=" max-width: 100%;  height: auto;"></td>
+        <!-- <td>{{ i[0].picture }}</td> -->
 
 
-  <div class="row">
-    <div class="col-md-3" style="border:0.5px solid grey;">
-
-      <ul class="list-group">
-
-        {% for i in operations %}
-        <li class="list-group-item">
-          <a class="nav-link" href="#">{{ i.operation_name }}</a>
-        </li>
-      </ul>
-
+      </tr>
       {% endfor %}
 
 
-    </div>
-    <div class="col">
-      2 of 2
 
-    </div>
-  </div>
+    </tbody>
+
+  </table>
+</div>
 
 
-  {% endblock %}
+
+
+
+
+
+
+<!-- <script src="../static/js/table.js"></script> -->
+<script>
+
+</script>
+
+{% endblock %}
