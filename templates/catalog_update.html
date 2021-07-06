@@ -72,10 +72,10 @@ Update
                         onChange="getValue(this.id);"><br>
                    <!--     <option value="">Выберите изделие</option>  -->
                         {% for i in product %}
-						{% if i.general_name == catalog.product_name %}
-                        <option selected>{{ i.general_name }}</option>
+						{% if i.id == catalog.id_product %}
+                        <option selected value="{{ i.id }}">{{ i.general_name }}</option>
 						{% else %}		
-                        <option>{{ i.general_name }}</option>
+                        <option value="{{ i.id }}">{{ i.general_name }}</option>
 						{% endif %}
                         {% endfor %}
                         <option value="add_product" style="background:green;">Добавить изделие</option>
@@ -88,10 +88,10 @@ Update
                         onChange="getValue(this.id);"><br>
                   <!--       <option value="">Выберите наименование операции</option> -->
                         {% for i in operation %}
-						{% if i.operation_name == catalog.operation %}
-                        <option selected>{{ i.operation_name }}</option>
+						{% if i.id == catalog.id_operation %}
+                        <option selected value="{{ i.id }}">{{ i.operation_name }}</option>
 						{% else %}		
-                        <option>{{ i.operation_name }}</option>
+                        <option value="{{ i.id }}">{{ i.operation_name }}</option>
 						{% endif %}
                         {% endfor %}
                         <option value="add_operation" style="background:green;">Добавить операцию</option>
@@ -116,8 +116,7 @@ Update
 
 
                     <input type="submit" class="btn btn-primary" value="Отправить">
-                    <hr>
-                    <hr>
+                   
                 </form>
             </div>
 

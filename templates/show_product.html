@@ -2,7 +2,7 @@
 
 
 {% block title %}
-Show operations
+Show products
 {% endblock %}
 
 {% block nav %}
@@ -55,8 +55,8 @@ td {
     style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
     <nav class="nav flex-column  p-4">
       <a class="nav-link" href="/show_catalog"> ВСЕ ОПЕРАЦИИ </a>
-      {% for i in operations %}
-      <a class="nav-link" href="/show_operation/{{ i.id }}"> {{ i.operation_name }},{{ i.id }} </a>
+      {% for i in products %}
+      <a class="nav-link" href="/show_product/{{ i.id }}"> {{ i.general_name }},{{ i.id }} </a>
       {% endfor %}
     </nav>
   </div>

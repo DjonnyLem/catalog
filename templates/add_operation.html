@@ -5,13 +5,71 @@
 Add operation
 {% endblock %}
 
+{% block nav %}
+<style>
+
+</style>
+<style>
+  /* Стиль фиксации шапки таблицы */
+  .tableFixHead {
+    overflow-y: auto;
+    height: 50vh;
+  }
+
+  .tableFixHead thead th {
+    position: sticky;
+    top: 0;
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 8px 16px;
+  }
+
+  th {
+    background: #fff !important;
+  }
+</style>
+<!------------------------------------------------------------------------------->
+<div class="col">
+  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
+    style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
+    <nav class="nav flex-column  p-4">
+      <a class="nav-link" href="add_catalog">Введите данные по дефекту</a>
+      <a class="nav-link" href="add_defect">Введите наименование дефекта</a>
+      <a class="nav-link" href="add_operation">Введите операцию</a>
+      <a class="nav-link" href="add_product">Введите информацию по изделию</a>
+   </nav>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+<!------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------->
 
 {% block main %}
 
 
-        <div class="col-md-9">
+        <div class="col-md-6">
             <div class="form-group">
-                <h2 id="2">Введите операцию</h2>
+                <h2 id="2">Введите новую операцию</h2>
+               {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <span>{{ message }}</span>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
 
                 <form method="post" id="3">
                     <label>Введите наименование операции: </label>
@@ -34,36 +92,52 @@ Add operation
         </div>
  
 <!------------------------------------------------------------------------------->
+<!---------------------------------------------------------------------------------------->
 
+<br>
+<br>
+<div class="col-md-8">
+
+<h2>Или выберите операцию для редактирования или удаления</h2>
+<div class="tableFixHead">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col"> Зарегистрированные операции</th>
+        <th scope="col"> </th>
+	
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for i in operation %}
+      <tr>
+        <td>{{ i.id }}</td>
+      	<td>{{ i.operation_name }}</td>
+
+		<td>
+		<a href="/operation/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Редактировать</a>
+		</td>
+		
+{% endfor %}
+	</tr>
+
+
+    </tbody>
+
+  </table>
+</div>
+</div>
+<!---------------------------------------------------------------------------------------->
+
+      
 
 <script>
-    function getValue() {
-        let next = "#2"
-        let a = document.getElementById("form-select1");
-        //let b = a.value;
-        /*   if (a.selectedIndex != -1) {
-               //Если есть выбранный элемент, отобразить его значение (свойство value)
-               console.log(a.options[a.selectedIndex].text);
-           }*/
-
-        if (a.options[a.selectedIndex].value == "add_defect") {
-            document.location.href = "#2"//"#top"
-        } else if (a.options[a.selectedIndex].value == "add_operation") {
-            document.location.href = "#3"
-        } else if (a.options[a.selectedIndex].value == "add_product") {
-            document.location.href = "#4"
-        }
-    }
-
+    
 </script>
-<script>
-    function filesize() {
-        let file = document.getElementById("image").files[0].size;
-        console.log('fs=', file);
 
-        //let a = 'filesize'+'='+file;
-
-        document.cookie = 'filesize' + '=' + file;
-    }
-</script>
 {% endblock %}
+
+

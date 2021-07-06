@@ -59,7 +59,7 @@ Add
                         onChange="getValue(this.id);"><br>
                         <option value="">Выберите изделие</option>
                         {% for i in product %}
-                        <option>{{ i.general_name }}</option>
+                        <option value="{{ i.id }}">{{ i.general_name }}</option>
                         {% endfor %}
                         <option value="add_product" style="color:#ff8111;">Добавить изделие</option>
                     </select><br>

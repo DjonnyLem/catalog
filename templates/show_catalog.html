@@ -2,7 +2,7 @@
 
 
 {% block title %}
-Show_defect
+Show defects
 {% endblock %}
 
 {% block nav %}
@@ -41,7 +41,15 @@ Show_defect
     background: #fff !important;
   }
 </style>
-
+<style>
+/*table {
+    table-layout: fixed;
+}*/
+td {
+    /*word-wrap:break-word;*/
+	word-break: break-all;
+}
+</style>
 <div class="col">
   <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
     style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
@@ -74,10 +82,10 @@ Show_defect
 
       {% for i in catalog %}
       <tr onclick="window.location.href='/catalog_list/{{ i[0].id }}'; return false">
-        <td>{{ i[0].product_name }}</td>
+        <td>{{ i[3]}}</td>
         <td>{{ i[1] }}</td>
         <td>{{ i[2] }}</td>
-        <td>{{ i[0].note }}</td>
+        <td style="width:25%">{{ i[0].note }}</td>
         <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt=""
             style=" max-width: 100%;  height: auto;"></td>
         <!-- <td>{{ i[0].picture }}</td> -->
