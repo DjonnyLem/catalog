@@ -701,6 +701,35 @@ def operation_delete(id):
 
 ####################################################################
 
+@app.route('/product/<int:id>/update', methods=['POST', 'GET'],)
+def product_update(id):
+    product_list = Product.query.get(id)
+    catalog = db.session.query(Catalog, Defect.defect_name, Operation.operation_name, Product.general_name).join(
+        Defect, Operation, Product).order_by(Product.general_name).filter(Product.id == id)
+
+    if request.method == "POST":
+        if request.form['operation_name'] != "":
+            catalog.id_operation = (request.form['operation_name']).upper()
+            operation_list.operation_name = (request.form['operation_name']).upper()
+
+            try:
+                db.session.commit()
+                print('Изменено')
+                return redirect('/add_operation')
+            except:
+                return "При редактировании произошла ошибка"
+        else:
+            return redirect('/add_operation')
+    else:
+        return render_template("product_update.html",
+                               product_list=product_list,
+                               catalog=catalog,
+                               table_head=table_head)
+
+
+
+
+####################################################################
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -5,6 +5,53 @@
 Add product
 {% endblock %}
 
+{% block nav %}
+<style>
+
+</style>
+<style>
+  /* Стиль фиксации шапки таблицы */
+  .tableFixHead {
+    overflow-y: auto;
+    height: 50vh;
+  }
+
+  .tableFixHead thead th {
+    position: sticky;
+    top: 0;
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 8px 16px;
+  }
+
+  th {
+    background: #fff !important;
+  }
+</style>
+<!------------------------------------------------------------------------------->
+<div class="col">
+  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
+    style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
+    <nav class="nav flex-column  p-4">
+      <a class="nav-link" href="add_catalog">Введите данные по дефекту</a>
+      <a class="nav-link" href="add_defect">Введите наименование дефекта</a>
+      <a class="nav-link" href="add_operation">Введите операцию</a>
+      <a class="nav-link" href="add_product">Введите информацию по изделию</a>
+   </nav>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
 
 {% block main %}
 
@@ -49,54 +96,53 @@ Add product
 <!------------------------------------------------------------------------------->
 
 
+    
+<!---------------------------------------------------------------------------------------->
+
+
+<br>
+<div class="col-md-8">
+
+<h2>Или выберите изделие для редактирования или удаления</h2>
+<div class="tableFixHead">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col"> Зарегистрированные изделия</th>
+        <th scope="col"> </th>
+	
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for i in product %}
+      <tr>
+        <td>{{ i.id }}</td>
+      	<td>{{ i.general_name }}</td>
+
+		<td>
+		<a href="/product/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Редактировать</a>
+		</td>
+		
+{% endfor %}
+	</tr>
+
+
+    </tbody>
+
+  </table>
+</div>
+</div>
+<!---------------------------------------------------------------------------------------->
+
+      
+
 <script>
-    function getValue() {
-        let next = "#2"
-        let a = document.getElementById("form-select1");
-        //let b = a.value;
-        /*   if (a.selectedIndex != -1) {
-               //Если есть выбранный элемент, отобразить его значение (свойство value)
-               console.log(a.options[a.selectedIndex].text);
-           }*/
-
-        if (a.options[a.selectedIndex].value == "add_defect") {
-            document.location.href = "#2"//"#top"
-        } else if (a.options[a.selectedIndex].value == "add_operation") {
-            document.location.href = "#3"
-        } else if (a.options[a.selectedIndex].value == "add_product") {
-            document.location.href = "#4"
-        }
-    }
-
+    
 </script>
-<script>
-    function filesize() {
-        let file = document.getElementById("image").files[0].size;
-        console.log('fs=', file);
 
-        //let a = 'filesize'+'='+file;
-
-        document.cookie = 'filesize' + '=' + file;
-    }
-</script>
 {% endblock %}
 
 
-</script>
-var menu = document.querySelector('.menu');
-var anchors = menu.getElementsByTagName('a');
-
-for (var i = 0; i < anchors.length; i += 1) {
-  anchors[i].addEventListener('click', function() { clickHandler(anchors[i]) }, false);
-}
-
-function clickHandler(anchor) {
-  var hasClass = anchor.getAttribute('class');
-  if (hasClass !== 'active') {
-    anchor.setAttribute('class', 'active');
-  }
-}
-$(function() {
-  $('nav a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
-});
-</script>
