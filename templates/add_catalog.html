@@ -7,109 +7,98 @@ Add
 
 
 {% block nav %}
-<style>
-  .nav a {
-    color: #333333 !important;
-  }
-</style>
 
-<!------------------------------------------------------------------------------->
-<div class="col">
-  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
-    style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
-    <nav class="nav flex-column  p-4">
-      <a class="nav-link" href="add_catalog">Введите данные по дефекту</a>
-      <a class="nav-link" href="add_defect">Введите наименование дефекта</a>
-      <a class="nav-link" href="add_operation">Введите операцию</a>
-      <a class="nav-link" href="add_product">Введите информацию по изделию</a>
-   </nav>
-  </div>
-</div>
-
+{% include 'navAdd.html' %}
 
 {% endblock %}
+
+
 {% block main %}
-        <div class="col-md-6">
-            <div class="form-group">
-                <h2>Введите данные по дефекту</h2>
+<style>
+            
+                
+</style>
+<div class="col-md-6">
+  <div class="form-group">
+    <h2>Введите данные по дефекту</h2>
 
-                <form method="post" id="1" enctype="multipart/form-data">
-			 <label>Выберите наименование дефекта: </label>
-                    <select class="form-control" id="defect_name" name="defect_name" required="required"
-                        onChange="getValue(this.id);"><br>
-                        <option value="">Выберите значение</option>
-                        {% for i in defect %}
-                        <option value="{{ i.id }}">{{ i.defect_name }}</option>
-                        {% endfor %}
-                        <option value="add_defect" style="color:#ff8111;">Добавить дефект</option>
-                    </select><br>
-
-
-                 <label>Выберите допустимость дефекта: </label>
-                    <select class="form-control" name="defect_type" id="defect_type" required="required"><br>
-                        <option value="">Выберите допустимость дефекта</option>
-
-                        <option value="1" style="color: green;">Дефект допустим</option>
-                        <option value="0" style="color: red;">Дефект не допустим</option>
-                    </select><br>
+    <form method="post" id="1" enctype="multipart/form-data">
+      <label>Выберите наименование дефекта: </label>
+      <select class="form-select" id="defect_name" name="defect_name" required="required" onChange="getValue(this.id);">
+        <option class="text-black-50" value="">Выберите значение</option>
+        {% for i in defect %}
+        <option value="{{ i.id }}">{{ i.defect_name }}</option>
+        {% endfor %}
+        <option value="add_defect" style="background-color:#ff8111; color:#fff;">ДОБАВИТЬ ДЕФЕКТ</option>
+      </select>
+      <br>
 
 
-                   <label>Выберите изделие:</label>
-                    <select class="form-control" id="product_name" name="product_name" required="required"
-                        onChange="getValue(this.id);"><br>
-                        <option value="">Выберите изделие</option>
-                        {% for i in product %}
-                        <option value="{{ i.id }}">{{ i.general_name }}</option>
-                        {% endfor %}
-                        <option value="add_product" style="color:#ff8111;">Добавить изделие</option>
-                    </select><br>
+      <label>Выберите допустимость дефекта: </label>
+      <select class="form-select" name="defect_type" id="defect_type" required="required">
+        <option value="">Выберите допустимость дефекта</option>
+
+        <option value="1" style="color: green;">Дефект допустим</option>
+        <option value="0" style="color: red;">Дефект не допустим</option>
+      </select><br>
+
+
+      <label>Выберите изделие:</label>
+      <select class="form-select" id="product_name" name="product_name" required="required"
+        onChange="getValue(this.id);">
+        <option value="">Выберите изделие</option>
+        {% for i in product %}
+        <option value="{{ i.id }}">{{ i.general_name }}</option>
+        {% endfor %}
+        <option value="add_product" style="background-color:#ff8111; color:#fff;">ДОБАВИТЬ ИЗДЕЛИЕ</option>
+      </select><br>
 
 
 
-                    <label>Выберите наименование операции:</label>
-                    <select class="form-control" id="operation_name" name="operation_name" required="required"
-                        onChange="getValue(this.id);"><br>
-                        <option value="">Выберите наименование операции</option>
-                        {% for i in operation %}
-                        <option value="{{ i.id }}">{{ i.operation_name }}</option>
-                        {% endfor %}
-                        <option value="add_operation" style="color:#ff8111;">Добавить операцию</option>
-                    </select><br>
+      <label>Выберите наименование операции:</label>
+      <select class="form-select" id="operation_name" name="operation_name" required="required"
+        onChange="getValue(this.id);">
+        <option value="">Выберите наименование операции</option>
+        {% for i in operation %}
+        <option value="{{ i.id }}">{{ i.operation_name }}</option>
+        {% endfor %}
+        <option value="add_operation" style="background-color:#ff8111; color:#fff;">ДОБАВИТЬ ОПЕРАЦИЮ</option>
+      </select><br>
 
-<!--
+      <!--
                     <label>Прикрепите фото дефекта: </label>
                     <input type="text" name="defect_picture" id="defect_picture" class="form-control"
                         placeholder="Прикрепите фото дефекта">
 -->
 
-                    <div class="custom-file">
-                        <label>Прикрепите фото дефекта:</label>
-                        <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
-                        
-               {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <span>{{ message }}</span>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-					<br>
-                    </div>
+      <div class="custom-file">
+        <label>Прикрепите фото дефекта:</label>
+        <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <span>{{ message }}</span>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+      </div>
 
 
-                    <label>Введите пояснение: </label>
-                    <textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
+      <label>Введите пояснение: </label>
+      <textarea name="note" id="note" class="form-control" placeholder="Введите пояснение"></textarea><br>
 
 
-                    <input type="submit" class="btn btn-outline-secondary" value="Отправить">
-                    
-                </form>
-            </div>
+      <input type="submit" class="btn btn-outline-secondary" value="Отправить">
+
+    </form>
+  </div>
 
 
 
-        </div>
-    </div>
+</div>
+</div>
 </div>
 
 </div>
@@ -119,65 +108,65 @@ Add
 
 <script>
   let a = document.getElementById(this.id);
-console.log (a);
-    let d = document.getElementsByTagName('select');
-    console.log (d)
-	var ids = document.querySelectorAll('[id]');
-    console.log (ids)
-    Array.prototype.forEach.call( ids, function( el, i ) {
-        console.log( el.id ); // log the ID
-    });
-    function getValue(id) {
+  console.log(a);
+  let d = document.getElementsByTagName('select');
+  console.log(d)
+  var ids = document.querySelectorAll('[id]');
+  console.log(ids)
+  Array.prototype.forEach.call(ids, function (el, i) {
+    console.log(el.id); // log the ID
+  });
+  function getValue(id) {
 
- ////let a = document.getElementById("defect_name");
-//// console.log (a);
- ////let val = a.options[a.selectedIndex].value;
- // == "add_defect"){
-  //  document.location.href="/add_defect";;
+    ////let a = document.getElementById("defect_name");
+    //// console.log (a);
+    ////let val = a.options[a.selectedIndex].value;
+    // == "add_defect"){
+    //  document.location.href="/add_defect";;
     //
- let f =  document.getElementById(id).id;
- let g =  document.getElementById(id).value;
-console.log(f,g);
+    let f = document.getElementById(id).id;
+    let g = document.getElementById(id).value;
+    console.log(f, g);
 
-if (f == "defect_name" && g == "add_defect"){
-console.log("OEEE defect name");
-document.location.href="/add_defect";
-}
-else if (f == "operation_name" && g == "add_operation"){
-    console.log("OEEE operation name");
-    document.location.href="/add_operation";
+    if (f == "defect_name" && g == "add_defect") {
+      console.log("OEEE defect name");
+      document.location.href = "/add_defect";
     }
-   else if (f == "product_name" && g == "add_product"){
-        console.log("OEEE product name");
-        document.location.href = "/add_product";
-        }
- //}
-////console.log(val);
-////if (val == "add_defect"){
-  ////  console.log("ok");
-  ////  document.location.href="/add_defect"
-////}
+    else if (f == "operation_name" && g == "add_operation") {
+      console.log("OEEE operation name");
+      document.location.href = "/add_operation";
+    }
+    else if (f == "product_name" && g == "add_product") {
+      console.log("OEEE product name");
+      document.location.href = "/add_product";
+    }
+    //}
+    ////console.log(val);
+    ////if (val == "add_defect"){
+    ////  console.log("ok");
+    ////  document.location.href="/add_defect"
+    ////}
 
-   //   if a.options[a.selectedIndex].value == "add_defect") {
-     //     document.location.href="/add_defect"
-     //   } 
-//		else if b.options[a.selectedIndex].value == "add_operation") {
-  //          document.location.href = "/add_operation"
-//        } 
-//		else if c.options[a.selectedIndex].value == "add_product") {
-   //         document.location.href = "/add_product"
- //       }
-    }
+    //   if a.options[a.selectedIndex].value == "add_defect") {
+    //     document.location.href="/add_defect"
+    //   } 
+    //		else if b.options[a.selectedIndex].value == "add_operation") {
+    //          document.location.href = "/add_operation"
+    //        } 
+    //		else if c.options[a.selectedIndex].value == "add_product") {
+    //         document.location.href = "/add_product"
+    //       }
+  }
 
 </script>
 <script>
-    function filesize() {
-        let file = document.getElementById("image").files[0].size;
-        console.log('fs=', file);
+  function filesize() {
+    let file = document.getElementById("image").files[0].size;
+    console.log('fs=', file);
 
-        //let a = 'filesize'+'='+file;
+    //let a = 'filesize'+'='+file;
 
-        document.cookie = 'filesize' + '=' + file;
-    }
+    document.cookie = 'filesize' + '=' + file;
+  }
 </script>
 {% endblock %}

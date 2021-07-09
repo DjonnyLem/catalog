@@ -35,19 +35,8 @@ Add
     background: #fff !important;
   }
 </style>
-<!------------------------------------------------------------------------------->
-<div class="col">
-  <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
-    style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
-    <nav class="nav flex-column  p-4">
-      <a class="nav-link" href="add_catalog">Введите данные по дефекту</a>
-      <a class="nav-link" href="add_defect">Введите наименование дефекта</a>
-      <a class="nav-link" href="add_operation">Введите операцию</a>
-      <a class="nav-link" href="add_product">Введите информацию по изделию</a>
-   </nav>
-  </div>
-</div>
 
+{% include 'navAdd.html' %}
 
 {% endblock %}
 
@@ -56,72 +45,72 @@ Add
 
 <!------------------------------------------------------------------------------->
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <h2>Введите новое наименование дефекта</h2>
-               {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <span>{{ message }}</span>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
+<div class="col-md-6">
+  <div class="form-group">
+    <h2>Введите новое наименование дефекта</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <span>{{ message }}</span>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
-                <form method="post" id="2">
-                    <label>Введите наименование дефекта: </label>
-                    <input type="text" name="defect_name" id="defect_name" class="form-control"
-                        placeholder="Введите наименование дефекта"><br>
+    <form method="post" id="2">
+      <label>Введите наименование дефекта: </label>
+      <input type="text" name="defect_name" id="defect_name" class="form-control"
+        placeholder="Введите наименование дефекта"><br>
 
 
-                    <input type="submit" class="btn btn-outline-secondary" value="Отправить">
+      <input type="submit" class="btn btn-outline-secondary" value="Отправить">
 
-                </form>
-            </div>
-        </div>
+    </form>
+  </div>
+</div>
 <!---------------------------------------------------------------------------------------->
 
 <br>
 <br>
 <div class="col-md-8">
 
-<h2>Или выберите наименование дефекта для редактирования или удаления</h2>
-<div class="tableFixHead">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col"> Зарегистрированные дефекты</th>
-        <th scope="col"> </th>
-	
-      </tr>
-    </thead>
+  <h2>Или выберите наименование дефекта для редактирования или удаления</h2>
+  <div class="tableFixHead">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col"> Зарегистрированные дефекты</th>
+          <th scope="col"> </th>
 
-    <tbody>
+        </tr>
+      </thead>
 
-      {% for i in defect %}
-      <tr>
-        <td>{{ i.id }}</td>
-      	<td>{{ i.defect_name }}</td>
+      <tbody>
 
-		<td>
-		<a href="/defect/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Редактировать</a>
-		</td>
-		
-{% endfor %}
-	</tr>
+        {% for i in defect %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.defect_name }}</td>
+
+          <td>
+            <a href="/defect/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Редактировать</a>
+          </td>
+
+          {% endfor %}
+        </tr>
 
 
-    </tbody>
+      </tbody>
 
-  </table>
-</div>
+    </table>
+  </div>
 </div>
 <!---------------------------------------------------------------------------------------->
 
-      
+
 
 <script>
-    
+
 </script>
 
 {% endblock %}

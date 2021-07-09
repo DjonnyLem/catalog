@@ -24,7 +24,7 @@ Update defect
   .table {
     border-collapse: collapse;
     width: 100%;
-	font-size: 0.9rem;
+    font-size: 0.9rem;
   }
 
   th,
@@ -37,14 +37,16 @@ Update defect
   }
 </style>
 <style>
-/*table {
+  /*table {
     table-layout: fixed;
 }*/
-td {
+  td {
     /*word-wrap:break-word;*/
-	word-break: break-all;
-}
+    word-break: break-all;
+  }
 </style>
+
+{% include 'navAdd.html' %}
 
 {% endblock %}
 
@@ -55,109 +57,111 @@ td {
 
 <!------------------------------------------------------------------------------->
 <form method="post" id="2">
-        <div class="col-md-6">
-            <div class="form-group">
-                <h2>Измените наименование операции</h2>
-               {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <span>{{ message }}</span>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-
-                
-                    <label>Введите наименование операции: </label>
-                    
-                    <input type="text" name="operation_name" id="operation_name" class="form-control"
-                        placeholder="{{ operation_list.operation_name }}"><br> 
+  <div class="col-md-6">
+    <div class="form-group">
+      <h2>Измените наименование операции</h2>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <span>{{ message }}</span>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
 
 
- 
+      <label>Введите наименование операции: </label>
+
+      <input type="text" name="operation_name" id="operation_name" class="form-control"
+        placeholder="{{ operation_list.operation_name }}"><br>
 
 
 
-            </div>
-        </div>
-<!---------------------------------------------------------------------------------------->
 
 
-<br>
-<div class="col-md-11">
-{% if catalog.count() == 1 %}
-<h5>Данная операция участвует в {{catalog.count()}} связанной записи. </h5>
-<h5>При изменении информация по операции изменится и в указанной записи.</h5>
-<h5 class="text-danger">Внимание! При удалении указанная запись полностью удалится без возможности восстановления.</h5>
 
-{% elif catalog.count() == 0 %}
-<h5>Данная операция участвует в {{catalog.count()}} связанной записи </h5>
-
-{% else %}
-<h5>Данная операция участвует в {{catalog.count()}} связанных записях.  </h5>
-<h5>При изменении информация по операции изменится и в указанных записях.</h5>
-<h5 class="text-danger">Внимание! При удалении указанные записи полностью удалятся без возможности восстановления.</h5>
-{%  endif %}
-<hr>
-<div class="tableFixHead">
-  <table class="table table-hover">
-    <thead>
-      <tr >
- {% for i in table_head %}
-        <th scope="col">{{ i }}</th>
-        {% endfor %}
-        
-      </tr>
-    </thead>
-
-    <tbody>
-
-      {% for i in catalog %}
-      <tr onclick="window.location.href='/catalog_list/{{ i[0].id }}/update'; return false">
-        <td>{{ i[3] }}</td>
-        <td>{{ i[1] }}</td>
-        <td class="text-danger">{{ i[2] }}</td>
-        <td style="width:25%">{{ i[0].note }}</td>
-        <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt=""
-            style=" max-width: 100%;  height: auto;"></td>
-        {% endfor %}
-		
-      </tr>
-      
+    </div>
+  </div>
+  <!---------------------------------------------------------------------------------------->
 
 
-    </tbody>
+  <br>
+  <div class="col-md-11">
+    {% if catalog.count() == 1 %}
+    <h5>Данная операция участвует в {{catalog.count()}} связанной записи. </h5>
+    <h5>При изменении информация по операции изменится и в указанной записи.</h5>
+    <h5 class="text-danger">Внимание! При удалении указанная запись полностью удалится без возможности восстановления.
+    </h5>
 
-  </table>
-</div>
-<br>
-		<div class="btn pb-4" >
-			<input type="submit" class="btn btn-outline-secondary" value="Изменить">
-			<a href="/operation/{{ operation_list.id }}/del" class="btn btn-outline-danger">Удалить</a>
-		</div>
-</div>
+    {% elif catalog.count() == 0 %}
+    <h5>Данная операция участвует в {{catalog.count()}} связанной записи </h5>
+
+    {% else %}
+    <h5>Данная операция участвует в {{catalog.count()}} связанных записях. </h5>
+    <h5>При изменении информация по операции изменится и в указанных записях.</h5>
+    <h5 class="text-danger">Внимание! При удалении указанные записи полностью удалятся без возможности восстановления.
+    </h5>
+    {% endif %}
+    <hr>
+    <div class="tableFixHead">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for i in table_head %}
+            <th scope="col">{{ i }}</th>
+            {% endfor %}
+
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% for i in catalog %}
+          <tr onclick="window.location.href='/catalog_list/{{ i[0].id }}/update'; return false">
+            <td>{{ i[3] }}</td>
+            <td>{{ i[1] }}</td>
+            <td class="text-danger">{{ i[2] }}</td>
+            <td style="width:25%">{{ i[0].note }}</td>
+            <td style="width:10%"><img src="/{{ i[0].picture }}" class="img-thumbnail" alt=""
+                style=" max-width: 100%;  height: auto;"></td>
+            {% endfor %}
+
+          </tr>
+
+
+
+        </tbody>
+
+      </table>
+    </div>
+    <br>
+    <div class="btn pb-4">
+      <input type="submit" class="btn btn-outline-secondary" value="Изменить">
+      <a href="/operation/{{ operation_list.id }}/del" class="btn btn-outline-danger">Удалить</a>
+    </div>
+  </div>
 </form>
 <!---------------------------------------------------------------------------------------->
 
 <script>
 
-window.onload = function () {
-  Height();
-};
-window.onresize = function () {
+  window.onload = function () {
+    Height();
+  };
+  window.onresize = function () {
     Height();
   };
 
-function Height (){
-	let divTable =document.querySelector('.tableFixHead');
-	let bodyHeight = document.documentElement.clientHeight
+  function Height() {
+    let divTable = document.querySelector('.tableFixHead');
+    let bodyHeight = document.documentElement.clientHeight
 
-	//if (divTable.clientHeight > 150){
-	if (bodyHeight > 665){
-		divTable.style.height = (bodyHeight - divTable.offsetTop - 100) +'px';
-		}
-	else {
-		divTable.style.height = 200+"px";
-		}
-	};
+    //if (divTable.clientHeight > 150){
+    if (bodyHeight > 665) {
+      divTable.style.height = (bodyHeight - divTable.offsetTop - 100) + 'px';
+    }
+    else {
+      divTable.style.height = 200 + "px";
+    }
+  };
 </script>
 {% endblock %}

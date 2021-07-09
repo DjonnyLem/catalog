@@ -608,34 +608,36 @@ def defect_update(id):
 @app.route('/defect/<int:id>/del', methods=['POST', 'GET'],)
 def defect_delete(id):
     defect_list = Defect.query.get_or_404(id)
-    catalog = db.session.query(Catalog, Defect.defect_name).join(
-        Defect).order_by(Defect.defect_name).filter(Defect.id == id)
- #   c = db.session.query(Catalog, Defect.defect_name).join(
-  #      Defect).order_by(Defect.defect_name).filter(Defect.id == id)
-    catalog_list = Catalog.query.get_or_404(id)
-    print(defect_list)
-    try:
-        for i in catalog:
-            print('i =', i[0])
-            d = os.path.join(path, i[0].picture)
-        
-            if os.path.isfile(d):
-                os.remove(d)
+    # catalog = db.session.query(Catalog, Defect.defect_name).join(
+        # Defect).order_by(Defect.defect_name).filter(Defect.id == id)
 
-            db.session.delete(i[0])
+    catalog = db.session.query(Catalog).filter_by(id_defect=id)
+    if catalog.first() is not None:
+        print ('Catalog contains ID')
+        try:
+            for i in catalog:
+                print('i =', i.picture)
+                d = os.path.join(path, i.picture)
+                if os.path.isfile(d):
+                    os.remove(d)
+                db.session.delete(i)
+                db.session.commit()
+            db.session.delete(defect_list)
             db.session.commit()
-        db.session.delete(defect_list)
-        db.session.commit()
-        return redirect('/add_defect')
-    except:
-        return "При удалении произошла ошибка"
-    
-
-    return render_template("add_defect.html",
-                           defect_list=defect_list,
-                           catalog=catalog,
-                           table_head=table_head)
-
+            return redirect('/add_defect')
+        except:
+            return "При удалении произошла ошибка"
+        
+    else:
+        print ('Catalog not contains ID')
+        try:
+            db.session.delete(defect_list)
+            db.session.commit()
+            return redirect('/add_defect')
+        except:
+            return "При удалении произошла ошибка"
+      
+            
 
 ####################################################################
 
@@ -670,34 +672,36 @@ def operation_update(id):
 @app.route('/operation/<int:id>/del', methods=['POST', 'GET'],)
 def operation_delete(id):
     operation_list = Operation.query.get_or_404(id)
-    catalog = db.session.query(Catalog, Operation.operation_name).join(
-        Operation).order_by(Operation.operation_name).filter(Operation.id == id)
-#    c = db.session.query(Catalog, Operation.operation_name).join(
-#        Operation).order_by(Operation.operation_name).filter(Operation.id == id)
-    catalog_list = Catalog.query.get_or_404(id)
-    print(operation_list)
-    try:
-        for i in catalog:
-            print('i =', i[0])
-            d = os.path.join(path, i[0].picture)
-        
-            if os.path.isfile(d):
-                os.remove(d)
+ ##   catalog = db.session.query(Catalog, Operation.operation_name).join(
+ ##       Operation).order_by(Operation.operation_name).filter(Operation.id == id)
 
-            db.session.delete(i[0])
+    catalog = db.session.query(Catalog).filter_by(id_operation=id)
+
+
+    if catalog.first() is not None:
+        print ('Catalog contains ID')
+        try:
+            for i in catalog:
+                print('i =', i.picture)
+                d = os.path.join(path, i.picture)
+                if os.path.isfile(d):
+                    os.remove(d)
+                db.session.delete(i)
+                db.session.commit()
+            db.session.delete(operation_list)
             db.session.commit()
-        db.session.delete(operation_list)
-        db.session.commit()
-        return redirect('/add_operation')
-    except:
-        return "При удалении произошла ошибка"
-
-    return redirect('/add_operation')
-
-    #return render_template("add_operation.html",
-     #                      operation_list=operation_list,
-     #                      catalog=catalog,
-     #                      table_head=table_head)
+            return redirect('/add_operation')
+        except:
+            return "При удалении произошла ошибка"
+        
+    else:
+        print ('Catalog not contains ID')
+        try:
+            db.session.delete(operation_list)
+            db.session.commit()
+            return redirect('/add_operation')
+        except:
+            return "При удалении произошла ошибка"
 
 
 ####################################################################
@@ -770,51 +774,9 @@ def product_delete(id):
         except:
             return "При удалении произошла ошибка"
         
-#    c = db.session.query(Catalog, Operation.operation_name).join(
-#        Operation).order_by(Operation.operation_name).filter(Operation.id == id)
-#    catalog_list = Catalog.query.get_or_404(id)
-#    try:
-        
-#        for i in catalog:
-#            print('i =', i[0])
-#            d = os.path.join(path, i[0].picture)
-            
-        
-#            if os.path.isfile(d):
-#                os.remove(d)
-
-#            db.session.delete(i[0])
-#            db.session.commit()
-#        db.session.delete(product_list)
-#        db.session.commit()
-#        return redirect('/add_product')
-#    except:
-#        return "При удалении произошла ошибка"
     
-#  return redirect('/add_product')
-#    return render_template("add_product.html",
- #                          product_list=product_list,
- #                          catalog=catalog,
-  #                         table_head=table_head)
-
-    
-
+####################################################################
 if __name__ == "__main__":
     app.run(debug=True)
 
 
-"""
-@app.route('/profile')
-def profile():
-    if user_not_logged_in:
-        session['url'] = url_for('profile')
-        return redirect(url_for('login'))
-    return rendertemplate('profile.html')
-
-@app.route('/login')
-def login():
-    if login == True: #assuming login was successful
-         if 'url' in session:
-            return redirect(session['url'])
-         return redirect(url_for('anyother_url'))
-"""
