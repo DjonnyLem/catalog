@@ -586,7 +586,7 @@ def defect_update(id):
 
     if request.method == "POST":
         if request.form['defect_name'] != "":
-            catalog.id_defect = (request.form['defect_name']).upper()
+ #           catalog.id_defect = (request.form['defect_name']).upper()
             defect_list.defect_name = (request.form['defect_name']).upper()
 
             try:
@@ -610,8 +610,8 @@ def defect_delete(id):
     defect_list = Defect.query.get_or_404(id)
     catalog = db.session.query(Catalog, Defect.defect_name).join(
         Defect).order_by(Defect.defect_name).filter(Defect.id == id)
-    c = db.session.query(Catalog, Defect.defect_name).join(
-        Defect).order_by(Defect.defect_name).filter(Defect.id == id)
+ #   c = db.session.query(Catalog, Defect.defect_name).join(
+  #      Defect).order_by(Defect.defect_name).filter(Defect.id == id)
     catalog_list = Catalog.query.get_or_404(id)
     print(defect_list)
     try:
@@ -648,7 +648,7 @@ def operation_update(id):
 
     if request.method == "POST":
         if request.form['operation_name'] != "":
-            catalog.id_operation = (request.form['operation_name']).upper()
+#            catalog.id_operation = (request.form['operation_name']).upper()
             operation_list.operation_name = (request.form['operation_name']).upper()
 
             try:
@@ -672,8 +672,8 @@ def operation_delete(id):
     operation_list = Operation.query.get_or_404(id)
     catalog = db.session.query(Catalog, Operation.operation_name).join(
         Operation).order_by(Operation.operation_name).filter(Operation.id == id)
-    c = db.session.query(Catalog, Operation.operation_name).join(
-        Operation).order_by(Operation.operation_name).filter(Operation.id == id)
+#    c = db.session.query(Catalog, Operation.operation_name).join(
+#        Operation).order_by(Operation.operation_name).filter(Operation.id == id)
     catalog_list = Catalog.query.get_or_404(id)
     print(operation_list)
     try:
@@ -691,12 +691,13 @@ def operation_delete(id):
         return redirect('/add_operation')
     except:
         return "При удалении произошла ошибка"
-    
 
-    return render_template("add_operation.html",
-                           operation_list=operation_list,
-                           catalog=catalog,
-                           table_head=table_head)
+    return redirect('/add_operation')
+
+    #return render_template("add_operation.html",
+     #                      operation_list=operation_list,
+     #                      catalog=catalog,
+     #                      table_head=table_head)
 
 
 ####################################################################
@@ -708,18 +709,27 @@ def product_update(id):
         Defect, Operation, Product).order_by(Product.general_name).filter(Product.id == id)
 
     if request.method == "POST":
-        if request.form['operation_name'] != "":
-            catalog.id_operation = (request.form['operation_name']).upper()
-            operation_list.operation_name = (request.form['operation_name']).upper()
-
-            try:
-                db.session.commit()
-                print('Изменено')
-                return redirect('/add_operation')
-            except:
-                return "При редактировании произошла ошибка"
+        if request.form['article_number'] == "" and request.form['article_name'] != "":
+            product_list.article_name = (request.form['article_name']).upper()            
+            product_list.general_name = f"{(request.form['article_name']).upper()}, {product_list.article_number}"
+        elif request.form['article_number'] != "" and request.form['article_name'] == "":
+            product_list.article_number = (request.form['article_number']).upper()
+            product_list.general_name = f"{product_list.article_name}, {(request.form['article_number']).upper()}"
+        elif request.form['article_number'] != "" and request.form['article_name'] != "":
+            #catalog.id_operation = (request.form['operation_name']).upper()
+            product_list.article_number = (request.form['article_number']).upper()
+            product_list.article_name = (request.form['article_name']).upper()            
+            product_list.general_name = f"{(request.form['article_name']).upper()}, {(request.form['article_number']).upper()}"
         else:
-            return redirect('/add_operation')
+            return redirect('/add_product')
+
+        try:
+            db.session.commit()
+            print('Изменено')
+            return redirect('/add_product')
+        except:
+            return "При редактировании произошла ошибка"
+        
     else:
         return render_template("product_update.html",
                                product_list=product_list,
@@ -730,6 +740,64 @@ def product_update(id):
 
 
 ####################################################################
+@app.route('/product/<int:id>/del', methods=['POST', 'GET'],)
+def product_delete(id):
+    product_list = Product.query.get_or_404(id)
+    catalog = db.session.query(Catalog).filter_by(id_product=id)
+    if catalog.first() is not None:
+        print ('Catalog contains ID')
+        try:
+            for i in catalog:
+                print('i =', i.picture)
+                d = os.path.join(path, i.picture)
+                if os.path.isfile(d):
+                    os.remove(d)
+
+                db.session.delete(i)
+                db.session.commit()
+            db.session.delete(product_list)
+            db.session.commit()
+            return redirect('/add_product')
+        except:
+            return "При удалении произошла ошибка"
+        
+    else:
+        print ('Catalog not contains ID')
+        try:
+            db.session.delete(product_list)
+            db.session.commit()
+            return redirect('/add_product')
+        except:
+            return "При удалении произошла ошибка"
+        
+#    c = db.session.query(Catalog, Operation.operation_name).join(
+#        Operation).order_by(Operation.operation_name).filter(Operation.id == id)
+#    catalog_list = Catalog.query.get_or_404(id)
+#    try:
+        
+#        for i in catalog:
+#            print('i =', i[0])
+#            d = os.path.join(path, i[0].picture)
+            
+        
+#            if os.path.isfile(d):
+#                os.remove(d)
+
+#            db.session.delete(i[0])
+#            db.session.commit()
+#        db.session.delete(product_list)
+#        db.session.commit()
+#        return redirect('/add_product')
+#    except:
+#        return "При удалении произошла ошибка"
+    
+#  return redirect('/add_product')
+#    return render_template("add_product.html",
+ #                          product_list=product_list,
+ #                          catalog=catalog,
+  #                         table_head=table_head)
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
