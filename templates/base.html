@@ -48,7 +48,7 @@
 
 	.nav-link.active {
       color: #ff8111 !important; 
-      font-size: 0.9rem;
+      /*font-size: 0.9rem;*/
 	  font-weight: 400;
 	}
 
@@ -155,6 +155,25 @@ text-decoration: none;
   <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <script type="text/javascript">shineLinks('navbarCollapse'); </script>
+
+	{% block script %}{% endblock %}
+  <script>
+// function shineNav() {
+      
+          let el = document.querySelector('nav.flex-column').getElementsByTagName('a');
+		let div = document.querySelector('.page');
+console.log('div=', div);
+ //         var url = document.location.href;
+//console.log(el);
+          for (let i = 0; i < el.length; i++) {
+            console.log(i,'=',el[i].id);
+           if (div.id == el[i].id) {
+				el[i].className += " active";
+           };
+         };  
+
+//console.log(this.href.substring(this.href.lastIndexOf('/') + 1));
+</script>
 </body>
 
 </html>
