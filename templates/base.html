@@ -158,21 +158,33 @@ text-decoration: none;
 
 	{% block script %}{% endblock %}
   <script>
-// function shineNav() {
+
+document.addEventListener("DOMContentLoaded", shineNav) 
+
+function shineNav() {
       
           let el = document.querySelector('nav.flex-column').getElementsByTagName('a');
 		let div = document.querySelector('.page');
-console.log('div=', div);
+//console.log('div=', div);
  //         var url = document.location.href;
 //console.log(el);
           for (let i = 0; i < el.length; i++) {
             console.log(i,'=',el[i].id);
-           if (div.id == el[i].id) {
+			if (div == null){
+				break
+				}
+           	else if (div.id == el[i].id) {
 				el[i].className += " active";
-           };
+           }
          };  
+}
+console.log(this.href.substring(this.href.lastIndexOf('/') + 1));
 
-//console.log(this.href.substring(this.href.lastIndexOf('/') + 1));
+        var el = document.getElementById(id).getElementsByTagName('a');
+let url = document.location.href;
+
+
+
 </script>
 </body>
 

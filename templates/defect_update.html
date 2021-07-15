@@ -139,12 +139,21 @@ td {
 <!---------------------------------------------------------------------------------------->
 
 <script>
-window.onload = function () {
-  Height();
-};
-window.onresize = function () {
-    Height();
-  };
+
+document.addEventListener("DOMContentLoaded", Height) //Обработка функции Height загрузки страницы
+
+document.addEventListener("DOMContentLoaded", function()  //Обработка функции Height ри изменении размера окна
+{
+    window.onresize = Height 
+});
+
+
+//window.onload = function () {
+//  Height();
+//};
+//window.onresize = function () {
+//    Height();
+ // };
 
 function Height (){
 	let divTable =document.querySelector('.tableFixHead');
