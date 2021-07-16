@@ -1,14 +1,24 @@
  function shineLinks(id) {
   console.log("Айгуль, я тебя люблю!")
   console.log(urlName().nm)
-          let el = document.getElementById(id).getElementsByTagName('a');
+          // let el = document.getElementById(id).getElementsByTagName('a');
+          let el1=document.querySelector("#navbarCollapse");
+          console.log(el1);
+          let el = el1.getElementsByTagName('a');
+          console.log(el);
+
+          
+          
+          // let nav =el.substring(el.lastIndexOf("/")+1);
           // var url = document.location.href;
 // console.log(el);
           for (var i = 0; i < el.length; i++) {
-            console.log(urlName().nm);
-			console.log(i,'=',el[i].href);
+            let nav =el[i].href.substring(el[i].href.lastIndexOf("/")+1);
 
-            if (urlName().nm == el[i].href) {
+            console.log(urlName().nm);
+			      console.log(`${i} = ${nav}`);
+
+            if (urlName().nm == nav) {
 				el[i].className += " active";
             };
           };

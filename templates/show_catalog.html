@@ -54,9 +54,9 @@ td {
   <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
     style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
     <nav class="nav flex-column show p-4">
-      <a class="nav-link" href="/show_catalog"> ВСЕ ДЕФЕКТЫ </a>
+      <a class="nav-link" value ="0" href="/show_catalog"> ВСЕ ДЕФЕКТЫ </a>
       {% for i in defects %}
-      <a class="nav-link" href="/show_catalog/{{ i.id }}"> {{ i.defect_name }},{{ i.id }} </a>
+      <a class="nav-link" value="{{ i.id }}" href="/show_catalog/{{ i.id }}"> {{ i.defect_name }}</a>
       {% endfor %}
     </nav>
   </div>
