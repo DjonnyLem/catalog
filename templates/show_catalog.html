@@ -114,6 +114,8 @@ td {
 
        // var el = document.getElementById(id).getElementsByTagName('a');
 //let url = document.location.href;
+
+////////////////////////////////////////////////////////////////////////////////////////////
 function urlName (){
 	let url  = document.location.href; // получаем href страницы
 	let nm = url.match(/(?<=\/\/.+\/)\w+/); //Получаем из htef блок наименования страницы
@@ -127,6 +129,7 @@ function urlName (){
 		};
 	 return {nm, num}
 };
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 console.log('urlName =',urlName());
 console.log('urlName =',urlName.nm);
@@ -150,5 +153,5 @@ else {
 	console.log('n =', n[0])
 	};
 </script>
-I
+
 {% endblock %}
