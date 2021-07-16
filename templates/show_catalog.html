@@ -53,7 +53,7 @@ td {
 <div class="col">
   <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
     style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
-    <nav class="nav flex-column  p-4">
+    <nav class="nav flex-column show p-4">
       <a class="nav-link" href="/show_catalog"> ВСЕ ДЕФЕКТЫ </a>
       {% for i in defects %}
       <a class="nav-link" href="/show_catalog/{{ i.id }}"> {{ i.defect_name }},{{ i.id }} </a>
@@ -110,7 +110,45 @@ td {
 
 <!-- <script src="../static/js/table.js"></script> -->
 <script>
+//console.log(this.href.substring(this.href.lastIndexOf('/') + 1));
 
+       // var el = document.getElementById(id).getElementsByTagName('a');
+//let url = document.location.href;
+function urlName (){
+	let url  = document.location.href; // получаем href страницы
+	let nm = url.match(/(?<=\/\/.+\/)\w+/); //Получаем из htef блок наименования страницы
+	nm = nm[0]
+	let num = url.match(/(?<=\/\/.+\/\w+\/)\d{1,}/);
+	if (num == null){
+		num = '0';
+		}
+	else {
+		num = num[0]
+		};
+	 return {nm, num}
+};
+
+console.log('urlName =',urlName());
+console.log('urlName =',urlName.nm);
+console.log('urlName =',urlName.num);
+let u  = document.location.href;
+console.log('u =', u);
+//let e = u.substring(u.indexOf("//"));
+//console.log('e =', e);
+//let r = u.match(/\/\D+\//);
+//console.log('r =', r);
+//let num = e.substring(e.lastIndexOf("/")+1);
+//console.log('num =',num);
+let z = u.match(/(?<=\/\/.+\/)\w+/);
+console.log('z =',z[0]);
+let n = u.match(/(?<=\/\/.+\/\w+\/)\d{1,}/);
+if (n == null){
+	n = '0';
+	console.log('n =', n);
+	}
+else {
+	console.log('n =', n[0])
+	};
 </script>
-
+I
 {% endblock %}

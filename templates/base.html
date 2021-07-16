@@ -97,7 +97,7 @@ text-decoration: none;
             <a class="nav-link" href="/show">SHOW</a>
           </li>-->
           <li class="nav-item">
-            <a class="nav-link" href="/add_catalog">ДОБАВИТЬ</a>
+            <a class="nav-link" href="/add_catalog">ИЗМЕНИТЬ</a>
           </li>
  			<li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
@@ -163,28 +163,32 @@ document.addEventListener("DOMContentLoaded", shineNav)
 
 function shineNav() {
       
-          let el = document.querySelector('nav.flex-column').getElementsByTagName('a');
-		let div = document.querySelector('.page');
+  //      let el = document.querySelector('nav.flex-column.add').getElementsByTagName('a');
+		let el1 = document.querySelector('nav.flex-column.add');
+		if (el1 != null){
+			let el = el1.getElementsByTagName('a')
+			let div = document.querySelector('.page');
 //console.log('div=', div);
  //         var url = document.location.href;
 //console.log(el);
-          for (let i = 0; i < el.length; i++) {
-            console.log(i,'=',el[i].id);
-			if (div == null){
-				break
-				}
-           	else if (div.id == el[i].id) {
-				el[i].className += " active";
-           }
-         };  
+          	for (let i = 0; i < el.length; i++) {
+            	console.log(i,'=',el[i].id);
+				if (div == null){
+					break
+					}
+           		else if (div.id == el[i].id) {
+					el[i].className += " active";
+           		};
+			};
+		};  
 }
-console.log(this.href.substring(this.href.lastIndexOf('/') + 1));
+//console.log(this.href.substring(this.href.lastIndexOf('/') + 1));
 
-        var el = document.getElementById(id).getElementsByTagName('a');
-let url = document.location.href;
+       // var el = document.getElementById(id).getElementsByTagName('a');
+//let url = document.location.href;
 
 
-
+document.addEventListener("DOMContentLoaded", shineNav) 
 </script>
 </body>
 
