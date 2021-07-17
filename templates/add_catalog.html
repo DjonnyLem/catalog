@@ -108,13 +108,13 @@ Add
 
 <script>
   let a = document.getElementById(this.id);
-  console.log(a);
+  //console.log(a);
   let d = document.getElementsByTagName('select');
-  console.log(d)
+  //console.log(d)
   var ids = document.querySelectorAll('[id]');
-  console.log(ids)
+  //console.log(ids)
   Array.prototype.forEach.call(ids, function (el, i) {
-    console.log(el.id); // log the ID
+   // console.log(el.id); // log the ID
   });
   function getValue(id) {
 
@@ -126,18 +126,18 @@ Add
     //
     let f = document.getElementById(id).id;
     let g = document.getElementById(id).value;
-    console.log(f, g);
+    //console.log(f, g);
 
     if (f == "defect_name" && g == "add_defect") {
-      console.log("OEEE defect name");
+      //console.log("OEEE defect name");
       document.location.href = "/add_defect";
     }
     else if (f == "operation_name" && g == "add_operation") {
-      console.log("OEEE operation name");
+      //console.log("OEEE operation name");
       document.location.href = "/add_operation";
     }
     else if (f == "product_name" && g == "add_product") {
-      console.log("OEEE product name");
+      //console.log("OEEE product name");
       document.location.href = "/add_product";
     }
     //}

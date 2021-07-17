@@ -124,7 +124,7 @@ def sign_in():
     return render_template('/sign_in.html')
 
 
-##########################################################################################################
+##################################################################
 @app.route("/user_profile")
 def user_profile():
 
@@ -138,7 +138,7 @@ def user_profile():
         return redirect(url_for("sign_in"))
     # return render_template("public/user_profile.html", user=user)
 
-##########################################################################################################
+####################################################################
 
 
 
@@ -233,7 +233,7 @@ def add_catalog():
             e = image.filename.rsplit('.', 1)
             past_id = Catalog.query.order_by(Catalog.id.desc()).first()
 
-            if past_id == None:
+            if past_id is None:
                 num_id = 0
             else:
                 num_id = past_id.id
@@ -295,7 +295,6 @@ def add_defect():
     if request.method == "POST":
         defect_name = (request.form['defect_name']).upper()
         defect = Defect(defect_name=defect_name)
-        
         try:
             db.session.add(defect)
             db.session.commit()
@@ -695,7 +694,7 @@ def operation_delete(id):
             return "При удалении произошла ошибка"
         
     else:
-        print ('Catalog not contains ID')
+        print('Catalog not contains ID')
         try:
             db.session.delete(operation_list)
             db.session.commit()

@@ -53,10 +53,10 @@ td {
 <div class="col">
   <div class="scrollspy" data-mdb-spy="scroll" data-mdb-target=".list-group" data-mdb-offset="0"
     style="position: relative;  height: calc(100vh - 25vh); overflow: auto;">
-    <nav class="nav flex-column  p-4">
-      <a class="nav-link" href="/show_catalog"> ВСЕ ОПЕРАЦИИ </a>
+    <nav class="nav flex-column show p-4">
+      <a class="nav-link" value="0" href="/show_product"> ВСЕ ИЗДЕЛИЯ </a>
       {% for i in products %}
-      <a class="nav-link" href="/show_product/{{ i.id }}"> {{ i.general_name }},{{ i.id }} </a>
+      <a class="nav-link" value="{{ i.id }}" href="/show_product/{{ i.id }}"> {{ i.general_name }} </a>
       {% endfor %}
     </nav>
   </div>
@@ -103,14 +103,29 @@ td {
 
 
 
-
-
-
-
-
-<!-- <script src="../static/js/table.js"></script> -->
+<script type="text/javascript" src="../static/js/base.js"></script>
 <script>
 
+
+  let navName = document.querySelector(".nav.flex-column.show");
+  //console.log(navName);
+  if (navName != null) {
+    let a = navName.getElementsByTagName("a");
+    //console.log(a);
+    for (var i = 0; i < a.length; i++) {
+      let value = a[i].getAttribute("value");
+      //console.log("value =", value);
+      if (value == urlName().num) {
+        a[i].className += " active";
+      };
+    };
+  };
+
 </script>
+
+
+
+
+
 
 {% endblock %}

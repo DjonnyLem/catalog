@@ -15,12 +15,12 @@
 
   <!-- Bootstrap core CSS -->
   <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
- 
+
   <!-- Custom styles for this template -->
   <link href="{{ url_for('static', filename='css/navbar-top-fixed.css') }}" rel="stylesheet">
 
 
- <style>
+  <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -36,29 +36,27 @@
     }
   </style>
   <style>
-    .collapse .nav-link   {
+    .collapse .nav-link {
       color: #333333 !important;
       font-size: 0.9rem;
     }
 
-    .nav-link:hover{
+    .nav-link:hover {
       color: #ff8111 !important;
-      text-decoration: underline ;
+      text-decoration: underline;
     }
 
-	.nav-link.active {
-      color: #ff8111 !important; 
+    .nav-link.active {
+      color: #ff8111 !important;
       /*font-size: 0.9rem;*/
-	  font-weight: 400;
-	}
+      font-weight: 400;
+    }
 
-.nav-link.disabled {
-      color: grey !important; 
- 
-text-decoration: none;
-	}
+    .nav-link.disabled {
+      color: grey !important;
 
-
+      text-decoration: none;
+    }
   </style>
 
 
@@ -78,9 +76,6 @@ text-decoration: none;
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0 align-items-center">
-
-
-
           <li class="nav-item">
             <a class="nav-link" href="/">HOME</a>
           </li>
@@ -93,103 +88,75 @@ text-decoration: none;
           <li class="nav-item">
             <a class="nav-link" href="/show_product">ДЕФЕКТЫ ПО ИЗДЕЛИЯМ</a>
           </li>
-          <!--<li class="nav-item">
-            <a class="nav-link" href="/show">SHOW</a>
-          </li>-->
           <li class="nav-item">
             <a class="nav-link" href="/add_catalog">ИЗМЕНИТЬ</a>
           </li>
- 			<li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
-          	</li>
-         <!-- <li class="nav-item">
-            <a class="nav-link" href="/add">ADD1</a>
           </li>
-		  <li class="nav-item">
-          <a class="nav-link" href="/1">1</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/upload">ЗАГРУЗИТЬ</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user_profile">ПРОФИЛЬ</a>
-          </li>-->
           <li class="nav-item pe-5 position-absolute  end-0 ">
             <a class="nav-link" href="/sign_in">ВОЙТИ</a>
           </li>
         </ul>
 
       </div>
-
-
-
-
-
-
-
     </div>
   </nav>
 
   <main class="container-fluid">
     <div class="row">
       <div class="col-md-3">
-		{% block nav %}{% endblock %}
-       
-
+        {% block nav %}{% endblock %}
       </div>
-
-
-
       <div class="col-md-9">
-		{% block main %}{% endblock %}
-        
-        </div>
-
+        {% block main %}{% endblock %}
       </div>
     </div>
-
-
+    </div>
   </main>
 
   <script src="{{ url_for('static', filename='js/base.js') }}"></script>
   <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-<script type="text/javascript">shineLinks('navbarCollapse'); </script>
+  <script type="text/javascript">shineLinks('navbarCollapse');</script>
 
-	{% block script %}{% endblock %}
+  {% block script %}{% endblock %}
   <script>
 
-document.addEventListener("DOMContentLoaded", shineNav) 
+    document.addEventListener("DOMContentLoaded", shineNav)
 
-function shineNav() {
-      
-  //      let el = document.querySelector('nav.flex-column.add').getElementsByTagName('a');
-		let el1 = document.querySelector('nav.flex-column.add');
-		if (el1 != null){
-			let el = el1.getElementsByTagName('a')
-			let div = document.querySelector('.page');
-//console.log('div=', div);
- //         var url = document.location.href;
-//console.log(el);
-          	for (let i = 0; i < el.length; i++) {
-            	console.log(i,'=',el[i].id);
-				if (div == null){
-					break
-					}
-           		else if (div.id == el[i].id) {
-					el[i].className += " active";
-           		};
-			};
-		};  
-}
-//console.log(this.href.substring(this.href.lastIndexOf('/') + 1));
-
-       // var el = document.getElementById(id).getElementsByTagName('a');
-//let url = document.location.href;
+    function shineNav() {
 
 
-document.addEventListener("DOMContentLoaded", shineNav) 
-</script>
+      let el1 = document.querySelector('nav.flex-column.add');
+      if (el1 != null) {
+        let el = el1.getElementsByTagName('a')
+        let div = document.querySelector('.page');
+        for (let i = 0; i < el.length; i++) {
+         // console.log(i, '=', el[i].id);
+          if (div == null) {
+            break
+          }
+          else if (div.id == el[i].id) {
+            el[i].className += " active";
+          };
+        };
+      };
+    };
+
+
+    let nav = document.querySelector("#navbarCollapse");
+    let el = nav.getElementsByTagName('a');
+    let page = document.querySelector(".page");
+    if (page != null) {
+      for (var i = 0; i < el.length; i++) {
+        if (el[i].innerText == "ИЗМЕНИТЬ") {
+          el[i].className += " active";
+        };
+      };
+    }
+
+  </script>
 </body>
 
 </html>
