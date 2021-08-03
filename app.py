@@ -99,27 +99,26 @@ user_data = {
 def sign_in():
     if request.method == 'POST':
         req = request.form
-        print(req)
         username = req.get('username')
         password = req.get('password')
 
         if not username in user_data["username"]:
-            print("Username not found")
-            print(user_data["username"])
+            flash("Не верный логин или пароль", 'danger')
             return redirect(request.url)
         else:
             user = user_data["username"]
 
         if not password == user_data['password']:
-            print('Incorrect password')
+            flash("Не верный логин или пароль", 'danger')
             return redirect(request.url)
         else:
-            session['USERNAME'] = user_data['username']
-            session['PASSWORD'] = user_data['password']
+            #session['USERNAME'] = user_data['username']
+            #session['PASSWORD'] = user_data['password']
+            session['AUTHORIZATION'] = 'OK'
             print('Session username set')
             print(session)
             # return redirect(request.url)
-            return redirect(url_for("user_profile"))
+            return redirect(url_for("index"))
 
     return render_template('/sign_in.html')
 

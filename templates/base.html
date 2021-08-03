@@ -89,10 +89,18 @@
             <a class="nav-link" href="/show_product">ДЕФЕКТЫ ПО ИЗДЕЛИЯМ</a>
           </li>
           <li class="nav-item">
+            {% if session["AUTHORIZATION"] =="OK" %}
             <a class="nav-link" href="/add_catalog">ИЗМЕНИТЬ</a>
+            {% else %}
+            <a class="d-none" href="/add_catalog">ИЗМЕНИТЬ</a>
+            {% endif %}
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
+            {% if session["AUTHORIZATION"] =="OK" %}
+            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
+            {% else %}
+            <a class="d-none" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
+            {% endif %}
           </li>
           <li class="nav-item pe-5 position-absolute  end-0 ">
             <a class="nav-link" href="/sign_in">ВОЙТИ</a>
