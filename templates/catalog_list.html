@@ -10,37 +10,45 @@ Defect
 
 
 
-    <div class="col p-4">
-      <h2 class="text-danger">{{ defect_list[0].defect_name }}</h2><br>
-      <p>Операция: {{  operation_list[0].operation_name }}</p>
+<div class="col p-4">
+  <h2 class="text-danger">{{ defect_list[0].defect_name }}</h2><br>
+  <p>Операция: {{ operation_list[0].operation_name }}</p>
   <!--    <p>Артикул: {{ catalog_list.article }}</p>
       <p>Наименование: {{ catalog_list.name }}</p>  -->
-	<p>Изделие:  {{ product_list[0].general_name }}</p>
-      {% if catalog_list.defect_type == 1 %}
-		<p>Допустимость: <a style="color:green;">ДЕФЕКТ ДОПУСТИМ</a></p>
-		{% elif catalog_list.defect_type == 0 %}
-	<p>Допустимость: <a style="color:red;">ДЕФЕКТ НЕ ДОПУСТИМ</a></p>
+  <p>Изделие: {{ product_list[0].general_name }}</p>
+  {% if catalog_list.defect_type == 1 %}
+  <p>Допустимость: <a style="color:green;">ДЕФЕКТ ДОПУСТИМ</a></p>
+  {% elif catalog_list.defect_type == 0 %}
+  <p>Допустимость: <a style="color:red;">ДЕФЕКТ НЕ ДОПУСТИМ</a></p>
+  {% else %}
+  <p>Допустимость: <a style="color:grey;">ДОПУСТИМОСТЬ НЕ ОПРЕДЕЛЕНА</a></p>
+  {% endif %}
+  <p style="word-break: break-all;">Комментарий: {{ catalog_list.note }}</p>
+  <hr>
+  <p class="text-secondary">ID:{{ catalog_list.id }} Дата записи: {{ catalog_list.date.strftime('%Y-%m-%d') }} </p>
+</div>
+
+
+
+<a href="/show_catalog" class="btn btn-outline-secondary">Назад</a>
+{% if session["AUTHORIZATION"] =="OK" %}
+<a href="/catalog_list/{{ catalog_list.id }}/del" class="btn btn-outline-danger">Удалить</a>
+<a href="/catalog_list/{{ catalog_list.id }}/update" class="btn btn-outline-secondary">Редактировать</a>
 {% else %}
-	<p>Допустимость: <a style="color:grey;">ДОПУСТИМОСТЬ НЕ ОПРЕДЕЛЕНА</a></p>
-	{% endif %}
-      <p style="word-break: break-all;">Комментарий: {{ catalog_list.note }}</p>
-<hr>
-	<p class="text-secondary">ID:{{ catalog_list.id }} Дата записи: {{ catalog_list.date.strftime('%Y-%m-%d') }}      </p>
- </div>
+<a href="/catalog_list/{{ catalog_list.id }}/del" class="btn btn-outline-danger disabled">Удалить</a>
+<a href="/catalog_list/{{ catalog_list.id }}/update" class="btn btn-outline-secondary disabled">Редактировать</a>
+{% endif %}
 
 
 
-     <a href="/show_catalog" class="btn btn-outline-secondary">Назад</a>
-        <a href="/catalog_list/{{ catalog_list.id }}/del" class="btn btn-outline-danger">Удалить</a>
-        <a href="/catalog_list/{{ catalog_list.id }}/update" class="btn btn-outline-secondary">Редактировать</a>
-    
+
 {% endblock %}
 {% block main %}
 
-    <div class="col">
-<!--{{ catalog_list.picture }}-->
-      <img src="/{{ catalog_list.picture }}"   class="img-fluid" alt="NO PICURE">
-    </div>
-  </div>
+<div class="col">
+  <!--{{ catalog_list.picture }}-->
+  <img src="/{{ catalog_list.picture }}" class="img-fluid" alt="NO PICURE">
+</div>
+</div>
 
-  {% endblock %}
+{% endblock %}

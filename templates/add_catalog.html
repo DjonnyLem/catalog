@@ -22,6 +22,16 @@ Add
   <div class="form-group">
     <h2>Введите данные по дефекту</h2>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="p-1 mb-2 bg-{{ category }} text-white">{{ message }}</div>
+    {% endfor %}
+    {% else %}
+    <br>
+    {% endif %}
+    {% endwith %}
+
     <form method="post" id="1" enctype="multipart/form-data">
       <label>Выберите наименование дефекта: </label>
       <select class="form-select" id="defect_name" name="defect_name" required="required" onChange="getValue(this.id);">
@@ -75,13 +85,6 @@ Add
         <label>Прикрепите фото дефекта:</label>
         <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <span>{{ message }}</span>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
         <br>
       </div>
 

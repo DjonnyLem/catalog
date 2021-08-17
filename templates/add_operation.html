@@ -86,7 +86,7 @@ Add operation
 
 <br>
 <br>
-<div class="col-md-8">
+<div class="col-md-9">
 
 <h2>Или выберите операцию для редактирования или удаления</h2>
 <div class="tableFixHead">
@@ -125,9 +125,27 @@ Add operation
 <div class='page' id="add_operation"></div>      
 
 <script>
-    
-</script>
 
+  window.onload = function () {
+    Height();
+  };
+  window.onresize = function () {
+      Height();
+    };
+  
+  function Height (){
+    let divTable =document.querySelector('.tableFixHead');
+    let bodyHeight = document.documentElement.clientHeight
+  
+    //if (divTable.clientHeight > 150){
+    if (bodyHeight > 665){
+      divTable.style.height = (bodyHeight - divTable.offsetTop - 50) +'px';
+      }
+    else {
+      divTable.style.height = 200+"px";
+      }
+    };
+  </script>
 {% endblock %}
 
 

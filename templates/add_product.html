@@ -47,91 +47,101 @@ Add product
 
 
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <h2 id="2">Введите информацию по изделию</h2>
-
-               {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <span>{{ message }}</span>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-
-                <form method="post" id="4">
-					<label>Введите номер изделия: </label>
-                    <input type="text" name="article_number" id="article_number" class="form-control"
-                        placeholder="Введите номер изделия"><br>
-
-                    <label>Введите наименование изделия: </label>
-                    <input type="text" name="article_name" id="article_name" class="form-control"
-                        placeholder="Введите наименование изделия"><br>
-
-
-                    <input type="submit" class="btn btn-outline-secondary" value="Отправить">
-
-                </form>
-
-      
-
-            </div>
+<div class="col-md-6">
+  <div class="form-group">
+    <h2 id="2">Введите информацию по изделию</h2>
 
 
 
-        </div>
- 
+    <form method="post" id="4">
+      <label>Введите номер изделия: </label>
+      <input type="text" name="article_number" id="article_number" class="form-control"
+        placeholder="Введите номер изделия"><br>
+
+      <label>Введите наименование изделия: </label>
+      <input type="text" name="article_name" id="article_name" class="form-control"
+        placeholder="Введите наименование изделия"><br>
+
+
+      <input type="submit" class="btn btn-outline-secondary" value="Отправить">
+
+    </form>
+
+
+
+  </div>
+
+
+
+</div>
+
 
 <!------------------------------------------------------------------------------->
 
 
-    
+
 <!---------------------------------------------------------------------------------------->
 
 
 <br>
-<div class="col-md-8">
+<div class="col-md-10">
 
-<h2>Или выберите изделие для редактирования или удаления</h2>
-<div class="tableFixHead">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col"> Зарегистрированные изделия</th>
-        <th scope="col"> </th>
-	
-      </tr>
-    </thead>
+  <h2>Или выберите изделие для редактирования или удаления</h2>
+  <div class="tableFixHead">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col"> Зарегистрированные изделия</th>
+          <th scope="col"> </th>
 
-    <tbody>
+        </tr>
+      </thead>
 
-      {% for i in product %}
-      <tr>
-        <td>{{ i.id }}</td>
-      	<td>{{ i.general_name }}</td>
+      <tbody>
 
-		<td>
-		<a href="/product/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Редактировать</a>
-		</td>
-		
-{% endfor %}
-	</tr>
+        {% for i in product %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.general_name }}</td>
+
+          <td>
+            <a href="/product/{{ i.id }}/update" class="btn btn-outline-secondary btn-sm">Редактировать</a>
+          </td>
+
+          {% endfor %}
+        </tr>
 
 
-    </tbody>
+      </tbody>
 
-  </table>
-</div>
+    </table>
+  </div>
 </div>
 <!---------------------------------------------------------------------------------------->
 
-  <div class='page' id="add_product"></div>     
+<div class='page' id="add_product"></div>
 
 <script>
-    
+
+  window.onload = function () {
+    Height();
+  };
+  window.onresize = function () {
+    Height();
+  };
+
+  function Height() {
+    let divTable = document.querySelector('.tableFixHead');
+    let bodyHeight = document.documentElement.clientHeight
+
+    //if (divTable.clientHeight > 150){
+    if (bodyHeight > 665) {
+      divTable.style.height = (bodyHeight - divTable.offsetTop - 50) + 'px';
+    }
+    else {
+      divTable.style.height = 200 + "px";
+    }
+  };
 </script>
-
 {% endblock %}
-
-

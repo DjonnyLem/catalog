@@ -17,154 +17,165 @@ Update
 
 {% block main %}
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <h2>Измените данные по дефекту</h2>
+<div class="col-md-6">
+    <div class="form-group">
+        <h2>Измените данные по дефекту</h2>
 
-                <form method="post" id="1" enctype="multipart/form-data">
-			 <label>Выберите наименование дефекта: </label>
-                    <select class="form-control" id="defect_name" name="defect_name" required="required"
-                        onChange="getValue(this.id);"><br>
-             <!--           <option value="">Выберите значение</option>  -->
-                        {% for i in defect %}
-						{% if i.id == catalog.id_defect %}
-                        <option selected value="{{ i.id }}">{{ i.defect_name }}</option>
-						{% else %}
-						<option value="{{ i.id }}">{{ i.defect_name }}</option>
-						{% endif %}
-                        {% endfor %}
-                        <option value="add_defect" style="background:green;">Добавить дефект</option>
-                    </select><br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="p-1 mb-2 bg-{{ category }} text-white">{{ message }}</div>
+        {% endfor %}
+        {% else %}
+        <br>
+        {% endif %}
+        {% endwith %}
 
-
-                 <label>Выберите допустимость дефекта: </label>
-                    <select class="form-control" name="defect_type" id="defect_type" required="required"><br>
-                  <!--      <option value="">Выберите допустимость дефекта</option>  -->
-						{% if catalog.defect_type == 1 %}
-						<option selected value="1" style="color: green;">Дефект допустим</option>
-						<option value="0" style="color: red;">Дефект не допустим</option>
-						{% elif catalog.defect_type == 0 %}
- 						<option selected value="0" style="color: red;">Дефект не допустим</option>
-						<option value="1" style="color: green;">Дефект допустим</option>
-						{% endif %}
-                                               
-                    </select><br>
+        <form method="post" id="1" enctype="multipart/form-data">
+            <label>Выберите наименование дефекта: </label>
+            <select class="form-control" id="defect_name" name="defect_name" required="required"
+                onChange="getValue(this.id);"><br>
+                <!--           <option value="">Выберите значение</option>  -->
+                {% for i in defect %}
+                {% if i.id == catalog.id_defect %}
+                <option selected value="{{ i.id }}">{{ i.defect_name }}</option>
+                {% else %}
+                <option value="{{ i.id }}">{{ i.defect_name }}</option>
+                {% endif %}
+                {% endfor %}
+                <option value="add_defect" style="background:green;">Добавить дефект</option>
+            </select><br>
 
 
-                   <label>Выберите изделие:</label>
-                    <select class="form-control" id="product_name" name="product_name" required="required"
-                        onChange="getValue(this.id);"><br>
-                   <!--     <option value="">Выберите изделие</option>  -->
-                        {% for i in product %}
-						{% if i.id == catalog.id_product %}
-                        <option selected value="{{ i.id }}">{{ i.general_name }}</option>
-						{% else %}		
-                        <option value="{{ i.id }}">{{ i.general_name }}</option>
-						{% endif %}
-                        {% endfor %}
-                        <option value="add_product" style="background:green;">Добавить изделие</option>
-                    </select><br>
+            <label>Выберите допустимость дефекта: </label>
+            <select class="form-control" name="defect_type" id="defect_type" required="required"><br>
+                <!--      <option value="">Выберите допустимость дефекта</option>  -->
+                {% if catalog.defect_type == 1 %}
+                <option selected value="1" style="color: green;">Дефект допустим</option>
+                <option value="0" style="color: red;">Дефект не допустим</option>
+                {% elif catalog.defect_type == 0 %}
+                <option selected value="0" style="color: red;">Дефект не допустим</option>
+                <option value="1" style="color: green;">Дефект допустим</option>
+                {% endif %}
+
+            </select><br>
+
+
+            <label>Выберите изделие:</label>
+            <select class="form-control" id="product_name" name="product_name" required="required"
+                onChange="getValue(this.id);"><br>
+                <!--     <option value="">Выберите изделие</option>  -->
+                {% for i in product %}
+                {% if i.id == catalog.id_product %}
+                <option selected value="{{ i.id }}">{{ i.general_name }}</option>
+                {% else %}
+                <option value="{{ i.id }}">{{ i.general_name }}</option>
+                {% endif %}
+                {% endfor %}
+                <option value="add_product" style="background:green;">Добавить изделие</option>
+            </select><br>
 
 
 
-                   <label>Выберите наименование операции:</label>  
-                    <select class="form-control" id="operation_name" name="operation_name" required="required"
-                        onChange="getValue(this.id);"><br>
-                  <!--       <option value="">Выберите наименование операции</option> -->
-                        {% for i in operation %}
-						{% if i.id == catalog.id_operation %}
-                        <option selected value="{{ i.id }}">{{ i.operation_name }}</option>
-						{% else %}		
-                        <option value="{{ i.id }}">{{ i.operation_name }}</option>
-						{% endif %}
-                        {% endfor %}
-                        <option value="add_operation" style="background:green;">Добавить операцию</option>
-                    </select><br>
+            <label>Выберите наименование операции:</label>
+            <select class="form-control" id="operation_name" name="operation_name" required="required"
+                onChange="getValue(this.id);"><br>
+                <!--       <option value="">Выберите наименование операции</option> -->
+                {% for i in operation %}
+                {% if i.id == catalog.id_operation %}
+                <option selected value="{{ i.id }}">{{ i.operation_name }}</option>
+                {% else %}
+                <option value="{{ i.id }}">{{ i.operation_name }}</option>
+                {% endif %}
+                {% endfor %}
+                <option value="add_operation" style="background:green;">Добавить операцию</option>
+            </select><br>
 
-<!--
+            <!--
                     <label>Прикрепите фото дефекта: </label>
                     <input type="text" name="defect_picture" id="defect_picture" class="form-control"
                         placeholder="Прикрепите фото дефекта">
 -->
-				<img src="/{{ catalog.picture }}" class="img-thumbnail" alt="" style=" max-width: 20%;  height: auto;">
-                    <div class="custom-file">
-                        <label>Прикрепите фото дефекта:</label>
-                        <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
-                        
-              
-                    </div>
+            <img src="/{{ catalog.picture }}" class="img-thumbnail" alt="" style=" max-width: 20%;  height: auto;">
+            <div class="custom-file">
+                <label>Прикрепите фото дефекта:</label>
+                <input type="file" class="form-control" name="image" id="image" oninput="filesize(this);">
 
 
-                    <label>Введите пояснение: </label>
-                    <textarea name="note" id="note" class="form-control" placeholder="Введите пояснение">{{ catalog.note }}</textarea><br>
-
-
-                    <input type="submit" class="btn btn-primary" value="Отправить">
-                   
-                </form>
             </div>
 
 
+            <label>Введите пояснение: </label>
+            <textarea name="note" id="note" class="form-control"
+                placeholder="Введите пояснение">{{ catalog.note }}</textarea><br>
 
-        </div>
+
+            <input type="submit" class="btn btn-primary" value="Отправить">
+
+        </form>
     </div>
+
+
+
+</div>
+</div>
 </div>
 
 </div>
 
 <!------------------------------------------------------------------------------->
-<div class='page' id="add_catalog"></div> 
+<div class='page' id="add_catalog"></div>
 
 <script>
-  let a = document.getElementById(this.id);
-//console.log (a);
+    let a = document.getElementById(this.id);
+    //console.log (a);
     let d = document.getElementsByTagName('select');
-   // console.log (d)
-	var ids = document.querySelectorAll('[id]');
+    // console.log (d)
+    var ids = document.querySelectorAll('[id]');
     //console.log (ids)
-    Array.prototype.forEach.call( ids, function( el, i ) {
-       // console.log( el.id ); // log the ID
+    Array.prototype.forEach.call(ids, function (el, i) {
+        // console.log( el.id ); // log the ID
     });
     function getValue(id) {
 
- ////let a = document.getElementById("defect_name");
-//// console.log (a);
- ////let val = a.options[a.selectedIndex].value;
- // == "add_defect"){
-  //  document.location.href="/add_defect";;
-    //
- let f =  document.getElementById(id).id;
- let g =  document.getElementById(id).value;
-console.log(f,g);
+        ////let a = document.getElementById("defect_name");
+        //// console.log (a);
+        ////let val = a.options[a.selectedIndex].value;
+        // == "add_defect"){
+        //  document.location.href="/add_defect";;
+        //
+        let f = document.getElementById(id).id;
+        let g = document.getElementById(id).value;
+        console.log(f, g);
 
-if (f == "defect_name" && g == "add_defect"){
-//console.log("OEEE defect name");
-document.location.href="/add_defect";
-}
-else if (f == "operation_name" && g == "add_operation"){
-    //console.log("OEEE operation name");
-    document.location.href="/add_operation";
-    }
-   else if (f == "product_name" && g == "add_product"){
-        //console.log("OEEE product name");
-        document.location.href = "/add_product";
+        if (f == "defect_name" && g == "add_defect") {
+            //console.log("OEEE defect name");
+            document.location.href = "/add_defect";
         }
- //}
-////console.log(val);
-////if (val == "add_defect"){
-  ////  console.log("ok");
-  ////  document.location.href="/add_defect"
-////}
+        else if (f == "operation_name" && g == "add_operation") {
+            //console.log("OEEE operation name");
+            document.location.href = "/add_operation";
+        }
+        else if (f == "product_name" && g == "add_product") {
+            //console.log("OEEE product name");
+            document.location.href = "/add_product";
+        }
+        //}
+        ////console.log(val);
+        ////if (val == "add_defect"){
+        ////  console.log("ok");
+        ////  document.location.href="/add_defect"
+        ////}
 
-   //   if a.options[a.selectedIndex].value == "add_defect") {
-     //     document.location.href="/add_defect"
-     //   } 
-//		else if b.options[a.selectedIndex].value == "add_operation") {
-  //          document.location.href = "/add_operation"
-//        } 
-//		else if c.options[a.selectedIndex].value == "add_product") {
-   //         document.location.href = "/add_product"
- //       }
+        //   if a.options[a.selectedIndex].value == "add_defect") {
+        //     document.location.href="/add_defect"
+        //   } 
+        //		else if b.options[a.selectedIndex].value == "add_operation") {
+        //          document.location.href = "/add_operation"
+        //        } 
+        //		else if c.options[a.selectedIndex].value == "add_product") {
+        //         document.location.href = "/add_product"
+        //       }
     }
 
 </script>

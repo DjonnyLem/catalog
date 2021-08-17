@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, request, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+
+from werkzeug.datastructures import Authorization
 from menu import menu
 import os
 from werkzeug.utils import secure_filename  # к обработке фото
@@ -29,7 +31,7 @@ class Catalog(db.Model):
 
     def __repr__(self):
         return "<Catalog %r, %r, %r, %r, %r, %r, %r" % (self.id_defect, self.id_operation, self.id_product, self.defect_type,
-                                                             self.picture, self.note,  self.date)
+                                                        self.picture, self.note,  self.date)
 
 
 class Defect(db.Model):
@@ -89,7 +91,7 @@ def index():
 user_data = {
     "username": "otk",
     "email": "julian@gmail.com",
-    "password": "115",
+    "password": "154",
     "bio": "Some guy from the internet"
 
 }
@@ -115,15 +117,24 @@ def sign_in():
             #session['USERNAME'] = user_data['username']
             #session['PASSWORD'] = user_data['password']
             session['AUTHORIZATION'] = 'OK'
-            print('Session username set')
-            print(session)
+           #print('Session username set')
+           # print(session)
             # return redirect(request.url)
-            return redirect(url_for("index"))
+            # return redirect(url_for("index"))
+            return redirect("/")
 
     return render_template('/sign_in.html')
 
 
 ##################################################################
+
+@app.route('/logout')
+def logout():
+    session.pop('AUTHORIZATION', None)  # удаление данных о посещениях
+    return redirect(url_for("index"))  # 'Visits deleted'
+##################################################################
+
+
 @app.route("/user_profile")
 def user_profile():
 
@@ -133,12 +144,11 @@ def user_profile():
         user = user_data["username"]
         return render_template("/user_profile.html", user_data=user_data, user=user)
     else:
-        print("No username found is session")
+       #print("No username found is session")
         return redirect(url_for("sign_in"))
     # return render_template("public/user_profile.html", user=user)
 
 ####################################################################
-
 
 
 ####################################################################
@@ -176,7 +186,7 @@ def limit_filesize(filesize):  # Проверяем не превышает ли
 
 '''
         if image.filename == "":
-            print("No filename")
+           #print("No filename")
             return redirect(request.url)
         if allowed_image(image.filename):
             filename = secure_filename(image.filename)
@@ -184,16 +194,17 @@ def limit_filesize(filesize):  # Проверяем не превышает ли
             ext = filename.rsplit(".", 1)###########
             fl = ('file_'+str(d.id+1)+'.'+ext[1]).lower()##############
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], fl))
-            print("Image saved")
+           #print("Image saved")
             return "static/img/uploads"+fl
         else:
-            print("That file extension is not allowed")
+           #print("That file extension is not allowed")
             return redirect(request.url)
 
 '''
 
 
 #########################################################################
+
 @app.route('/add_catalog', methods=['POST', 'GET'])
 def add_catalog():
     defect = Defect.query.all()
@@ -209,26 +220,26 @@ def add_catalog():
         id_product = (request.form['product_name']).upper()
         note = (request.form['note']).upper()
         image = request.files['image']
-        print(id_defect)
+       # print(id_defect)
         if request.files:
             if "filesize" in request.cookies:
                 if not limit_filesize(request.cookies["filesize"]):
-                    print("Filesize exceeded maximum limit")
-                    flash("Размер файла превышает лимит", 'warning')
+                    #print("Filesize exceeded maximum limit")
+                    flash("Размер файла превышает лимит", 'danger')
                     return redirect(request.url)
 
             if image.filename == "":
-                print("No filename")
-                flash("Файл не выбран", 'warning')
+                #print("No filename")
+                flash("Файл не выбран", 'danger')
                 return redirect(request.url)
 
             if not allowed_image(image.filename):
-                print("Расширение файла не соответствует заданному")
-                flash("Расширение файла не соответствует заданному", 'warning')
+                #print("Расширение файла не соответствует заданному")
+                flash("Расширение файла не соответствует заданному", 'danger')
                 filename = secure_filename(image.filename)
                 return redirect(request.url)
 
-            print("picture =", image.filename)
+           #print("picture =", image.filename)
             e = image.filename.rsplit('.', 1)
             past_id = Catalog.query.order_by(Catalog.id.desc()).first()
 
@@ -236,27 +247,26 @@ def add_catalog():
                 num_id = 0
             else:
                 num_id = past_id.id
-            print("past_id =", num_id)
+           #print("past_id =", num_id)
             new_flname = "file_"+str(num_id+1)+"."+(e[1]).lower()
             flname = secure_filename(new_flname)
-            print(flname)
+           # print(flname)
             path_flname = os.path.join(app.config["IMAGE_UPLOADS"], flname)
-            print(path_flname)
+           # print(path_flname)
 
-            print(path)
+           # print(path)
             path_load = os.path.join(path, app.config["IMAGE_UPLOADS"])
-            print("path_load=", path_load)
+           #print("path_load=", path_load)
 
         picture = path_flname
 
         ff = request.form
         fl = request.files
         fg = request.cookies
-        print(id_defect, id_operation, defect_type,
-              id_product, note)
-        print('new=   ', ff)
-        print('now=   ', fl)
-        print('nrw=   ', fg)
+        #print(id_defect, id_operation, defect_type, id_product, note)
+        #print('new=   ', ff)
+        #print('now=   ', fl)
+        #print('nrw=   ', fg)
 
         q = Catalog(id_defect=id_defect,
                     id_operation=id_operation,
@@ -265,12 +275,12 @@ def add_catalog():
                     id_product=id_product,
                     note=note)
 
-        print('q=   ', q)
+        ##print('q=   ', q)
 
         try:
             db.session.add(q)
             d = Catalog.query.order_by(Catalog.id.desc()).first()
-            print(d.id)
+            # print(d.id)
             image.save(os.path.join(path_load, flname))
             db.session.commit()
             return redirect('/add_catalog')
@@ -278,7 +288,10 @@ def add_catalog():
             return "При добавлении произошла ошибка"
 
     else:
-        return render_template("add_catalog.html",
+        if session.get("AUTHORIZATION") is None: 
+            return render_template("sign_in.html")
+        else:    
+            return render_template("add_catalog.html",
                                operation=operation,
                                defect=defect,
                                product=product)
@@ -290,20 +303,22 @@ def add_catalog():
 def add_defect():
     defect = Defect.query.all()
 
-
     if request.method == "POST":
         defect_name = (request.form['defect_name']).upper()
         defect = Defect(defect_name=defect_name)
         try:
             db.session.add(defect)
             db.session.commit()
-            flash("Наименование дефекта добавлено в базу данных", 'warning')
+            #flash("Наименование дефекта добавлено в базу данных", 'warning')
             return redirect('/add_defect')
         except:
             return "При добавлении произошла ошибка"
 
     else:
-        return render_template("add_defect.html", defect=defect)
+        if session.get("AUTHORIZATION") is None: 
+            return render_template("sign_in.html")
+        else:    
+            return render_template("add_defect.html", defect=defect)
 
 ####################################################################
 
@@ -324,7 +339,10 @@ def add_operation():
             return "При добавлении произошла ошибка"
 
     else:
-        return render_template("add_operation.html", operation=operation)
+        if session.get("AUTHORIZATION") is None:
+            return render_template("sign_in.html")
+        else:
+            return render_template("add_operation.html", operation=operation)
 
 ####################################################################
 
@@ -344,13 +362,17 @@ def add_product():
 
             db.session.add(product)
             db.session.commit()
-            flash('Информация по изделию добавлена в базу данных', 'warning')
+            #flash('Информация по изделию добавлена в базу данных', 'success')
             return redirect('/add_product')
         except:
             return "При добавлении произошла ошибка"
 
     else:
-        return render_template("add_product.html", product=product)
+        if session.get("AUTHORIZATION") is None:
+            return render_template("sign_in.html")
+
+        else:
+            return render_template("add_product.html", product=product)
 
 
 ####################################################################
@@ -374,7 +396,6 @@ def show_catalog():
         Defect, Operation, Product).order_by(Defect.defect_name).all()
 # Показываем наименование дефекта из таблице Дефект
     #res = res.sort()
-    
 
     return render_template("show_catalog.html", defects=defects, catalog=catalog, table_head=table_head)
 
@@ -397,18 +418,18 @@ def select_defect(id):
 
 @app.route('/catalog_list/<int:id>')
 def catalog_list(id):
-            
+
     catalog_list = db.session.query(Catalog).get(id)
     defect_list = db.session.query(Defect).filter(
         catalog_list.id_defect == Defect.id)
     operation_list = db.session.query(Operation).filter(
-    catalog_list.id_operation == Operation.id)
+        catalog_list.id_operation == Operation.id)
     product_list = db.session.query(Product).filter(
-    catalog_list.id_product == Product.id)
+        catalog_list.id_product == Product.id)
     return render_template("catalog_list.html",
                            operation_list=operation_list,
                            catalog_list=catalog_list,
-                           defect_list = defect_list,
+                           defect_list=defect_list,
                            product_list=product_list)
 ####################################################################
 
@@ -418,7 +439,7 @@ def catalog_delete(id):
     catalog = Catalog.query.get_or_404(id)
     try:
         d = os.path.join(path, catalog.picture)
-        print(d)
+        # print(d)
         if os.path.isfile(d):
             os.remove(d)
         db.session.delete(catalog)
@@ -441,64 +462,65 @@ def catalog_update(id):
     operation = Operation.query.all()
     product = Product.query.all()
     if request.method == "POST":
-        print('POST')
+       # print('POST')
         catalog.id_defect = (request.form['defect_name']).upper()
         catalog.id_operation = (request.form['operation_name']).upper()
         catalog.defect_type = (request.form['defect_type'])
         catalog.id_product = (request.form['product_name']).upper()
         catalog.note = (request.form['note']).upper()
         if not request.files['image']:
-            print("None")
+            pass
+            # print("None")
 
         else:
-            print('OK')  # ????????????????request.form
+            # print('OK')  # ????????????????request.form
             image = request.files['image']
             if "filesize" in request.cookies:
                 if not limit_filesize(request.cookies["filesize"]):
-                    print("Filesize exceeded maximum limit")
-                    flash("Размер файла превышает лимит", 'warning')
+                    #print("Filesize exceeded maximum limit")
+                    flash("Размер файла превышает лимит", 'danger')
                     return redirect(request.url)
 
             if image.filename == "":
-                print("No filename")
-                flash("Файл не выбран", 'warning')
+                #print("No filename")
+                flash("Файл не выбран", 'danger')
                 return redirect(request.url)
 
             if not allowed_image(image.filename):
-                print("Расширение файла не соответствует заданному")
-                flash("Расширение файла не соответствует заданному", 'warning')
+                #print("Расширение файла не соответствует заданному")
+                flash("Расширение файла не соответствует заданному", 'danger')
                 filename = secure_filename(image.filename)
                 return redirect(request.url)
 
             splitFile = image.filename.rsplit('.', 1)
-            print(splitFile)
+           # print(splitFile)
 
             newFileName = "file_"+str(id)+"."+(splitFile[1]).lower()
             fileName = secure_filename(newFileName)
-            print(fileName)
+           # print(fileName)
             pathFileName = os.path.join(app.config["IMAGE_UPLOADS"], fileName)
-            print(pathFileName)
+           # print(pathFileName)
 
-            print(path)
+           # print(path)
             pathLoad = os.path.join(path, app.config["IMAGE_UPLOADS"])
-            print("pathLoad=", pathLoad)
+           #print("pathLoad=", pathLoad)
 
             picture = pathFileName
 
             catalog = Catalog.query.get_or_404(id)
             try:
                 pathOldFile = os.path.join(path, catalog.picture)
-                print('pathOldFile =', pathOldFile)
+               #print('pathOldFile =', pathOldFile)
                 if os.path.isfile(pathOldFile):
                     os.remove(pathOldFile)
-                    print("Удалено")
+                   # print("Удалено")
             except:
                 return "При удалении произошла ошибка"
             image.save(os.path.join(pathLoad, fileName))
             catalog.picture = picture
         try:
             db.session.commit()
-            print('Изменено')
+           # print('Изменено')
             return redirect('/show_catalog')
         except:
             return "При редактировании произошла ошибка"
@@ -514,10 +536,9 @@ def show_operation():
 
     operations = db.session.query(Operation.id, Operation.operation_name).join(
         Catalog).distinct().order_by(Operation.operation_name).all()
-    
+
     catalog = db.session.query(Catalog, Defect.defect_name, Operation.operation_name, Product.general_name).join(
         Defect, Operation, Product).order_by(Operation.operation_name).all()
-
 
     return render_template("show_operation.html",
                            operations=operations,
@@ -529,27 +550,25 @@ def show_operation():
 
 @app.route('/show_operation/<int:id>')
 def select_operation(id):
-    
+
     operations = db.session.query(Operation.id, Operation.operation_name).join(
         Catalog).distinct().order_by(Operation.operation_name).all()
     catalog = db.session.query(Catalog, Defect.defect_name, Operation.operation_name,
-    Product.general_name).join(Defect, Operation, Product).order_by(Operation.operation_name).filter(Operation.id == id)
-
-  
+                               Product.general_name).join(Defect, Operation, Product).order_by(Operation.operation_name).filter(Operation.id == id)
 
     return render_template("show_operation.html", operations=operations, catalog=catalog, table_head=table_head)
 
 ####################################################################
+
 
 @app.route('/show_product')
 def show_product():
 
     products = db.session.query(Product.id, Product.general_name).join(
         Catalog).distinct().order_by(Product.general_name).all()
-    
+
     catalog = db.session.query(Catalog, Defect.defect_name, Operation.operation_name, Product.general_name).join(
         Defect, Operation, Product).order_by(Product.general_name).all()
-
 
     return render_template("show_product.html",
                            products=products,
@@ -561,13 +580,11 @@ def show_product():
 
 @app.route('/show_product/<int:id>')
 def select_product(id):
-    
+
     products = db.session.query(Product.id, Product.general_name).join(
         Catalog).distinct().order_by(Product.general_name).all()
     catalog = db.session.query(Catalog, Defect.defect_name, Operation.operation_name,
-    Product.general_name).join(Defect, Operation, Product).order_by(Product.general_name).filter(Product.id == id)
-
-  
+                               Product.general_name).join(Defect, Operation, Product).order_by(Product.general_name).filter(Product.id == id)
 
     return render_template("show_product.html",
                            products=products,
@@ -575,6 +592,7 @@ def select_product(id):
                            table_head=table_head)
 
 ####################################################################
+
 
 @app.route('/defect/<int:id>/update', methods=['POST', 'GET'],)
 def defect_update(id):
@@ -584,19 +602,22 @@ def defect_update(id):
 
     if request.method == "POST":
         if request.form['defect_name'] != "":
- #           catalog.id_defect = (request.form['defect_name']).upper()
+         #           catalog.id_defect = (request.form['defect_name']).upper()
             defect_list.defect_name = (request.form['defect_name']).upper()
 
             try:
                 db.session.commit()
-                print('Изменено')
+               # print('Изменено')
                 return redirect('/add_defect')
             except:
                 return "При редактировании произошла ошибка"
         else:
             return redirect('/add_defect')
     else:
-        return render_template("defect_update.html",
+        if session.get("AUTHORIZATION") is None: 
+            return render_template("sign_in.html")
+        else:    
+            return render_template("defect_update.html",
                                defect_list=defect_list,
                                catalog=catalog,
                                table_head=table_head)
@@ -607,14 +628,14 @@ def defect_update(id):
 def defect_delete(id):
     defect_list = Defect.query.get_or_404(id)
     # catalog = db.session.query(Catalog, Defect.defect_name).join(
-        # Defect).order_by(Defect.defect_name).filter(Defect.id == id)
+    # Defect).order_by(Defect.defect_name).filter(Defect.id == id)
 
     catalog = db.session.query(Catalog).filter_by(id_defect=id)
     if catalog.first() is not None:
-        print ('Catalog contains ID')
+       #print ('Catalog contains ID')
         try:
             for i in catalog:
-                print('i =', i.picture)
+               #print('i =', i.picture)
                 d = os.path.join(path, i.picture)
                 if os.path.isfile(d):
                     os.remove(d)
@@ -625,17 +646,16 @@ def defect_delete(id):
             return redirect('/add_defect')
         except:
             return "При удалении произошла ошибка"
-        
+
     else:
-        print ('Catalog not contains ID')
+       #print ('Catalog not contains ID')
         try:
             db.session.delete(defect_list)
             db.session.commit()
             return redirect('/add_defect')
         except:
             return "При удалении произошла ошибка"
-      
-            
+
 
 ####################################################################
 
@@ -648,19 +668,23 @@ def operation_update(id):
 
     if request.method == "POST":
         if request.form['operation_name'] != "":
-#            catalog.id_operation = (request.form['operation_name']).upper()
-            operation_list.operation_name = (request.form['operation_name']).upper()
+            #            catalog.id_operation = (request.form['operation_name']).upper()
+            operation_list.operation_name = (
+                request.form['operation_name']).upper()
 
             try:
                 db.session.commit()
-                print('Изменено')
+               # print('Изменено')
                 return redirect('/add_operation')
             except:
                 return "При редактировании произошла ошибка"
         else:
             return redirect('/add_operation')
     else:
-        return render_template("operation_update.html",
+        if session.get("AUTHORIZATION") is None: 
+            return render_template("sign_in.html")
+        else:    
+            return render_template("operation_update.html",
                                operation_list=operation_list,
                                catalog=catalog,
                                table_head=table_head)
@@ -670,17 +694,16 @@ def operation_update(id):
 @app.route('/operation/<int:id>/del', methods=['POST', 'GET'],)
 def operation_delete(id):
     operation_list = Operation.query.get_or_404(id)
- ##   catalog = db.session.query(Catalog, Operation.operation_name).join(
- ##       Operation).order_by(Operation.operation_name).filter(Operation.id == id)
+ # catalog = db.session.query(Catalog, Operation.operation_name).join(
+ # Operation).order_by(Operation.operation_name).filter(Operation.id == id)
 
     catalog = db.session.query(Catalog).filter_by(id_operation=id)
 
-
     if catalog.first() is not None:
-        print ('Catalog contains ID')
+       #print ('Catalog contains ID')
         try:
             for i in catalog:
-                print('i =', i.picture)
+               #print('i =', i.picture)
                 d = os.path.join(path, i.picture)
                 if os.path.isfile(d):
                     os.remove(d)
@@ -691,9 +714,9 @@ def operation_delete(id):
             return redirect('/add_operation')
         except:
             return "При удалении произошла ошибка"
-        
+
     else:
-        print('Catalog not contains ID')
+       #print('Catalog not contains ID')
         try:
             db.session.delete(operation_list)
             db.session.commit()
@@ -712,33 +735,36 @@ def product_update(id):
 
     if request.method == "POST":
         if request.form['article_number'] == "" and request.form['article_name'] != "":
-            product_list.article_name = (request.form['article_name']).upper()            
+            product_list.article_name = (request.form['article_name']).upper()
             product_list.general_name = f"{(request.form['article_name']).upper()}, {product_list.article_number}"
         elif request.form['article_number'] != "" and request.form['article_name'] == "":
-            product_list.article_number = (request.form['article_number']).upper()
+            product_list.article_number = (
+                request.form['article_number']).upper()
             product_list.general_name = f"{product_list.article_name}, {(request.form['article_number']).upper()}"
         elif request.form['article_number'] != "" and request.form['article_name'] != "":
             #catalog.id_operation = (request.form['operation_name']).upper()
-            product_list.article_number = (request.form['article_number']).upper()
-            product_list.article_name = (request.form['article_name']).upper()            
+            product_list.article_number = (
+                request.form['article_number']).upper()
+            product_list.article_name = (request.form['article_name']).upper()
             product_list.general_name = f"{(request.form['article_name']).upper()}, {(request.form['article_number']).upper()}"
         else:
             return redirect('/add_product')
 
         try:
             db.session.commit()
-            print('Изменено')
+           # print('Изменено')
             return redirect('/add_product')
         except:
             return "При редактировании произошла ошибка"
-        
+
     else:
-        return render_template("product_update.html",
+        if session.get("AUTHORIZATION") is None: 
+            return render_template("sign_in.html")
+        else:    
+            return render_template("product_update.html",
                                product_list=product_list,
                                catalog=catalog,
                                table_head=table_head)
-
-
 
 
 ####################################################################
@@ -747,10 +773,10 @@ def product_delete(id):
     product_list = Product.query.get_or_404(id)
     catalog = db.session.query(Catalog).filter_by(id_product=id)
     if catalog.first() is not None:
-        print ('Catalog contains ID')
+       #print ('Catalog contains ID')
         try:
             for i in catalog:
-                print('i =', i.picture)
+               #print('i =', i.picture)
                 d = os.path.join(path, i.picture)
                 if os.path.isfile(d):
                     os.remove(d)
@@ -762,19 +788,17 @@ def product_delete(id):
             return redirect('/add_product')
         except:
             return "При удалении произошла ошибка"
-        
+
     else:
-        print ('Catalog not contains ID')
+       #print ('Catalog not contains ID')
         try:
             db.session.delete(product_list)
             db.session.commit()
             return redirect('/add_product')
         except:
             return "При удалении произошла ошибка"
-        
-    
+
+
 ####################################################################
 if __name__ == "__main__":
     app.run(debug=True)
-
-

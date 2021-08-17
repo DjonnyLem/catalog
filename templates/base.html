@@ -97,13 +97,17 @@
           </li>
           <li class="nav-item">
             {% if session["AUTHORIZATION"] =="OK" %}
-            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
             {% else %}
             <a class="d-none" href="#" tabindex="-1" aria-disabled="true">АНАЛИТИКА</a>
             {% endif %}
           </li>
           <li class="nav-item pe-5 position-absolute  end-0 ">
+            {% if session["AUTHORIZATION"] =="OK" %}
+            <a class="nav-link" href="/logout">ВЫЙТИ</a>
+            {% else %}
             <a class="nav-link" href="/sign_in">ВОЙТИ</a>
+            {% endif %}
           </li>
         </ul>
 
