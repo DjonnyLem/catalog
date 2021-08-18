@@ -23,7 +23,9 @@
 function urlName (){
   let url  = document.location.href; // получаем href страницы
   let nm = url.match(/(?<=\/\/.+\/)\w+/); //Получаем из htef блок наименования страницы
-  nm = nm[0]          //получаем строку с именем страницы
+  if (nm == null){nm = "";}
+else {
+nm = nm[0]  };        //получаем строку с именем страницы
   let num = url.match(/(?<=\/\/.+\/\w+\/)\d{1,}/);  ////Получаем из htef номер id страницы или null
   if (num == null){
     num = '0';
